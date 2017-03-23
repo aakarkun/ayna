@@ -1,0 +1,302 @@
+/*!Empresa CSS Custom Design
+Copyright © 2016 - Glomeworks Tech/*!
+
+
+/*GENERAL
+************************************/
+body {
+  margin: 0;
+  background-color: #000;
+}
+
+/*LINK-STYLES
+************************************/
+
+a {
+    text-decoration: none;
+    color: #444444;
+}
+a:hover,
+a:focus {
+    text-decoration: none;
+    color: #000000;
+}
+.link-style {
+    color: #444;
+}
+.link-style:hover {
+    color: #000;
+    text-shadow:  0 1px 1px rgba(0, 0, 0, 0.1);
+}
+.link-style-contrast {
+    color: #fafafa;
+}
+.link-style-contrast:hover {
+    color: #fff;
+    text-shadow:  0 1px 1px rgba(0, 0, 0, 0.1);
+
+}
+
+
+/*FONT-STYLES
+*************************************/
+
+.font {
+    font-family: 'Roboto', sans-serif;
+}
+.font-regular {
+    font-weight: 400;
+}
+.font-light {
+    font-family: 'Roboto-light', sans-serif;
+    font-weight: 100;
+}
+.font-semibold {
+    font-weight: 500;
+}
+.font-bold {
+    font-weight: 700;
+}
+.font-x-large {
+    font-size: 32px;
+}
+.font-xx-large {
+    font-size: 48px;
+}
+.font-large {
+    font-size: 24px;
+}
+.font-medium {
+    font-size: 18px;
+}
+.font-small {
+    font-size: 14px;
+}
+.font-x-small {
+    font-size: 8px;
+}
+.font-contrast {
+    color: #fff;
+}
+.font-contrast2 {
+    color: #878787;
+}
+.font-contrast3 {
+    color: #898989;
+}
+.font-contrast4 {
+    color: #444;
+}
+.font-dark {
+    color: #000;
+}
+.font-red {
+    color: #b41312;
+}
+.font-green {
+    color: #51c048;
+}
+.font-green-dark {
+    color: #1f3d4d;
+}
+.font-red {
+    color: #f00;
+}
+.font-shadow {
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+}
+
+/*MARGIN-STYLES
+*************************************/
+
+/*Normal-margin*/
+.margin {
+    margin: 15px;
+}
+.margin-top {
+    margin-top: 15px;
+}
+.margin-right {
+    margin-right: 15px;
+}
+.margin-bottom {
+    margin-bottom: 15px;
+}
+.margin-left {
+    margin-left: 15px;
+}
+
+/*Larger Margin*/
+.margin-large {
+    margin: 50px;
+}
+.margin-large-top {
+    margin-top: 50px;
+}
+.margin-large-right {
+    margin-right: 50px;
+}
+.margin-large-bottom {
+    margin-bottom: 50px;
+}
+.margin-large-left {
+    margin-left: 50px;
+}
+
+/*Smaller Margin*/
+.margin-large {
+    margin: 5px;
+}
+.margin-small-top {
+    margin-top: 5px;
+}
+.margin-small-right {
+    margin-right: 5px;
+}
+.margin-small-bottom {
+    margin-bottom: 5px;
+}
+.margin-small-left {
+    margin-left: 5px;
+}
+
+/*Reset Margin*/
+.margin-remove {
+    margin: 0px;
+}
+.margin-top-remove {
+    margin-top: 0px;
+}
+.margin-right-remove {
+    margin-right: 0px;
+}
+.margin-bottom-remove {
+    margin-bottom: 0px;
+}
+.margin-left-remove {
+    margin-left: 0px;
+}
+
+/*BUTTON-STYLES
+*************************************/
+
+.button-style1 {
+    color: #fff;
+    background-color: #337ab7;
+    padding: 2px 8px;
+    border-radius: 10px;
+    box-shadow: 0px;
+}
+
+/*INPUT-STYLES
+*************************************/
+
+.input-style1 {
+    box-shadow: none;
+    border-radius: 0px;
+    border: 1px transparent;
+    background-color: transparent;
+    border-bottom: 1px solid #ccc;
+}
+.input-style1:hover, .input-style1:focus {
+    box-shadow: none;
+    border-radius: 0px;
+    border: 1px transparent;
+    background-color: transparent;
+    border-bottom: 1px solid rgba(51, 122, 183, 0.4);
+}
+.input-style1:focus {
+    border-bottom: 1px solid #337ab7;
+}
+
+/*CARD-STYLE
+*************************************/
+
+.em-card-style {
+    padding: 0px;
+    background-color: #fff;
+    border: 1px transparent;
+    box-shadow: 0 1px 3px rgba(0, 0, 255, 0.2)
+}
+
+.em-mirror-card {
+    padding: 10px 10px;
+    border: 0;
+}
+
+.em-mirror-card-heading {
+    padding: 10px 16px;
+    background-color:
+}
+
+.em-card-style:hover {
+    box-shadow: 0 1px 4px rgba(0, 0, 255, 0.3)
+}
+.em-card-style-border {
+    border-bottom: 2px solid transparent;
+}
+.em-card-style-border:hover {
+    border-bottom: 1px solid #00b4f5;
+}
+.em-card-style:hover .em-card-heading a {
+    color: #fff;
+    text-shadow:  0 1px 2px rgba(0, 0, 0, 0.4);
+}
+.em-card-heading {
+    padding: 12px 16px;
+    background-color: #337ab7;
+}
+.em-card-heading a {
+    color: #fafafa;
+}
+.em-card-body {
+    padding: 5px 16px;
+}
+.em-card-body-post {
+    padding: 16px 32px 32px 32px;
+}
+.em-card-body li:hover i {
+    color: #337ab7;
+}
+.em-card-border {
+    height: 2px;
+    background: transparent;
+}
+.em-card-style:hover .em-card-border {
+    height: 2px;
+    background: radial-gradient(#0c80bb, #0c80bb 20%, #ffffff);
+}
+.thumbnail-style {
+    border: 0px;
+    margin-bottom: 0px;
+}
+.thumbnail-style img {
+    width: 96px;
+    height: 96px;
+    padding: 4px;
+    border-radius: 50%;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.3);
+}
+.thumbnail-style:hover hr {
+    border-top: 1px solid #00b4f5;
+}
+.thumbnail-style:hover img {
+    box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.4);
+}
+.thumbnail-style2 {
+    padding: 2px;
+    height: 172px;
+}
+
+/*Empresa Card Mirror*/
+.em-mirror-greetings {
+  margin-top: 150px;
+}
+
+/*FOOTER
+*************************************/
+.em-mirror-footer {
+  position: absolute;
+  bottom: 20px;
+  right: 16px;
+}
