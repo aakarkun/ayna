@@ -1,0 +1,147 @@
+/* AnalogClock CSS */
+
+/*https://cssanimation.rocks/clocks/*/
+/* Dimensions depended on a diameter of 400px */
+/************************************************/
+/*$clock-diameter: 400px;
+
+$hours-indicator-width: 6px;
+$hours-indicator-height: 90px;
+
+$minutes-indicator-width: 4px;
+$minutes-indicator-height: 120px;
+
+$seconds-indicator-width: 2px;
+$seconds-indicator-height: 150px;
+
+$indicator-cover-diameter: 12px;*/
+/************************************************/
+/* Dimensions depended on a diameter of 400px - responsive values */
+/************************************************/
+/************************************************/
+/* Dimensions depended on a diameter of 300px */
+/************************************************/
+/************************************************/
+.clock-container {
+  background-color: transparent;
+  margin-top: 10px;
+  margin-bottom: 10px !important;
+  height: 200px;
+  width: 230px;
+}
+@media (min-width: 576px) {
+  .clock-container {
+    /* height: 225px;
+    width: 255px; */
+    /* height: 120px;
+    width: 155px; */
+    height: 170px;
+    width: 201px;
+  }
+}
+@media (min-width: 768px) {
+  .clock-container {
+    /* height: 250px;
+    width: 280px; */
+    /* height: 120px;
+    width: 155px; */
+    height: 170px;
+    width: 201px;
+  }
+}
+@media (min-width: 992px) {
+  .clock-container {
+    /* height: 300px; */
+    /* width: 330px; */
+    /* height: 120px;
+    width: 155px; */
+    height: 170px;
+    width: 201px;
+  }
+}
+@media (min-width: 1200px) {
+  .clock-container {
+    /* height: 400px; */
+    /* width: 430px; */
+    /* height: 150px;
+    width: 180px; */
+    height: 170px;
+    width: 201px;
+  }
+}
+.clock-container .clock {
+  height: 100%;
+  width: 100%;
+  background-color: transparent;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 50%;
+   /* box-shadow: 0px 0px 10px #fff;  */
+   border: 1px solid #fff; 
+  z-index: 0;
+  box-sizing: border-box;
+}
+.clock-container .clock .background-numbers {
+  position: absolute;
+  width: 90%;
+  height: 90%;
+  top: 5%;
+  left: 5%;
+  z-index: 1;
+}
+.clock-container .clock .background-numbers .numbers {
+    fill: #fff;
+    font-size: 6px;  
+   /* fill: #000;  */
+}
+.clock-container .clock .indicator {
+  position: absolute;
+  border-radius: 10px;
+  transform-origin: bottom;
+  outline: 1px solid transparent;
+}
+.clock-container .clock .indicator.hours-indicator {
+  width: 1.5%;
+  height: 22.5%;
+  top: 27.5%;
+  left: 49.25%;
+  z-index: 2;
+  /* background-color: #8f9c6c; */
+   background-color: #fff;   
+}
+.clock-container .clock .indicator.minutes-indicator {
+  width: 1%;
+  height: 30%;
+  top: 20%;
+  left: 49.5%;
+  z-index: 3;
+  /* background-color: #cd6a51; */
+  background-color: #fff;  
+}
+.clock-container .clock .indicator.seconds-indicator {
+  width: 0.5%;
+  height: 37.5%;
+  top: 12.5%;
+  left: 49.75%;
+  z-index: 4;
+  /* background-color: #dfc48c; */
+  background-color: #fff;  
+}
+.clock-container .clock .indicator-cover {
+  position: absolute;
+  top: 48.5%;
+  left: 48.5%;
+  border-radius: 50%;
+  width: 3%;
+  height: 3%;
+  background-color: lightgrey;
+  z-index: 5;
+}
+
+.digital {
+  margin-top: 10px;
+  text-align: center;
+  font-family: 'Roboto', sans-serif;
+  font-size: 20px;
+}
