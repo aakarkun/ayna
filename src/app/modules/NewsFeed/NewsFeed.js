@@ -43,7 +43,10 @@ export class NewsFeed extends React.Component{
 	render(){
 		if(this.state.news.length >= 1) {
 			this.state.header = 'RECENT NEWS';
+		} else {
+			this.state.header = 'Loading.. .';
 		}
+
 		return(
 			<div>	
 				<h6>{this.state.header}</h6>

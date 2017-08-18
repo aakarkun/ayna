@@ -12,83 +12,18 @@ import { MediaPlayer }  from '../modules/MediaPlayer/MediaPlayer';
 
 
 export class Module extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      /*defaultModules: [ 
-        {
-          module: "Clock" 
-        },
-        {
-          module: "Greetings"
-        },
-        {
-          module: "Calendar"
-        },
-        {
-          module: "AnalogClock"
-        }
-    ],*/
-      userModules: [],
-      componentName: []
-    };
-  }
-  
-  /*htmlDecode(input) {
-    var e = document.createElement('div');
-    e.innerHTML = input;
-    console.log(e.childNodes[0]);
-    return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
-  }*/
-
-  componentWillMount() {  
-    var uModules = this.state.userModules;
-    // console.log(uModules);
-    // var dModules = this.state.defaultModules;
-    // console.log(dModules);
-    this.props.modules.map((module, name) =>{
-      // console.log(module);
-      if(module !== null) {
-        uModules.push(module);
-        // var html = "&lt;" + module.name + " /&gt;";
-        // var html = "<" + module.name + " />";
-        var html = module.name;        
-        this.state.componentName.push(html);
-        // console.log(this.state.componentName);
-        
-        /* try{
-          var mname = module.name;
-          var filelocation = "../modules/" + mname + "/" + mname + ".js"; 
-          var script = document.createElement("script");
-          script.src = filelocation;
-          script.onload = function() {
-
-          }
-          script.setAttribute("type", "application/json");
-          document.getElementsByTagName("head")[0].appendChild(script);
-        } catch (err) {
-          console.log("Error: " + module.name + ".js not found! " + err);
-          console.log("Error: " + err);
-        } */
-      }
-      // console.log("newHtml :" + this.state.newHtml);
-    });
-  }
 
   render() {
-      var { componentName } = this.state;
-      /* function createHtml() {
-        for(var i = 0; i < componentName.length; i++) {
-          return {__html: ComponentName[i]};
-        }
-      }
+    var componentName = [];
 
-      function Component() {
-        return <div dangerouslySetInnerHTML={createHtml()} />
-      } */
+    this.props.modules.map((module, index) => {
+      if(module !== null) {
+        componentName.push(module.name);
+      }
+    })
+    
     return(
       <div>
-        {/* {Component()} */}
          {componentName.map((component, id) => {
           switch (component) {
             case "AnalogClock":
