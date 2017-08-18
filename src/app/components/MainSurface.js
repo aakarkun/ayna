@@ -19,7 +19,6 @@ export class MainSurface extends React.Component {
   }
 
   getDefaultModules() {
-
     getModulesData().then((modules) => {
       // defining the valid surfaces
       var validSurfaces = ["top_bar", "hero_section", "middle_center", "lower_section", "bottom_bar"];
