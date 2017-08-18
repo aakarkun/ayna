@@ -3,7 +3,6 @@ import { ModuleComponent} from './mini-components/ModuleComponent';
 import { getModulesData } from '../../utils/modules-api';
 
 export class Modules extends React.Component {
-
     constructor() {
         super();
         this.state = {
@@ -34,7 +33,7 @@ export class Modules extends React.Component {
                     <div className="panel-body">
                         <div className="row">                            
                             {defaultModules.map((defaultModule, index) => (
-                                <ModuleComponent name={ defaultModule.name } category={ defaultModule.header } key={index} downloads="1.2k" />    
+                                <ModuleComponent name={ defaultModule.name } category={ defaultModule.category } key={index} downloads="1.2k" />    
                             ))}
                         </div>
                     </div>
