@@ -1,10 +1,15 @@
 import React from 'react';
 import { Link, browserHistory } from 'react-router';
+import { loggedOut } from '../../utils/AuthService';
 
 export class Navbar extends React.Component {
 
   onNavigateHome() {
     browserHistory.push("/dashboard");
+  }
+
+  logOut() {
+    loggedOut();
   }
 
   render() {
@@ -23,7 +28,7 @@ export class Navbar extends React.Component {
                 </div>
                 <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                   <ul className="nav navbar-nav navbar-right">
-                    <li><Link to={"/login"}>Logout</Link></li>
+                    <li><Link to={"/login"} onClick={this.logOut}>Logout</Link></li>
                   </ul>
                 </div>
               </div>

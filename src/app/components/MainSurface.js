@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { SurfaceArea } from './SurfaceArea';
-import { getModulesData } from '../utils/modules-api';
+import { getDefaultModules } from '../utils/modules-api';
 
 export class MainSurface extends React.Component {
   constructor() {
@@ -18,8 +18,8 @@ export class MainSurface extends React.Component {
     };
   }
 
-  getDefaultModules() {
-    getModulesData().then((modules) => {
+  defaultModules() {
+    getDefaultModules().then((modules) => {
       // defining the valid surfaces
       var validSurfaces = ["top_bar", "hero_section", "middle_center", "lower_section", "bottom_bar"];
       var surfaces = {
@@ -52,7 +52,7 @@ export class MainSurface extends React.Component {
 
   
   componentDidMount() {
-    this.getDefaultModules();
+    this.defaultModules();
   }
 
   render() {

@@ -1,6 +1,32 @@
 import React from 'react';
+import { postUserModules } from '../../../utils/users-api';
 
 export class ModuleComponent extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.handleIsInstalled = this.handleIsInstalled.bind(this);
+    }
+
+    handleIsInstalled() {
+        if(this.props.isInstalled === "INSTALL") {
+            const { name, category, surface_area, position, header, defaul, isInstalled } = this.props;            
+            postUserModules(name, category, surface_area, position, header, defaul).then((response, error) => {
+                if(response) {
+                    console.log("Module Installed Successfully!");
+                } else {
+                    console.log("Module Not Installed");
+                }
+            });
+        } else {
+            console.log("Are you sure to Uninstall that Module?");
+        }
+    } 
+
+    componentDidMount() {
+        this.handleIsInstalled();
+    }
+
     render() {
         return(
             <div className="col-lg-4 col-md-4 col-sm-4">
@@ -10,7 +36,7 @@ export class ModuleComponent extends React.Component {
                         <strong style={{fontSize: "16px"}}>{this.props.name}</strong>
                         <p>
                             <strong>Category:</strong> {this.props.category}<br />
-                            <strong>Downloads:</strong> {this.props.downloads} Downloads
+                            <a href="" onClick={this.handleIsInstalled}><span className="badge">{this.props.isInstalled}</span></a>
                         </p>
                     </div>
                 </div>

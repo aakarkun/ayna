@@ -1,16 +1,64 @@
 import React from 'react';
-import { ModuleInfoComponent } from './mini-components/ModuleInfoComponent';
+import { DashboardInfo } from './mini-components/DashboardInfo';
+import { getDefaultModules } from '../../utils/modules-api';
+import { getUserModules } from '../../utils/users-api';
+import { getUsersData } from '../../utils/users-api';
 
 export class Dashboard extends React.Component {
+    constructor() {
+        super();
+
+        this.state = {
+            dCount: 0,
+            mCount: 0,
+            uCount: 0
+        }
+    }
+
+    counter(c) {
+        if(c < 1) {
+            c = '' + c;
+        } else if(c < 10) {
+            c = '0' + c;
+        } else {
+            c = '' + c; 
+        }
+        return c;
+    }
+    
+    count() {
+        getDefaultModules().then((modules => {
+            var count = modules.length;
+            this.setState({
+                dCount: this.counter(count)
+            })
+        }));
+        getUserModules().then((modules => {
+            var count = modules.length;
+            this.setState({
+                mCount: this.counter(count)
+            })
+        }));
+        getUsersData().then((users) => {
+            var count = users.length;
+            this.setState({
+                uCount: this.counter(count)
+            })
+        })   
+    }
+
+    componentDidMount() {
+        this.count();
+    }
+
     render() {
         return(
             <div>
                 <h5>DASHBOARD</h5>
                 <div className="row margin-large-top margin-bottom">
-                    <ModuleInfoComponent name="Default Modules" count="04" />
-                    <ModuleInfoComponent name="User Modules" count="03" />
-                    <ModuleInfoComponent name="Active Users" count="04" />
-                    
+                    <DashboardInfo header="AYNA MODULES" subheader="Available" count={this.state.dCount} />
+                    <DashboardInfo header="USER MODULES" subheader="Your Modules" count={this.state.mCount} />
+                    <DashboardInfo header="USERS" subheader="Active Users" count={this.state.uCount} />   
                 </div>
 
                 <div className="row">
