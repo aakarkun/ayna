@@ -7,8 +7,9 @@ import { Greetings }  from '../modules/Greetings/Greetings';
 import { NewsFeed }  from '../modules/NewsFeed/NewsFeed';
 import { Todo }  from '../modules/Todo/Todo';
 import { Quotes }  from '../modules/Quotes/Quotes';
-import { Weather }  from '../modules/Weather/Weather';
-import { MediaPlayer }  from '../modules/MediaPlayer/MediaPlayer';
+import { Speech } from '../modules/Speech/Speech';
+// import { Weather }  from '../modules/Weather/Weather';
+// import { MediaPlayer }  from '../modules/MediaPlayer/MediaPlayer';
 
 
 export class Module extends React.Component {
@@ -24,6 +25,7 @@ export class Module extends React.Component {
     
     return(
       <div>
+        {/* {console.log(this.props.reply)} */}
          {componentName.map((component, id) => {
           switch (component) {
             case "AnalogClock":
@@ -36,7 +38,12 @@ export class Module extends React.Component {
               return <Clock key={id}/>
               break;
             case "Greetings":
-              return <Greetings key={id}/>
+              return (
+                <div>
+                  <Greetings key={id} reply={this.props.reply} /> 
+                  <Speech reply={this.props.reply} />
+                </div>
+              );
               break;
             case "NewsFeed":
               return <NewsFeed key={id}/>
@@ -47,12 +54,12 @@ export class Module extends React.Component {
             case "Quotes":
               return <Quotes key={id}/>
               break;
-             case "Weather":
+             {/* case "Weather":
               return <Weather key={id}/>
               break;
             case "MediaPlayer":
               return <MediaPlayer key={id}/>
-              break;   
+              break;    */}
             default:
               return null
           }

@@ -1,7 +1,10 @@
 import React from 'react';
 
 import { SurfaceArea } from './SurfaceArea';
-import { getModulesData } from '../utils/modules-api';
+import { isLoggedIn } from '../utils/users-api';
+import { getModulesData, changePosition } from '../utils/modules-api';
+
+import annyang from 'annyang';
 
 export class MainSurface extends React.Component {
   constructor() {
@@ -14,12 +17,26 @@ export class MainSurface extends React.Component {
         middle_center: [],
         lower_section: [],
         bottom_bar: []
-      }
+      },
+      replies: [
+        {
+          name: "hello",
+          text: ["Hello.", "Hi, there", "Hi. Whats up!"]
+        },
+        {
+          name: "how are you",
+          text: ["Living the AI dream.", "I'm doing well. What about you?", "hmm. I'm fine I guess"]
+        }
+      ],
+      toDisplay: 'hello',
+      // messages: ["Hello.", "Hi, how are you?", "Hi. Whats up! 👻"],
+      // secondMessages: ["Living the AI dream.", "I'm doing well. What about you?", "hmm. I'm fine I guess 👻"]
     };
+
+    this.acceptVoiceCommands = this.acceptVoiceCommands.bind(this);
   }
 
   getDefaultModules() {
-
     getModulesData().then((modules) => {
       // defining the valid surfaces
       var validSurfaces = ["top_bar", "hero_section", "middle_center", "lower_section", "bottom_bar"];
@@ -51,19 +68,106 @@ export class MainSurface extends React.Component {
     })
   }
 
+  acceptVoiceCommands() {
+
+    var availableModules = [];
+    var replies = this.state.replies;
+
+    var toDisplay = '';
+
+    annyang.debug();
+
+    annyang.setLanguage('en-IN');
+    getModulesData().then((modules) => {
+      availableModules = modules;
+      var commands = {
+        'show (me) :moduleName': function(moduleName) {
+          console.log(moduleName);
+        },
+        
+        // 'move (that) :moduleName to (the) :newPosition': {'regexp': /^move (clock|weather|news|calendar|greetings|quote|todo|) to (the) (left|centre|right)$/, 'callback': function(moduleName, newPosition) {
+        // }.bind(this)},
+  
+        'move (that) :moduleName to (the) :newPosition': function(moduleName, newPosition) {
+          // console.log(availableModules);
+          if(newPosition === 'centre') {
+            newPosition = 'center';
+          }
+          if(newPosition === 'write') {
+            newPosition = 'right';
+          }
+          if(moduleName === 'clock') {
+            moduleName = 'analogclock'
+          }
+          if(moduleName === 'news' | moduleName === 'feed') {
+            moduleName = 'newsfeed'
+          }
+
+          if(newPosition === 'left' | newPosition === 'right' | newPosition === 'center') {
+            
+            availableModules.map((aModule, index) => {
+
+              if(aModule.name.toLowerCase() === moduleName && aModule.position !== newPosition) {
+                console.log("Modules Matched previously " + aModule.name.toLowerCase() + " was in " + aModule.position);
+                aModule.position = newPosition;
+                console.log("now " + aModule.name + " is in " + aModule.position);
+                changePosition(aModule._id, newPosition).then(data => {
+                  console.log(data);
+                })
+                window.location.reload();
+              } else {
+                console.log("Module Not Matched or same position call");
+              }
+            });
+          } else {
+            console.log("Position not matched!")
+          }
+        }.bind(this),
+  
+        '(hello) (hi) (hey)': function() {
+          var num;
+          num = Math.floor((Math.random() * replies[0].text.length));
+          toDisplay = replies[0].text[num];
+          this.setState({
+            toDisplay
+          })
+          console.log(this.state.toDisplay);
+        }.bind(this),
+        
+        'how are you': function() {
+          var num;
+          num = Math.floor((Math.random() * replies[1].text.length));
+          toDisplay = replies[1].text[num];
+          this.setState({
+            toDisplay
+          })
+          console.log(this.state.toDisplay);
+        }.bind(this)
+      }; 
+      
+      annyang.addCommands(commands);
+      annyang.start();
+    });
+    
+
+  }
   
   componentDidMount() {
     this.getDefaultModules();
+    this.acceptVoiceCommands();
   }
 
+
+  
   render() {
     const { top_bar, hero_section, middle_center, lower_section, bottom_bar } = this.state.surfaces;
+    var { toDisplay } = this.state;
     return(
       <div>
         <div className="surface fullscreen below" />
         <SurfaceArea surfaceName="surface top bar" modules={top_bar} col_left={3} col_center={6} col_right={3}/>
         <SurfaceArea surfaceName="surface hero section" modules={hero_section} col_left={2} col_center={8} col_right={2}/>
-        <SurfaceArea surfaceName="surface middle center" modules={middle_center} col_left={3} col_center={6} col_right={3}/>
+        <SurfaceArea surfaceName="surface middle center" modules={middle_center} reply={toDisplay} col_left={3} col_center={6} col_right={3}/>
         <SurfaceArea surfaceName="surface lower section" modules={lower_section} col_left={2} col_center={8} col_right={2}/>
         <SurfaceArea surfaceName="surface bottom bar" modules={bottom_bar} col_left={2} col_center={8} col_right={2}/>
         <div className="surface fullscreen above"/>

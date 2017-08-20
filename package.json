@@ -5,11 +5,15 @@
   "dependencies": {
     "annyang": "^2.6.0",
     "axios": "^0.16.2",
+    "google-tts-api": "0.0.2-alpha.1",
     "jquery": "^3.2.1",
     "react": "^15.5.4",
     "react-addons-update": "^15.6.0",
     "react-dom": "^15.5.4",
-    "react-router": "^2.8.1"
+    "react-forecast": "0.0.7",
+    "react-media-player": "^0.6.3",
+    "react-router": "^2.8.1",
+    "react-speech": "^0.3.2"
   },
   "devDependencies": {
     "react-scripts": "1.0.7"

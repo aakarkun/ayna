@@ -1,0 +1,103 @@
+/*MARGIN-STYLES
+*************************************/
+
+/*Normal-margin*/
+.margin {
+    margin: 15px;
+}
+.margin-top {
+    margin-top: 15px;
+}
+.margin-right {
+    margin-right: 15px;
+}
+.margin-bottom {
+    margin-bottom: 15px;
+}
+.margin-left {
+    margin-left: 15px;
+}
+
+/*Larger Margin*/
+.margin-large {
+    margin: 50px;
+}
+.margin-large-top {
+    margin-top: 50px;
+}
+.margin-large-right {
+    margin-right: 50px;
+}
+.margin-large-bottom {
+    margin-bottom: 50px;
+}
+.margin-large-left {
+    margin-left: 50px;
+}
+
+/*Smaller Margin*/
+.margin-large {
+    margin: 5px;
+}
+.margin-small-top {
+    margin-top: 5px;
+}
+.margin-small-right {
+    margin-right: 5px;
+}
+.margin-small-bottom {
+    margin-bottom: 5px;
+}
+.margin-small-left {
+    margin-left: 5px;
+}
+
+/*Reset Margin*/
+.margin-remove {
+    margin: 0px;
+}
+.margin-top-remove {
+    margin-top: 0px;
+}
+.margin-right-remove {
+    margin-right: 0px;
+}
+.margin-bottom-remove {
+    margin-bottom: 0px;
+}
+.margin-left-remove {
+    margin-left: 0px;
+}
+
+/* Plceholder twiks */
+input::placeholder {
+    color: #ccc;
+}
+
+.badge-circle {
+  height: 80px;
+  width: 80px;
+  font-size: 24px;
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+  border-radius: 50%;
+  border: 4px solid #fff;
+  background: transparent;
+  padding-top: 12px;
+}
+
+.badge-circle-bg {
+  height: 70px;
+  width: 70px;
+  color: #121212;
+  font-size: 24px;
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+  border-radius: 50%;
+  border: none;
+  background: #fff;
+  padding-top: 12px;
+  box-shadow: 0 2px 4px rgba(255, 255, 255, 0.4);
+}

@@ -29,7 +29,7 @@ export class Quotes extends React.Component{
 	render() { 
 		//const listItem = list.map((item) => <li> {item}</li>);
 		return(
-			<div className="text-left">
+			<div className="text-center">
 				<p><h6>QUOTES</h6></p>
 				<h7> {quotes[this.state.num]} </h7>
 			</div>

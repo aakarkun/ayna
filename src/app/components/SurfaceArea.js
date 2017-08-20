@@ -26,17 +26,17 @@ export class SurfaceArea extends React.Component {
 
     return(
       <div className={this.props.surfaceName}>
-        {/* {console.log(this.props.modules)} */}
+        {/* {console.log(this.props.reply)} */}
         <div className="container">
           <div className="row text-center">
             <div className={'col-sm-' + this.props.col_left}>
-              <Module modules={positions.left} />       
+              <Module modules={positions.left} reply={this.props.reply}/>       
             </div>
             <div className={'col-sm-' + this.props.col_center}>
-              <Module modules={positions.center} />                     
+              <Module modules={positions.center} reply={this.props.reply}/>                 
             </div>
             <div className={'col-sm-' + this.props.col_right}>
-              <Module modules={positions.right} />              
+              <Module modules={positions.right} reply={this.props.reply}/>              
             </div>
           </div>
         </div>
