@@ -23,10 +23,6 @@ export class ModuleComponent extends React.Component {
         }
     } 
 
-    componentDidMount() {
-        this.handleIsInstalled();
-    }
-
     render() {
         return(
             <div className="col-lg-4 col-md-4 col-sm-4">
