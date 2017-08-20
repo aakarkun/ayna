@@ -78,7 +78,7 @@ export class MainSurface extends React.Component {
     annyang.debug();
 
     annyang.setLanguage('en-IN');
-    getModulesData().then((modules) => {
+    getDefaultModules().then((modules) => {
       availableModules = modules;
       var commands = {
         'show (me) :moduleName': function(moduleName) {
