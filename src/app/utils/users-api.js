@@ -2,9 +2,6 @@ import axios from 'axios';
 
 const BASE_URL = 'http://localhost:8000';
 
-<<<<<<< HEAD
-export { getUsersData, login, isLoggedIn };
-=======
 export { getUsersData, 
          loginUser, 
          registerUser, 
@@ -12,22 +9,12 @@ export { getUsersData,
          getUserModules,
          postUserModules 
         };
->>>>>>> 3813ff38f66edb817bf37253c5e74167bef8ac1d
 
 function getUsersData() {
     const url = `${BASE_URL}/users`;
     return axios.get(url).then(response => response.data);
 }
 
-<<<<<<< HEAD
-function login(username, password) {
-    const url = `${BASE_URL}/users/signin`;
-    return axios.post(url, {
-        'username': username,
-        'password': password
-    }).then((response, err) => {
-        if(!err) {
-=======
 function loginUser(username, password) {
     const url = `${BASE_URL}/users/signin`;
     return axios.post(url, {
@@ -37,19 +24,10 @@ function loginUser(username, password) {
         if(response) {
             sessionStorage.setItem('ayna-jwt', response.data.token);
             sessionStorage.setItem('user-id', response.data.user.id);
->>>>>>> 3813ff38f66edb817bf37253c5e74167bef8ac1d
             return response.data;
         } else {
             return err;
         }
-<<<<<<< HEAD
-    })
-}
-
-function isLoggedIn() {
-    const url = `${BASE_URL}/signin`;
-}
-=======
     });
 }
 
@@ -106,4 +84,3 @@ function postUserModules(name, category, surface_area, position, header, defaul)
             console.log(error);
         })
     }
->>>>>>> 3813ff38f66edb817bf37253c5e74167bef8ac1d
