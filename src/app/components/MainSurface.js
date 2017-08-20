@@ -2,7 +2,7 @@ import React from 'react';
 
 import { SurfaceArea } from './SurfaceArea';
 import { isLoggedIn } from '../utils/users-api';
-import { getModulesData, changePosition } from '../utils/modules-api';
+import { getDefaultModules, changePosition } from '../utils/modules-api';
 
 import annyang from 'annyang';
 
@@ -36,8 +36,8 @@ export class MainSurface extends React.Component {
     this.acceptVoiceCommands = this.acceptVoiceCommands.bind(this);
   }
 
-  getDefaultModules() {
-    getModulesData().then((modules) => {
+  defaultModules() {
+    getDefaultModules().then((modules) => {
       // defining the valid surfaces
       var validSurfaces = ["top_bar", "hero_section", "middle_center", "lower_section", "bottom_bar"];
       var surfaces = {
@@ -153,8 +153,8 @@ export class MainSurface extends React.Component {
   }
   
   componentDidMount() {
-    this.getDefaultModules();
     this.acceptVoiceCommands();
+    this.defaultModules();
   }
 
 

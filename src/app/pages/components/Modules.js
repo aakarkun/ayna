@@ -1,40 +1,110 @@
 import React from 'react';
 import { ModuleComponent} from './mini-components/ModuleComponent';
-import { getModulesData } from '../../utils/modules-api';
+import { getDefaultModules } from '../../utils/modules-api';
+import { getUserId, getUserModules } from '../../utils/users-api';
 
 export class Modules extends React.Component {
     constructor() {
         super();
         this.state = {
-            defaultModules: []
+            defaultModules: [],
+            userModules: [],
+            installedModules: [],
+            userId: getUserId()
         }
     }
 
-    getDefaultModules() {
-        getModulesData().then((defaultModules) => {
+    defaultModules() {
+        getDefaultModules().then((defaultModules) => {
             this.setState({
                 defaultModules
             })
         })
     }
 
+    userModules() {
+        getUserModules().then((userModules) => {
+            this.setState({
+                userModules
+            })
+        })
+    }
+
     componentDidMount() {
-        this.getDefaultModules();
+        this.defaultModules();
+        this.userModules();
     }
 
     render() {
+        var { defaultModules, userModules } = this.state;
 
-        const { defaultModules } = this.state;
+        // To identify the installed Modules by the user from available Ayna Modules  
+
+        var defModulesName = [];
+        var userModulesName = [];
+        defaultModules.map((defaultModule, index) => {
+            defModulesName.push(defaultModule.name);
+        });
+        userModules.map((userModule, index) => {
+            userModulesName.push(userModule.name);
+        });
+        function intersectModules(defaul, user) {
+            var sorted_defaul = defaul.concat().sort();
+            var sorted_user = user.concat().sort();
+            var common = [];
+            var defaul_i = 0;
+            var user_i = 0;
+        
+            while (defaul_i < defaul.length
+                   && user_i < user.length)
+            {
+                if (sorted_defaul[defaul_i] === sorted_user[user_i]) {
+                    common.push(sorted_defaul[defaul_i]);
+                    defaul_i++;
+                    user_i++;
+                }
+                else if(sorted_defaul[defaul_i] < sorted_user[user_i]) {
+                    defaul_i++;
+                }
+                else {
+                    user_i++;
+                }
+            }
+            return common;
+        }
+        var installedModules = intersectModules(defModulesName, userModulesName);
+        function isInstalled(name) {
+            var install;
+            if(userModulesName.indexOf(name) !== -1) {
+                install = "UNINSTALL";
+            } else {
+                install = "INSTALL";
+            }
+            return install;
+        }
+
         return(
             <div>
                 <h5>MODULES</h5>
                 <div className="panel panel-default margin-large-top">
-                    <div className="panel-heading">DEFAULT MODULES</div>
+                    <div className="panel-heading">AYNA MODULES</div>
                     <div className="panel-body">
-                        <div className="row">                            
-                            {defaultModules.map((defaultModule, index) => (
-                                <ModuleComponent name={ defaultModule.name } category={ defaultModule.category } key={index} downloads="1.2k" />    
-                            ))}
+                        <div className="row">
+                            {
+                                (defaultModules.length === 0) ? <center><p>EMPTY AYNA MODULES</p></center> :
+                                defaultModules.map((defaultModule, index) => (      
+                                    <ModuleComponent 
+                                        name={ defaultModule.name } 
+                                        category={ defaultModule.category }
+                                        surface_area={ defaultModule.surface_area }
+                                        position={ defaultModule.position }
+                                        header={ defaultModule.header }
+                                        defaul="false"
+                                        key={index} 
+                                        isInstalled={isInstalled(defaultModule.name)}
+                                    />    
+                                ))
+                            }                            
                         </div>
                     </div>
                 </div>
@@ -42,9 +112,18 @@ export class Modules extends React.Component {
                 <div className="panel panel-default margin-large-top">
                     <div className="panel-heading">USER MODULES</div>
                     <div className="panel-body">
-                        <div className="row">    
-                            <ModuleComponent name="Analog Clock" category="Clock and Time" downloads="1.2k" />
-                            <ModuleComponent name="Weather" category="Weather" downloads="0.9k" />
+                        <div className="row">
+                            {
+                                (userModules.length === 0) ? <center><p>EMPTY USER MODULES</p></center> : 
+                                userModules.map((userModule, index) => (
+                                    <ModuleComponent 
+                                        module={ userModule } 
+                                        name={ userModule.name }
+                                        category={ userModule.category } 
+                                        key={ index } 
+                                        isInstalled={isInstalled(userModule.name)} />                                
+                                ))
+                            }
                         </div>
                     </div>
                 </div>
