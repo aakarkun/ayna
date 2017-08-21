@@ -11,7 +11,7 @@ export class Greetings extends React.Component{
 
 	componentDidMount(){
 		
-		this.greetID = setInterval(() => this.tick(),500);
+		this.greetID = setInterval(() => this.tick(),1500);
 	}
 	
 	componentWillMount(){
@@ -50,12 +50,12 @@ export class Greetings extends React.Component{
 
 		if(this.props.reply == 'hello') {
 			console.log(this.state.greet);
-			return <h1> <center> {this.state.greet} </center> </h1> 
+			return <h2> <center> {this.state.greet} </center> </h2> 
 		} else {
 			return(
 				<div> 
-					<h1><center>{this.props.reply}</center></h1>
-					<h1><center>👻</center></h1> 
+					<h2><center>{this.props.reply}</center></h2>
+					<h2><center>👻</center></h2> 
 				</div>
 			); 
 		}
