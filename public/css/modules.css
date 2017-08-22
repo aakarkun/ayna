@@ -145,3 +145,14 @@ $indicator-cover-diameter: 12px;*/
   font-family: 'Roboto', sans-serif;
   font-size: 20px;
 }
+
+.news-via {
+  color: gray;
+  /* float: right; */
+}
+
+.news-img {
+  border-radius: 2px;
+  height: 100px;
+  width: 100px;
+}

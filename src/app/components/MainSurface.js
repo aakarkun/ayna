@@ -20,12 +20,54 @@ export class MainSurface extends React.Component {
       },
       replies: [
         {
-          name: "hello",
-          text: ["Hello.", "Hi, there", "Hi. Whats up!"]
+          command: "hello",
+          text: [
+            "Hello. How's it going?",
+            "Hey, there",
+            "Hi. Whats up!",
+            "Hello to you too",
+            "Is it me you're looking for?"
+          ]
         },
         {
-          name: "how are you",
-          text: ["Living the AI dream.", "I'm doing well. What about you?", "hmm. I'm fine I guess"]
+          command: "how are you",
+          text: [
+            "Living the AI dream.",
+            "I'm doing well. What about you?",
+            "hmm. I'm fine I guess",
+            "I'm feeling electrified.",
+            "I'm well."
+          ]
+        },
+        {
+          command: "goodnight",
+          text: [
+            "I seem to have hit a hiccup. Check back in a few",
+            "Rest up sleepy head. I will talk to you tomorrow.",
+            "Goodnight to you too. Remember tomorrow is just another day.",
+            ]
+        },
+        {
+          command: "who are you",
+          text: [
+            "Empresa. I'm your personal assistant."
+          ]
+        },
+        {
+          command: "goodmorning",
+          text: [
+            "Good morning, I hope you slept well.",
+            "Good morning to you, too.",
+            "Good morning, I hope you're well.",
+            ""
+          ]
+        },
+        {
+          command: "good afternoon",
+          text: [
+            "Midday greetings to you, too.",
+            "Good afternoon, I hope the day is going well. Any dinner plans?"
+          ]
         }
       ],
       toDisplay: 'hello',
@@ -102,6 +144,9 @@ export class MainSurface extends React.Component {
           if(moduleName === 'news' | moduleName === 'feed') {
             moduleName = 'newsfeed'
           }
+          if(moduleName === 'codes') {
+            moduleName = 'quotes'
+          }
 
           if(newPosition === 'left' | newPosition === 'right' | newPosition === 'center') {
             
@@ -142,7 +187,47 @@ export class MainSurface extends React.Component {
             toDisplay
           })
           console.log(this.state.toDisplay);
-        }.bind(this)
+        }.bind(this),
+
+        '(goodnight) (good night)': function() {
+          var num;
+          num = Math.floor((Math.random() * replies[2].text.length));
+          toDisplay = replies[2].text[num];
+          this.setState({
+            toDisplay
+          })
+          console.log(this.state.toDisplay);
+        }.bind(this),
+
+        'who are you': function() {
+          var num;
+          num = Math.floor((Math.random() * replies[3].text.length));
+          toDisplay = replies[3].text[num];
+          this.setState({
+            toDisplay
+          })
+          console.log(this.state.toDisplay);
+        }.bind(this),
+
+        'good morning': function() {
+          var num;
+          num = Math.floor((Math.random() * replies[4].text.length));
+          toDisplay = replies[4].text[num];
+          this.setState({
+            toDisplay
+          })
+          console.log(this.state.toDisplay);
+        }.bind(this),
+
+        'good afternoon': function() {
+          var num;
+          num = Math.floor((Math.random() * replies[5].text.length));
+          toDisplay = replies[5].text[num];
+          this.setState({
+            toDisplay
+          })
+          console.log(this.state.toDisplay);
+        }.bind(this),
       }; 
       
       annyang.addCommands(commands);
@@ -167,9 +252,9 @@ export class MainSurface extends React.Component {
         <div className="surface fullscreen below" />
         <SurfaceArea surfaceName="surface top bar" modules={top_bar} col_left={3} col_center={6} col_right={3}/>
         <SurfaceArea surfaceName="surface hero section" modules={hero_section} col_left={2} col_center={8} col_right={2}/>
-        <SurfaceArea surfaceName="surface middle center" modules={middle_center} reply={toDisplay} col_left={3} col_center={6} col_right={3}/>
-        <SurfaceArea surfaceName="surface lower section" modules={lower_section} col_left={2} col_center={8} col_right={2}/>
-        <SurfaceArea surfaceName="surface bottom bar" modules={bottom_bar} col_left={2} col_center={8} col_right={2}/>
+        <SurfaceArea surfaceName="surface middle center" modules={middle_center} reply={toDisplay} col_left={2} col_center={8} col_right={2}/>
+        <SurfaceArea surfaceName="surface lower section" modules={lower_section} col_left={1} col_center={10} col_right={1}/>
+        <SurfaceArea surfaceName="surface bottom bar" modules={bottom_bar} col_left={10} col_center={0} col_right={2}/>
         <div className="surface fullscreen above"/>
       </div>
     );
