@@ -76,7 +76,7 @@ export class Modules extends React.Component {
         function isInstalled(name) {
             var install;
             if(userModulesName.indexOf(name) !== -1) {
-                install = "UNINSTALL";
+                install = "INSTALLED";
             } else {
                 install = "INSTALL";
             }
@@ -94,7 +94,8 @@ export class Modules extends React.Component {
                                 (defaultModules.length === 0) ? <center><p>EMPTY AYNA MODULES</p></center> :
                                 defaultModules.map((defaultModule, index) => (      
                                     <ModuleComponent 
-                                        name={ defaultModule.name } 
+                                        name={ defaultModule.name }
+                                        id={defaultModule._id} 
                                         category={ defaultModule.category }
                                         surface_area={ defaultModule.surface_area }
                                         position={ defaultModule.position }
@@ -119,9 +120,10 @@ export class Modules extends React.Component {
                                     <ModuleComponent 
                                         module={ userModule } 
                                         name={ userModule.name }
+                                        id={ userModule._id }
                                         category={ userModule.category } 
                                         key={ index } 
-                                        isInstalled={isInstalled(userModule.name)} />                                
+                                        isInstalled="UNINSTALL" />                                
                                 ))
                             }
                         </div>

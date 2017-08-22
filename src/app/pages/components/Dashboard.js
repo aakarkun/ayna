@@ -11,7 +11,8 @@ export class Dashboard extends React.Component {
         this.state = {
             dCount: 0,
             mCount: 0,
-            uCount: 0
+            uCount: 0,
+            error: ''
         }
     }
 
@@ -39,19 +40,39 @@ export class Dashboard extends React.Component {
                 mCount: this.counter(count)
             })
         }));
-        getUsersData().then((users) => {
-            var count = users.length;
-            this.setState({
-                uCount: this.counter(count)
-            })
+        getUsersData().then((users, error) => {
+            if(users) {
+                var count = users.length;
+                this.setState({
+                    uCount: this.counter(count)
+                })
+            } else {
+                this.setState({
+                    error
+                })
+            }
+        });
+        getUsersData().then((users, error) => {
+            if(users) {
+                return users;
+            } else {
+                return error;
+            }
         })   
     }
+
 
     componentDidMount() {
         this.count();
     }
 
     render() {
+        if(this.state.error !== '') {
+            return <div>
+                <center>Error: {this.state.error}</center>
+            </div>
+        }
+        console.log(this.state.error);
         return(
             <div>
                 <h5>DASHBOARD</h5>

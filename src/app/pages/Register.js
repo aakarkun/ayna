@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 import { registerUser } from '../utils/users-api';
+import { browserHistory } from 'react-router';
 
 export class Register extends React.Component {
     
@@ -18,6 +19,7 @@ export class Register extends React.Component {
         registerUser(username, email, password).then((registerInfo, error) => {
             if(registerInfo) {
                 console.log(registerInfo.username + ", has been Registered Successfully!");
+                browserHistory.push("/dashboard");
             } else {
                 console.log("Error: " + error.error);
             }

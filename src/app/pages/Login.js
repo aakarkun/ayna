@@ -23,6 +23,7 @@ export class Login extends React.Component {
                 })
                 console.log("Welcome " + userInfo.user.username + "! to Dashboard");
                 console.log(userInfo.user.username);
+                window.location.reload();
                 browserHistory.push("/dashboard");
             } else if(userInfo.success === false) {
                 console.log("Error: " + userInfo.msg);
@@ -33,7 +34,6 @@ export class Login extends React.Component {
     }
 
     render() {
-        console.log(this.state.token);
         return(
             <div className="row">
                 <div className="col-lg-8 col-lg-offset-2">

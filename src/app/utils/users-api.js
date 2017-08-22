@@ -2,48 +2,71 @@ import axios from 'axios';
 
 const BASE_URL = 'http://localhost:8000';
 
-export { getUsersData, 
-         loginUser, 
-         registerUser, 
-         getUserId, 
-         getUserModules,
-         postUserModules 
-        };
+// Altering Base URL while creating axios Instance
+const axiosInstance = axios.create({
+    baseURL: BASE_URL
+});
 
+// Alter defaults after instance has been created 
+const AUTH_TOKEN = getJwtToken();
+axiosInstance.defaults.headers.common['Authorization'] = AUTH_TOKEN;
+
+// To get all the Users and user related data
 function getUsersData() {
-    const url = `${BASE_URL}/users`;
-    return axios.get(url).then(response => response.data);
-}
+    const url = '/users';
+    return axiosInstance.get(url)
+        .then((response) =>  {
+            // console.log("data: " + response.data);
+            // console.log("status: " + response.status);
+            // console.log("statusText: " + response.statusText);
+            // console.log("headers: ");
+            // console.log(response.headers);
+            // console.log("config: ");
+            // console.log(response.config);
+            return response.data;
+        }).catch((error) => {
+            if(error.response) {
+                console.log(error.response.data);
+                console.log(error.response.status);
+                console.log(error.response.headers);                
+                return error.response;
+            } else if(error.request) {
+                console.log(error.request);
+                return error.request;
+            } else {
+                console.log("Error: " + error.message);
+                return error.message;
+            }
+        });
+    }
 
 function loginUser(username, password) {
-    const url = `${BASE_URL}/users/signin`;
-    return axios.post(url, {
+    const url = "/users/signin";
+    return axiosInstance.post(url, {
         'username': username,
         'password': password        
-    }).then((response, err) => {
-        if(response) {
-            sessionStorage.setItem('ayna-jwt', response.data.token);
-            sessionStorage.setItem('user-id', response.data.user.id);
-            return response.data;
-        } else {
-            return err;
-        }
+    }).then((response)  => {
+        sessionStorage.setItem('ayna-jwt', response.data.token);
+        sessionStorage.setItem('user-id', response.data.user.id);
+        return response.data;
+    }).catch((error) => {
+        console.log("Error :" + error);
+        return error;
     });
 }
 
 function registerUser(username, email, password) {
-    const url = `${BASE_URL}/users/signup`;
-    return axios.post(url, {
+    const url = "/users/signup";
+    return axiosInstance.post(url, {
         'username': username,
         'email': email,
         'password': password
-    }).then((response, error) => {
-        if(response) {
-            return response.data;
-        } else {
-            return error.data;
-        }
-    })
+    }).then((response)  => {
+        return response.data;
+    }).catch((error) => {
+        console.log("Error :" + error);
+        return error;
+    });
 }
 
 function getUserId() {
@@ -54,33 +77,46 @@ function getJwtToken() {
     return sessionStorage['ayna-jwt'];
 }
 
+function getModuleId() {
+    
+}
+
 const userId = getUserId();
-const userModulesUrl = `${BASE_URL}/users/${userId}/modules`;
+const userModulesUrl = `/users/${userId}/modules`;
 
 function getUserModules() {
-    return axios.get(userModulesUrl).then(response => response.data);
+    return axiosInstance.get(userModulesUrl)
+        .then((response) => {
+            return response.data;
+        }).catch((error) => {
+            return error;
+        })    
 }
 
 function postUserModules(name, category, surface_area, position, header, defaul) {
-    return axios.post(userModulesUrl, 
-        {
-            data: {
-                "name": name,
-                "category": category,
-                "surface_area": surface_area,
-                "position": position,
-                "header": header,
-                "default": defaul
-            },
-            headers: {
-                        'Authorization': getJwtToken(),
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    },
-            json: true
-        }).then((response) => {
-            console.log(response.data);
-            console.log(response.status);   
+    return axiosInstance.post(userModulesUrl, {
+        "name": name,
+        "category": category,
+        "surface_area": surface_area,
+        "position": position,
+        "header": header,
+        "default": defaul
+    }).then((response) => {
+        return response.data;
+    }).catch((error) => {
+        return error;
+    })
+}
+
+const moduleId = getModuleId();
+function deleteUserModule(moduleId) {
+    const moduleUrl = `/modules/${moduleId}`;    
+    return axiosInstance.delete(moduleUrl)
+        .then((response) => {
+            return response.data;
         }).catch((error) => {
-            console.log(error);
+            return error;
         })
-    }
+}
+
+export { getUsersData, loginUser, registerUser, getUserId, getUserModules, postUserModules, deleteUserModule };
