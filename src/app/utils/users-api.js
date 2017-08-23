@@ -80,12 +80,19 @@ function getUsername() {
     const url = `/users/${userId}`
     return axiosInstance.get(url)
         .then((response) => {
+<<<<<<< HEAD
             return response.data.username;
+=======
+            return response.data;
+>>>>>>> 8c9b9fced4ba2c0e262cffdcbd25356aa9e131e7
         }).catch((error) => {
             return error;
         })
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 8c9b9fced4ba2c0e262cffdcbd25356aa9e131e7
 function getUserModules() {
     return axiosInstance.get(userModulesUrl)
         .then((response) => {

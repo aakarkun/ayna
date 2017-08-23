@@ -12,7 +12,11 @@ export class Root extends React.Component {
                     </div>
                 </div>
                 <div className="row">
+<<<<<<< HEAD
                     <div className="col-xs-12 col-md-12 col-lg-10 col-lg-offset-1">
+=======
+                    <div className="col-xs-10 col-md-10 col-lg-10 col-lg-offset-1">
+>>>>>>> 8c9b9fced4ba2c0e262cffdcbd25356aa9e131e7
                         {this.props.children}
                     </div>
                 </div>
