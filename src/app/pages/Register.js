@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router';
 import { registerUser } from '../utils/users-api';
 import { browserHistory } from 'react-router';
+import { Flash } from './components/mini-components/Flash';
 
 export class Register extends React.Component {
     
@@ -17,11 +18,20 @@ export class Register extends React.Component {
         var email = this.refs.email.value;
         var password = this.refs.password.value;
         registerUser(username, email, password)
+<<<<<<< HEAD
+            .then((response) => {
+                console.log(response.username + ", has been Registered Successfully!");
+                browserHistory.push("/dashboard");
+            }).catch((error) => {
+                return error;
+                console.log(error);
+=======
             .then((registerInfo) => {
                 console.log(registerInfo.username + ", has been Registered Successfully!");
                 browserHistory.push("/dashboard");
             }).catch((error) => {
                 return error;
+>>>>>>> 8c9b9fced4ba2c0e262cffdcbd25356aa9e131e7
             })
     }
 
@@ -29,7 +39,8 @@ export class Register extends React.Component {
         return(
             <div className="row">
                 <div className="col-lg-8 col-lg-offset-2">
-                     <center><h2>Register</h2></center>
+                    <center><h2>Register</h2></center>
+                    {/* <Flash type="danger" content="User not Registered!"/> */}
                     <div className="row">
                         <div className="col-lg-8 col-lg-offset-2">
                             <form>

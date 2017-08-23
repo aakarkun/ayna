@@ -38,14 +38,18 @@ export class ModuleComponent extends React.Component {
 
     render() {
         return(
-            <div className="col-lg-4 col-md-4 col-sm-4">
+            <div className="col-lg-6 col-md-6 col-sm-6 margin-bottom">
                 <div className="media">
                     <div className="badge-circle-bg pull-left"><span style={{paddingLeft: "12px"}}>{this.props.name.substring(0,2)}</span></div>
                     <div className="media-body" style={{paddingLeft: "12px", }}>
                         <strong style={{fontSize: "16px"}}>{this.props.name}</strong>
                         <p>
                             <strong>Category:</strong> {this.props.category}<br />
-                            <button className="badge" onClick={this.handleIsInstalled}>{this.props.isInstalled}</button>
+                            {
+                                (this.props.btn_color === "success") ? 
+                                    <span className={'badge badge-' + this.props.btn_color}>INSTALLED</span> :  
+                                	<button className={'badge badge-' + this.props.btn_color} onClick={this.handleIsInstalled}>{this.props.isInstalled}</button>
+                            }
                         </p>
                     </div>
                 </div>

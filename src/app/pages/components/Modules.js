@@ -96,7 +96,7 @@ export class Modules extends React.Component {
         return(
             <div>
                 <h5>MODULES</h5>
-                <div className="panel panel-default margin-large-top">
+                <div className="panel panel-default margin-large-top padding">
                     <div className="panel-heading">AYNA MODULES</div>
                     <div className="panel-body">
                         <div className="row">
@@ -113,6 +113,7 @@ export class Modules extends React.Component {
                                         defaul="false"
                                         key={index} 
                                         isInstalled={isInstalled(defaultModule.name)}
+                                        btn_color={(isInstalled(defaultModule.name) === "INSTALL") ? "primary" : "success"}
                                     />    
                                 ))
                             }                            
@@ -120,7 +121,7 @@ export class Modules extends React.Component {
                     </div>
                 </div>
 
-                <div className="panel panel-default margin-large-top">
+                <div className="panel panel-default margin-large-top padding">
                     <div className="panel-heading">USER MODULES</div>
                     <div className="panel-body">
                         <div className="row">
@@ -134,7 +135,9 @@ export class Modules extends React.Component {
                                         id={ userModule._id }
                                         category={ userModule.category } 
                                         key={ index } 
-                                        isInstalled="UNINSTALL" />                                
+                                        isInstalled="UNINSTALL"
+                                        btn_color= "danger"
+                                    />                                
                                 ))
                             }
                         </div>

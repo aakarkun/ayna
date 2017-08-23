@@ -5,7 +5,7 @@ export class DashboardInfo extends React.Component {
     render() {
         var { count, header, subheader } = this.props;
         return(
-            <div className="col-lg-4 col-md-4 col-sm-4">
+            <div className="col-lg-4 col-md-6 col-sm-6">
                 <div className="well">
                     {
                         (count === 0) ? <Spinner /> : 

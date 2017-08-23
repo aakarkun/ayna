@@ -33,7 +33,6 @@ class App extends React.Component {
         </Route>
         <Route path="login" component={Login} />
         <Route path="register" component={Register} />
-        
       </Router>
     );
   }

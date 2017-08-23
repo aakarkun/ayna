@@ -22,10 +22,14 @@ export class Login extends React.Component {
                     this.setState({
                         userInfo
                     })
+                    browserHistory.push("/dashboard");
                     window.location.reload();
                     console.log("Welcome " + userInfo.user.username + "! to Dashboard");
                     console.log(userInfo.user.username);
-                    browserHistory.push("/dashboard");
+                    // window.location.reload();
+                    // console.log("Welcome " + userInfo.user.username + "! to Dashboard");
+                    // console.log(userInfo.user.username);
+                    // browserHistory.push("/dashboard");
                 } else if(userInfo.success === false) {
                     console.log("Error: " + userInfo.msg);
                 }

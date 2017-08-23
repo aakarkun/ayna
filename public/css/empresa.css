@@ -69,6 +69,77 @@
     margin-left: 0px;
 }
 
+/*PADDING-STYLES
+*************************************/
+
+/*Normal-padding*/
+.padding {
+  padding: 15px;
+}
+.padding-top {
+  padding-top: 15px;
+}
+.padding-right {
+  padding-right: 15px;
+}
+.padding-bottom {
+  padding-bottom: 15px;
+}
+.padding-left {
+  padding-left: 15px;
+}
+
+/*Larger padding*/
+.padding-large {
+  padding: 50px;
+}
+.padding-large-top {
+  padding-top: 50px;
+}
+.padding-large-right {
+  padding-right: 50px;
+}
+.padding-large-bottom {
+  padding-bottom: 50px;
+}
+.padding-large-left {
+  padding-left: 50px;
+}
+
+/*Smaller padding*/
+.padding-large {
+  padding: 5px;
+}
+.padding-small-top {
+  padding-top: 5px;
+}
+.padding-small-right {
+  padding-right: 5px;
+}
+.padding-small-bottom {
+  padding-bottom: 5px;
+}
+.padding-small-left {
+  padding-left: 5px;
+}
+
+/*Reset padding*/
+.padding-remove {
+  padding: 0px;
+}
+.padding-top-remove {
+  padding-top: 0px;
+}
+.padding-right-remove {
+  padding-right: 0px;
+}
+.padding-bottom-remove {
+  padding-bottom: 0px;
+}
+.padding-left-remove {
+  padding-left: 0px;
+}
+
 /* Plceholder twiks */
 input::placeholder {
     color: #ccc;
@@ -261,4 +332,49 @@ input::placeholder {
       transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
       -webkit-transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
     }
+<<<<<<< HEAD
   }
+
+  /* Badge-ReDesigned */
+.badge-primary {
+  border: 2px solid rgb(0, 122, 255);
+  background: rgba(0, 122, 255, 0);
+}
+
+.badge-primary:hover,
+.badge-primary:focus {
+  background: rgba(0, 122, 255, 0.5);  
+  border: 2px solid rgba(0, 122, 255, 1);
+  box-shadow: 0px 0px 10px 2px rgba(0, 122, 255, 1);
+  outline: none;
+}  
+
+.badge-success {
+  /* border: 2px solid rgba(73, 217, 97, 0); */
+  color: rgb(73, 217, 97);
+  background: rgba(76, 217, 100, 0);
+}
+
+/* .badge-success:hover,
+.badge-success:focus {
+  background: rgba(76, 217, 100, 0.5);  
+  border: 2px solid rgba(73, 217, 97, 1);
+  box-shadow: 0px 0px 10px 2px rgba(76, 217, 100, 1);
+  outline: none;
+}   */
+
+.badge-danger {
+  border: 2px solid rgb(255, 59, 48);
+  background: rgba(255, 59, 48, 0);
+}
+
+.badge-danger:hover,
+.badge-danger:focus {
+  background: rgba(255, 59, 48, 0.5);  
+  border: 2px solid rgba(255, 59, 48, 1);
+  box-shadow: 0px 0px 10px 2px rgba(255, 59, 48, 1);
+  outline: none;
+}
+=======
+  }
+>>>>>>> 8c9b9fced4ba2c0e262cffdcbd25356aa9e131e7
