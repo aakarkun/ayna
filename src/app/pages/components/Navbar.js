@@ -8,11 +8,7 @@ export class Navbar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-<<<<<<< HEAD
       username: ''
-=======
-      username: 'Ayna'
->>>>>>> 8c9b9fced4ba2c0e262cffdcbd25356aa9e131e7
     }
   }
 
