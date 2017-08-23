@@ -1,16 +1,17 @@
 import axios from 'axios';
 
+// const BASE_URL = 'http://9b352016.ngrok.io';
 const BASE_URL = 'http://localhost:8000';
 
+const userId = getUserId();
+const userModulesUrl = `/users/${userId}/modules`;
 // Altering Base URL while creating axios Instance
 const axiosInstance = axios.create({
     baseURL: BASE_URL
 });
-
 // Alter defaults after instance has been created 
 const AUTH_TOKEN = getJwtToken();
 axiosInstance.defaults.headers.common['Authorization'] = AUTH_TOKEN;
-
 // To get all the Users and user related data
 function getUsersData() {
     const url = '/users';
@@ -54,7 +55,6 @@ function loginUser(username, password) {
         return error;
     });
 }
-
 function registerUser(username, email, password) {
     const url = "/users/signup";
     return axiosInstance.post(url, {
@@ -70,20 +70,21 @@ function registerUser(username, email, password) {
 }
 
 function getUserId() {
-    return sessionStorage['user-id'];
+return sessionStorage['user-id'];
 }
-
 function getJwtToken() {
     return sessionStorage['ayna-jwt'];
 }
 
-function getModuleId() {
-    
+function getUsername() {
+    const url = `/users/${userId}`
+    return axiosInstance.get(url)
+        .then((response) => {
+            return response.data;
+        }).catch((error) => {
+            return error;
+        })
 }
-
-const userId = getUserId();
-const userModulesUrl = `/users/${userId}/modules`;
-
 function getUserModules() {
     return axiosInstance.get(userModulesUrl)
         .then((response) => {
@@ -92,7 +93,6 @@ function getUserModules() {
             return error;
         })    
 }
-
 function postUserModules(name, category, surface_area, position, header, defaul) {
     return axiosInstance.post(userModulesUrl, {
         "name": name,
@@ -107,8 +107,6 @@ function postUserModules(name, category, surface_area, position, header, defaul)
         return error;
     })
 }
-
-const moduleId = getModuleId();
 function deleteUserModule(moduleId) {
     const moduleUrl = `/modules/${moduleId}`;    
     return axiosInstance.delete(moduleUrl)
@@ -119,4 +117,4 @@ function deleteUserModule(moduleId) {
         })
 }
 
-export { getUsersData, loginUser, registerUser, getUserId, getUserModules, postUserModules, deleteUserModule };
+export { getUsersData, loginUser, registerUser, getUserId, getUsername, getUserModules, postUserModules, deleteUserModule };

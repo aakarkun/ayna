@@ -152,7 +152,7 @@ $indicator-cover-diameter: 12px;*/
 }
 
 .news-img {
-  border-radius: 2px;
+  border-radius: 5px;
   height: 100px;
   width: 100px;
 }

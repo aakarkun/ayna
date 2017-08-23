@@ -58,8 +58,7 @@ export class MainSurface extends React.Component {
           text: [
             "Good morning, I hope you slept well.",
             "Good morning to you, too.",
-            "Good morning, I hope you're well.",
-            ""
+            "Good morning, I hope you're well."
           ]
         },
         {
@@ -242,7 +241,6 @@ export class MainSurface extends React.Component {
     this.defaultModules();
   }
 
-
   
   render() {
     const { top_bar, hero_section, middle_center, lower_section, bottom_bar } = this.state.surfaces;
@@ -254,7 +252,7 @@ export class MainSurface extends React.Component {
         <SurfaceArea surfaceName="surface hero section" modules={hero_section} col_left={2} col_center={8} col_right={2}/>
         <SurfaceArea surfaceName="surface middle center" modules={middle_center} reply={toDisplay} col_left={2} col_center={8} col_right={2}/>
         <SurfaceArea surfaceName="surface lower section" modules={lower_section} col_left={1} col_center={10} col_right={1}/>
-        <SurfaceArea surfaceName="surface bottom bar" modules={bottom_bar} col_left={10} col_center={0} col_right={2}/>
+        <SurfaceArea surfaceName="surface bottom bar" modules={bottom_bar} col_left={1} col_center={10} col_right={1}/>
         <div className="surface fullscreen above"/>
       </div>
     );

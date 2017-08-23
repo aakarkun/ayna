@@ -21,8 +21,10 @@ export class Dashboard extends React.Component {
             c = '' + c;
         } else if(c < 10) {
             c = '0' + c;
-        } else {
+        } else if(c > 10){
             c = '' + c; 
+        } else {
+            c = 0;
         }
         return c;
     }
@@ -67,12 +69,6 @@ export class Dashboard extends React.Component {
     }
 
     render() {
-        if(this.state.error !== '') {
-            return <div>
-                <center>Error: {this.state.error}</center>
-            </div>
-        }
-        console.log(this.state.error);
         return(
             <div>
                 <h5>DASHBOARD</h5>

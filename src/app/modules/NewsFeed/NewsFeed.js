@@ -1,5 +1,8 @@
 import React from 'react';
 import $ from 'jquery';
+import { Spinner } from '../../pages/components/mini-components/Spinner';
+
+
 
 export class NewsFeed extends React.Component{
 	constructor(){
@@ -9,7 +12,7 @@ export class NewsFeed extends React.Component{
 			news : [],
 			imageUrl: [],
 			author: [],
-			heading: '',
+			heading: 'RECENT NEWS',
 			channelNumber: 0,
 			channel: [
 				{
@@ -65,40 +68,38 @@ export class NewsFeed extends React.Component{
 		})
 		// console.log(this.state.news);
 	}
-
+	
 	timer(){
 		this.setState({
 			newsLength : Math.floor((Math.random() * this.state.news.length))
 		})
 	}
-
+	
 	componentDidMount(){
 		this.now = setInterval(this.timer.bind(this),7000);
 	}
-
-	render(){
-		if(this.state.news.length >= 1) {
-			this.state.heading = 'RECENT NEWS';
-		} else {
-			this.state.heading = 'Loading.. .';
-		}
-
+	
+	render(){		
 		return(
-			<div className="text-left">
-				<div className="col-sm-3 text-right">
-					{/* {console.log(this.state.imageUrl[this.state.newsLength])} */}
-					{(this.state.imageUrl[this.state.newsLength] !== null)? 
-						<img className="news-img" src={this.state.imageUrl[this.state.newsLength]} /> : 
-						<img className="news-img" src="https://image.ibb.co/i98W2Q/no_image.jpg" alt="no_image" border="0" />
+			<div>
+				{(this.state.news.length === 0 && this.state.imageUrl.length === 0) ? <Spinner /> :	
+				<div className="media">
+					<div className="media-left">
+						{(this.state.imageUrl[this.state.newsLength] === null)? 
+							<img className="news-img media-object" src="https://image.ibb.co/i98W2Q/no_image.jpg" alt="no image" border="0" /> :
+							<img className="news-img media-object" src={this.state.imageUrl[this.state.newsLength]} /> 
 						}
-					
+					</div>
+					<div className="media-body text-left">
+						<div className="margin-left">
+							<h6 className="media-heading">{this.state.heading}</h6>
+							<h6> {this.state.news[this.state.newsLength]} </h6>
+							<p className="news-via"> {
+								(this.state.author[this.state.newsLength] === null) ? "Unknown " : this.state.author[this.state.newsLength]} | {this.state.channel[this.state.channelNumber].powered_by} </p>
+						</div>
+					</div>
 				</div>
-				<div className="col-sm-9">
-					<h6>{this.state.heading}</h6>
-					<h6> {this.state.news[this.state.newsLength]} </h6>
-					<p className="news-via"> {this.state.author[this.state.newsLength]} | via {this.state.channel[this.state.channelNumber].powered_by} </p>
-					{/* <p className="news-via"> via {this.state.channel[this.state.channelNumber].powered_by} </p> */}
-				</div>
+				}
 			</div>
 		)
 	}

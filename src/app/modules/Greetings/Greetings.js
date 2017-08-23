@@ -36,21 +36,13 @@ export class Greetings extends React.Component{
 			greet: this.greetChanger()
 		});
 	}
-
-	// flush() {
-	// 	setTimeout(() => {
-	// 		this.setState({
-	// 			reply: ''
-	// 		})
-	// 	}, 500);
-	// }
 	
 	render(){
 		const { greet } = this.state;
 
 		if(this.props.reply == 'hello') {
 			console.log(this.state.greet);
-			return <h2> <center> {this.state.greet} </center> </h2> 
+			return <h2> <center> {(this.state.greet === null)? <p>Loading.. .</p> : this.state.greet} </center> </h2> 
 		} else {
 			return(
 				<div> 

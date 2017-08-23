@@ -16,14 +16,13 @@ export class Register extends React.Component {
         var username = this.refs.username.value;
         var email = this.refs.email.value;
         var password = this.refs.password.value;
-        registerUser(username, email, password).then((registerInfo, error) => {
-            if(registerInfo) {
+        registerUser(username, email, password)
+            .then((registerInfo) => {
                 console.log(registerInfo.username + ", has been Registered Successfully!");
                 browserHistory.push("/dashboard");
-            } else {
-                console.log("Error: " + error.error);
-            }
-        })
+            }).catch((error) => {
+                return error;
+            })
     }
 
     render() {

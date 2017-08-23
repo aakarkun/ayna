@@ -8,14 +8,11 @@ export class Root extends React.Component {
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-xs-12">
-                        <Navbar brandname="Dashboard"/>
+                        <Navbar brandname="ayna" menu_i="Dashboard" menu_ii="Modules"/>
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col-xs-2">
-                        <Sidebar />
-                    </div>
-                    <div className="col-xs-10">
+                    <div className="col-xs-10 col-md-10 col-lg-10 col-lg-offset-1">
                         {this.props.children}
                     </div>
                 </div>
