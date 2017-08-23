@@ -1,7 +1,6 @@
 import React from 'react';
 
 export class Flash extends React.Component {
-<<<<<<< HEAD
     constructor(props) {
         super(props);
         
@@ -14,12 +13,6 @@ export class Flash extends React.Component {
                     <button type="button" className="close" data-dismiss="alert">x</button>
                     <strong>{ name }: </strong>{ content }
                 </div>
-=======
-    render() {
-        return(
-            <div>
-                <h2>Flash</h2>
->>>>>>> 8c9b9fced4ba2c0e262cffdcbd25356aa9e131e7
             </div>
         ); 
     }

@@ -5,10 +5,14 @@ export class Speech extends React.Component{
         super(props);
     }
 	render(){
+        var utterance = new SpeechSynthesisUtterance();
+        var voices = speechSynthesis.getVoices();
+        utterance.voice = voices[4];
+
         return(
             <div>
                 {(this.props.reply !== "hello") ? 
-                    speechSynthesis.speak(new SpeechSynthesisUtterance(this.props.reply)) : console.log("nothing to speak")
+                    utterance.speak(this.props.reply) : console.log("nothing to speak")
                 }
             </div>
         );
