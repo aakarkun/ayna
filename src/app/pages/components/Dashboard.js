@@ -3,6 +3,7 @@ import { DashboardInfo } from './mini-components/DashboardInfo';
 import { getDefaultModules } from '../../utils/modules-api';
 import { getUserModules } from '../../utils/users-api';
 import { getUsersData } from '../../utils/users-api';
+import { Flash } from './mini-components/Flash';
 
 export class Dashboard extends React.Component {
     constructor() {
@@ -21,8 +22,10 @@ export class Dashboard extends React.Component {
             c = '' + c;
         } else if(c < 10) {
             c = '0' + c;
-        } else {
+        } else if(c > 10){
             c = '' + c; 
+        } else {
+            c = 0;
         }
         return c;
     }
@@ -67,14 +70,9 @@ export class Dashboard extends React.Component {
     }
 
     render() {
-        if(this.state.error !== '') {
-            return <div>
-                <center>Error: {this.state.error}</center>
-            </div>
-        }
-        console.log(this.state.error);
         return(
             <div>
+                <Flash type="success" name="Success" content="Registration Successfully done!" />
                 <h5>DASHBOARD</h5>
                 <div className="row margin-large-top margin-bottom">
                     <DashboardInfo header="AYNA MODULES" subheader="Available" count={this.state.dCount} />

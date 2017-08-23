@@ -1,10 +1,3 @@
-export function login() {
-       
-}
-
-export function loggedOut() {
-    sessionStorage.clear();
-}
 
 export function isLoggedIn() {
     if(!sessionStorage['ayna-jwt']) {
@@ -12,6 +5,10 @@ export function isLoggedIn() {
     } else {
         return true;
     }
+}
+
+export function loggedOut() {
+    sessionStorage.clear();
 }
 
 export function requireAuth(nextState, replace) {

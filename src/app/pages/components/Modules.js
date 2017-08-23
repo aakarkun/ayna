@@ -2,6 +2,8 @@ import React from 'react';
 import { ModuleComponent} from './mini-components/ModuleComponent';
 import { getDefaultModules } from '../../utils/modules-api';
 import { getUserId, getUserModules } from '../../utils/users-api';
+import { Spinner } from './mini-components/Spinner';
+
 
 export class Modules extends React.Component {
     constructor() {
@@ -15,19 +17,27 @@ export class Modules extends React.Component {
     }
 
     defaultModules() {
-        getDefaultModules().then((defaultModules) => {
+        getDefaultModules()
+        .then((defaultModules) => {
             this.setState({
                 defaultModules
             })
+        }).catch((error) => {
+            console.log(error);
+            return error;
         })
     }
 
     userModules() {
-        getUserModules().then((userModules) => {
-            this.setState({
-                userModules
+        getUserModules()
+            .then((userModules) => {
+                this.setState({
+                    userModules
+                })
+            }).catch((error) => {
+                console.log(error);
+                return error;
             })
-        })
     }
 
     componentDidMount() {
@@ -86,12 +96,12 @@ export class Modules extends React.Component {
         return(
             <div>
                 <h5>MODULES</h5>
-                <div className="panel panel-default margin-large-top">
+                <div className="panel panel-default margin-large-top padding">
                     <div className="panel-heading">AYNA MODULES</div>
                     <div className="panel-body">
                         <div className="row">
                             {
-                                (defaultModules.length === 0) ? <center><p>EMPTY AYNA MODULES</p></center> :
+                                (defaultModules.length === 0) ? <center><Spinner /></center> :
                                 defaultModules.map((defaultModule, index) => (      
                                     <ModuleComponent 
                                         name={ defaultModule.name }
@@ -103,6 +113,7 @@ export class Modules extends React.Component {
                                         defaul="false"
                                         key={index} 
                                         isInstalled={isInstalled(defaultModule.name)}
+                                        btn_color={(isInstalled(defaultModule.name) === "INSTALL") ? "primary" : "success"}
                                     />    
                                 ))
                             }                            
@@ -110,11 +121,12 @@ export class Modules extends React.Component {
                     </div>
                 </div>
 
-                <div className="panel panel-default margin-large-top">
+                <div className="panel panel-default margin-large-top padding">
                     <div className="panel-heading">USER MODULES</div>
                     <div className="panel-body">
                         <div className="row">
                             {
+                                (userModules.length === '') ? <Spinner /> :
                                 (userModules.length === 0) ? <center><p>EMPTY USER MODULES</p></center> : 
                                 userModules.map((userModule, index) => (
                                     <ModuleComponent 
@@ -123,7 +135,9 @@ export class Modules extends React.Component {
                                         id={ userModule._id }
                                         category={ userModule.category } 
                                         key={ index } 
-                                        isInstalled="UNINSTALL" />                                
+                                        isInstalled="UNINSTALL"
+                                        btn_color= "danger"
+                                    />                                
                                 ))
                             }
                         </div>

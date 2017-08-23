@@ -58,8 +58,7 @@ export class MainSurface extends React.Component {
           text: [
             "Good morning, I hope you slept well.",
             "Good morning to you, too.",
-            "Good morning, I hope you're well.",
-            ""
+            "Good morning, I hope you're well."
           ]
         },
         {

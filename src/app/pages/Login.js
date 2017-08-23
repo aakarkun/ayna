@@ -16,21 +16,22 @@ export class Login extends React.Component {
         event.preventDefault();
         var username = this.refs.username.value;
         var password = this.refs.password.value;
-        loginUser(username, password).then((userInfo, err) => {
-            if(userInfo.success === true) {
-                this.setState({
-                    userInfo
-                })
-                console.log("Welcome " + userInfo.user.username + "! to Dashboard");
-                console.log(userInfo.user.username);
-                window.location.reload();
-                browserHistory.push("/dashboard");
-            } else if(userInfo.success === false) {
-                console.log("Error: " + userInfo.msg);
-            } else {
-                console.log(userInfo);
-            }
-        });
+        loginUser(username, password)
+            .then((userInfo) => {
+                if(userInfo.success === true) {
+                    this.setState({
+                        userInfo
+                    })
+                    browserHistory.push("/dashboard");
+                    window.location.reload();
+                    console.log("Welcome " + userInfo.user.username + "! to Dashboard");
+                    console.log(userInfo.user.username);
+                } else if(userInfo.success === false) {
+                    console.log("Error: " + userInfo.msg);
+                }
+        }).catch((error) => {
+            return error;
+        })
     }
 
     render() {
