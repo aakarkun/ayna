@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-// const BASE_URL = 'http://9b352016.ngrok.io';
+// const BASE_URL = 'http://068a4a62.ngrok.io';
 const BASE_URL = 'http://localhost:8000';
 
 const userId = getUserId();
