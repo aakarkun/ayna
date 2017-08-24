@@ -62,7 +62,7 @@ export class Profile extends React.Component {
                                     {/* <td><EditableLabel text="username" /></td> */}
                                 </tr>
                                 <tr>
-                                    <td>Email: {email}</td>
+                                    <td>Email</td>
                                     <td>{email}</td>
                                     {/* <td><EditableLabel text="aakar.kun@hotmail.com" /></td> */}
                                 </tr>
