@@ -26,7 +26,7 @@ export class Greetings extends React.Component{
 		}else if(hr >=12 && hr < 17){
 			gr="Have a great afternoon.";
 		} else { 
-			gr = "Evening. Rest well Sir.";
+			gr = "Evening, Sir.";
 		}
 		return gr;
 	}

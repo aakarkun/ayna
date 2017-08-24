@@ -2,12 +2,15 @@ import React from 'react';
 import { Link } from 'react-router';
 import { loginUser, isLoggedIn } from '../utils/users-api';
 import { browserHistory } from 'react-router';
+import { Flash } from './components/mini-components/Flash';
+
 
 export class Login extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            userInfo: ''
+            userInfo: '',
+            error: ''
         }
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -20,6 +23,7 @@ export class Login extends React.Component {
         loginUser(username, password)
             .then((userInfo) => {
                 if(userInfo.success === true) {
+                    // console.log(userInfo.success);
                     this.setState({
                         userInfo
                     })
@@ -32,10 +36,20 @@ export class Login extends React.Component {
                     // console.log(userInfo.user.username);
                     // browserHistory.push("/dashboard");
                 } else if(userInfo.success === false) {
-                    console.log("Error: " + userInfo.msg);
+                    console.log(userInfo);
+                } 
+                else {
+                    console.log(userInfo);
+                    this.setState({
+                        error: userInfo
+                    })
+
                 }
         }).catch((error) => {
-            return error;
+            console.log("Username or Password invalid!");
+            this.setState({
+                error: "Username or Password invalid."
+            })
         })
     }
 
@@ -44,6 +58,7 @@ export class Login extends React.Component {
             <div className="row">
                 <div className="col-lg-8 col-lg-offset-2">
                      <center><h2>Login</h2></center>
+                    {(this.state.error == '')? '' : <Flash type="danger" name="Error" content={this.state.error}/>}
                     <div className="row">
                         <div className="col-lg-8 col-lg-offset-2">
                             <form id="login-form">

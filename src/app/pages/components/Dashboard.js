@@ -72,6 +72,7 @@ export class Dashboard extends React.Component {
     render() {
         return(
             <div>
+                {/* <Flash type="success" name="Success" content="Logged in Successfully!" /> */}
                 <h5>DASHBOARD</h5>
                 <div className="row margin-large-top margin-bottom">
                     <DashboardInfo header="AYNA MODULES" subheader="Available" count={this.state.dCount} />
