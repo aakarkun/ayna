@@ -47,8 +47,8 @@ export class ModuleComponent extends React.Component {
                             <strong>Category:</strong> {this.props.category}<br />
                             {
                                 (this.props.btn_color === "success") ? 
-                                    <span className={'badge badge-' + this.props.btn_color}>INSTALLED</span> :  
-                                	<button className={'badge badge-' + this.props.btn_color} onClick={this.handleIsInstalled}>{this.props.isInstalled}</button>
+                                    <span className={'badge green badge-' + this.props.btn_color}>INSTALLED</span> :  
+                                	<button className={'badge red badge-' + this.props.btn_color} onClick={this.handleIsInstalled}>{this.props.isInstalled}</button>
                             }
                         </p>
                     </div>

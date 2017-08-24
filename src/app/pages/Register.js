@@ -55,14 +55,26 @@ export class Register extends React.Component {
                         <div className="col-lg-8 col-lg-offset-2">
                             <form>
                                 <div className="form margin-large-top text-center">
-                                    <div className="form-group">
-                                        <input type="text" ref="username" className="form-control" id="inputUsername"/>
+                                    <div className="row">
+                                        <div className="input-field col s12">
+                                            <i className="material-icons prefix">account_circle</i>
+                                            <input id="icon_prefix" ref="username" type="text" className="validate" />
+                                            <label for="icon_prefix">Username</label>
+                                        </div>
                                     </div>
-                                    <div className="form-group">
-                                        <input type="text" ref="email" className="form-control" id="inputEmail"/>
+                                    <div className="row">
+                                        <div className="input-field col s12">
+                                            <i className="material-icons prefix">email</i>
+                                            <input id="icon_prefix" ref="email" type="email" className="validate" />
+                                            <label for="icon_prefix">Email</label>
+                                        </div>
                                     </div>
-                                    <div className="form-group">
-                                        <input type="password" ref="password" className="form-control" id="inputPassword"/>
+                                    <div className="row">
+                                        <div className="input-field col s12">
+                                            <i className="material-icons prefix">lock</i>
+                                            <input id="icon_prefix" ref="password" type="password" className="validate" />
+                                            <label for="icon_prefix">Password</label>
+                                        </div>
                                     </div>
                                     <div className="margin-large-top">
                                         <a type="submit" className="btn btn-default margin-top" onClick={this.handleRegister}>Register</a>

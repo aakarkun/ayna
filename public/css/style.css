@@ -1,0 +1,52 @@
+/* Input Field Twiks */
+.input-field.col label {
+    left: 2rem;
+  }
+  .input-field .label {
+    font-size: 3rem;
+    margin-bottom: 5px;
+  }
+  
+  .input-field.col i {
+    margin-top: 8px;
+  }
+  
+  .input-field.col input {
+    padding-left: 20px;
+  }
+  
+  .btn {
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #000;
+  }
+  
+  .btn:hover,
+  .btn:focus {
+    background-color: #fff;
+    color: #000;  
+  }
+  
+  input:not([type]):focus:not([readonly]), input[type=text]:not(.browser-default):focus:not([readonly]), input[type=password]:not(.browser-default):focus:not([readonly]), input[type=email]:not(.browser-default):focus:not([readonly]), input[type=url]:not(.browser-default):focus:not([readonly]), input[type=time]:not(.browser-default):focus:not([readonly]), input[type=date]:not(.browser-default):focus:not([readonly]), input[type=datetime]:not(.browser-default):focus:not([readonly]), input[type=datetime-local]:not(.browser-default):focus:not([readonly]), input[type=tel]:not(.browser-default):focus:not([readonly]), input[type=number]:not(.browser-default):focus:not([readonly]), input[type=search]:not(.browser-default):focus:not([readonly]), textarea.materialize-textarea:focus:not([readonly]) {
+    border-bottom: 1px solid #fff;
+    box-shadow: 0 1px 0 0 #fff;
+  }
+  
+  .input-field .prefix {
+    color: #aaa;
+    font-size: 1.5rem;
+  }
+  
+  .input-field .prefix.active {
+    font-size: 2rem;  
+    color: #fff;
+    transition: 0.3s;
+  }
+  
+  input:not([type]):focus:not([readonly])+label, input[type=text]:not(.browser-default):focus:not([readonly])+label, input[type=password]:not(.browser-default):focus:not([readonly])+label, input[type=email]:not(.browser-default):focus:not([readonly])+label, input[type=url]:not(.browser-default):focus:not([readonly])+label, input[type=time]:not(.browser-default):focus:not([readonly])+label, input[type=date]:not(.browser-default):focus:not([readonly])+label, input[type=datetime]:not(.browser-default):focus:not([readonly])+label, input[type=datetime-local]:not(.browser-default):focus:not([readonly])+label, input[type=tel]:not(.browser-default):focus:not([readonly])+label, input[type=number]:not(.browser-default):focus:not([readonly])+label, input[type=search]:not(.browser-default):focus:not([readonly])+label, textarea.materialize-textarea:focus:not([readonly])+label {
+    color: #fff;
+  }
+
+  .nav ul li {
+      float: none;
+  }
+
