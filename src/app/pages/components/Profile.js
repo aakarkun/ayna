@@ -57,16 +57,19 @@ export class Profile extends React.Component {
                         <table className="table table-hover margin-large-top">
                             <tbody>
                                 <tr>
-                                    <td>Username: {username}</td>
-                                    <td><EditableLabel text="username" /></td>
+                                    <td>Username</td>
+                                    <td>{username}</td>
+                                    {/* <td><EditableLabel text="username" /></td> */}
                                 </tr>
                                 <tr>
                                     <td>Email: {email}</td>
-                                    <td><EditableLabel text="aakar.kun@hotmail.com" /></td>
+                                    <td>{email}</td>
+                                    {/* <td><EditableLabel text="aakar.kun@hotmail.com" /></td> */}
                                 </tr>
                                 <tr>
                                     <td>Password</td>
-                                    <td><EditableLabel text="********"/></td>
+                                    <td>********</td>
+                                    {/* <td><EditableLabel text="********"/></td> */}
                                 </tr>
                             </tbody>
                         </table>
