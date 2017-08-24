@@ -250,7 +250,7 @@ export class MainSurface extends React.Component {
         <div className="surface fullscreen below" />
         <SurfaceArea surfaceName="surface top bar" modules={top_bar} col_left={3} col_center={6} col_right={3}/>
         <SurfaceArea surfaceName="surface hero section" modules={hero_section} col_left={2} col_center={8} col_right={2}/>
-        <SurfaceArea surfaceName="surface middle center" modules={middle_center} reply={toDisplay} col_left={2} col_center={8} col_right={2}/>
+        <SurfaceArea surfaceName="surface middle center" modules={middle_center} reply={toDisplay} col_left={1} col_center={10} col_right={1}/>
         <SurfaceArea surfaceName="surface lower section" modules={lower_section} col_left={1} col_center={10} col_right={1}/>
         <SurfaceArea surfaceName="surface bottom bar" modules={bottom_bar} col_left={1} col_center={10} col_right={1}/>
         <div className="surface fullscreen above"/>

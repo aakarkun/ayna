@@ -2,26 +2,32 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="theme-color" content="#000000">
-
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
     <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
+
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Css required for Ayna -->
     <link rel="stylesheet" href="%PUBLIC_URL%/css/bootstrap-ayna.css">
+    <link rel="stylesheet" href="%PUBLIC_URL%/css/materialize.min.css">
     <link rel="stylesheet" href="%PUBLIC_URL%/css/empresa.css">    
     <link rel="stylesheet" href="%PUBLIC_URL%/css/modules.css">
+    <link rel="stylesheet" href="%PUBLIC_URL%/css/style.css">
+    
+
     <title>ayna - webapp</title>
   </head>
   <body>
     <div id="root"></div>
+
+    <!-- Js file required for Ayna -->
     <script src="%PUBLIC_URL%/js/jquery.min.js"></script>
     <script src="%PUBLIC_URL%/js/bootstrap.js"></script>
     <script src="%PUBLIC_URL%/js/script.js"></script>
+    <script src="%PUBLIC_URL%/js/materialize.min.js"></script>
 
-    <script>
-      $('.form-control').on('focus blur', function (e) {
-        $(this).parents('.form-group').toggleClass('focused', (e.type === 'focus' || this.value.length > 0));
-      }).trigger('blur');
-    </script>
   </body>
 </html>

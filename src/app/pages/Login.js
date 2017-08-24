@@ -16,6 +16,7 @@ export class Login extends React.Component {
         event.preventDefault();
         var username = this.refs.username.value;
         var password = this.refs.password.value;
+        console.log(this.refs.username.value);
         loginUser(username, password)
             .then((userInfo) => {
                 if(userInfo.success === true) {
@@ -47,14 +48,22 @@ export class Login extends React.Component {
                         <div className="col-lg-8 col-lg-offset-2">
                             <form id="login-form">
                                 <div className="form margin-large-top text-center">
-                                    <div className="form-group">
-                                        <input type="text" ref="username" className="form-control" id="inputUsername"/>
+                                    <div className="row">
+                                        <div className="input-field col s12">
+                                            <i className="material-icons prefix">account_circle</i>
+                                            <input id="icon_prefix" ref="username" type="text" className="validate" />
+                                            <label for="icon_prefix">Username</label>
+                                        </div>
                                     </div>
-                                    <div className="form-group">
-                                        <input type="password" ref="password" className="form-control" id="inputPassword"/>
+                                    <div className="row">
+                                        <div className="input-field col s12">
+                                            <i className="material-icons prefix">lock</i>
+                                            <input id="icon_prefix" ref="password" type="password" className="validate" />
+                                            <label for="icon_prefix">Password</label>
+                                        </div>
                                     </div>
                                     <div className="margin-large-top">
-                                        <a type="submit" className="btn btn-default margin-top" onClick={this.handleSubmit}>Login</a>
+                                        <Link to={"/dashboard"} type="submit" className="btn btn-default margin-top" onClick={this.handleSubmit}>Login</Link>
                                         <Link to={"/register"} type="button" className="btn btn-default margin-top margin-left">Register</Link>
                                     </div>
                                 </div>

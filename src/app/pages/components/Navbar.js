@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, browserHistory } from 'react-router';
 import { loggedOut } from '../../utils/AuthService';
 import { getUsername } from '../../utils/users-api';
+import { Spinner } from './mini-components/Spinner';
 
 export class Navbar extends React.Component {
 
@@ -36,6 +37,8 @@ export class Navbar extends React.Component {
   }
 
   render() {
+    var { brandname, menu_i, menu_ii } = this.props;
+    var { username } = this.state;
       return(
           <div>
               <nav className="navbar navbar-default">
@@ -47,13 +50,13 @@ export class Navbar extends React.Component {
                     <span className="icon-bar"></span>
                     <span className="icon-bar"></span>
                   </button>
-                  <a className="navbar-brand" href="" onClick={this.onNavigateHome}>{this.props.brandname}</a>
+                  <a className="navbar-brand" href="" onClick={ this.onNavigateHome }>{ brandname }</a>
                   <ul className="nav navbar-nav">
                     <li>
-                      <a className="" href="" onClick={this.onNavigateDashboard}>{this.props.menu_i}</a>
+                      <a className="" href="" onClick={ this.onNavigateDashboard }>{ menu_i }</a>
                     </li>
                     <li>
-                      <a className="" href="" onClick={this.onNavigateModules}>{this.props.menu_ii}</a>
+                      <a className="" href="" onClick={ this.onNavigateModules }>{ menu_ii }</a>
                     </li>
                   </ul>
                 </div>
@@ -61,10 +64,12 @@ export class Navbar extends React.Component {
                   <ul className="nav navbar-nav navbar-right">
                     <li className="dropdown">
                       <a href="" className="dropdown-toggle" data-toggle="dropdown">
-                        Welcome! {this.state.username} <span className="caret"></span>
+                        {
+                          (this.state.username === '') ? <Spinner /> :
+                          <span>Welcome! { username.charAt(0).toUpperCase() + username.slice(1) } <span className="caret"></span></span>
+                        }
                       </a>
                       <ul className="dropdown-menu">
-                        <li><Link to="/account" activeStyle={{fontWeight: 400}}>Account</Link></li>
                         <li><Link to="/profile" activeStyle={{fontWeight: 400}}>Profile</Link></li>
                         <li><Link to={"/"} onClick={this.logOut}>Logout</Link></li>                        
                       </ul>

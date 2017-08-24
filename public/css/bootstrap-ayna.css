@@ -17,7 +17,7 @@ html {
   background-color: #000;
 }
 body {
-  margin: 60px;
+  margin: 60px!important;
   height: calc(100% - 120px);
   width: calc(100% - 120px);
 }

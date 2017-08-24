@@ -5,6 +5,7 @@ const BASE_URL = 'http://localhost:8000';
 
 const userId = getUserId();
 const userModulesUrl = `/users/${userId}/modules`;
+const userUrl = `/users/${userId}`;
 // Altering Base URL while creating axios Instance
 const axiosInstance = axios.create({
     baseURL: BASE_URL
@@ -93,6 +94,17 @@ function getUserModules() {
             return error;
         })    
 }
+
+function getUserData() {
+    return axiosInstance.get(userUrl)
+        .then((response) => {
+            return response.data;
+        }).catch((error) => {
+            return error;
+        })
+}
+
+
 function postUserModules(name, category, surface_area, position, header, defaul) {
     return axiosInstance.post(userModulesUrl, {
         "name": name,
@@ -117,4 +129,4 @@ function deleteUserModule(moduleId) {
         })
 }
 
-export { getUsersData, loginUser, registerUser, getUserId, getUsername, getUserModules, postUserModules, deleteUserModule };
+export { getUsersData, getUserData, loginUser, registerUser, getUserId, getUsername, getUserModules, postUserModules, deleteUserModule };

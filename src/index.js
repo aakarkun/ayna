@@ -10,6 +10,8 @@ import { Register } from './app/pages/Register';
 import { Dashboard } from './app/pages/components/Dashboard';
 import { Modules } from './app/pages/components/Modules';
 import { Users } from './app/pages/components/Users';
+import { Profile } from './app/pages/components/Profile';
+
 import { isLoggedIn, requireAuth } from './app/utils/AuthService';
 
 
@@ -29,7 +31,8 @@ class App extends React.Component {
         <Route path={"/dashboard"} component={Root} onEnter={requireAuth}>
           <IndexRoute component={Dashboard} /> 
           <Route path="/modules" component={Modules} />         
-          <Route path="/users" component={Users} />                   
+          <Route path="/users" component={Users} />   
+          <Route path="/profile" component={Profile} />                          
         </Route>
         <Route path="login" component={Login} />
         <Route path="register" component={Register} />
