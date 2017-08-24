@@ -70,6 +70,7 @@ export class MainSurface extends React.Component {
         }
       ],
       toDisplay: 'hello',
+      soundStarted: "listening.. ."
       // messages: ["Hello.", "Hi, how are you?", "Hi. Whats up! 👻"],
       // secondMessages: ["Living the AI dream.", "I'm doing well. What about you?", "hmm. I'm fine I guess 👻"]
     };
@@ -117,7 +118,19 @@ export class MainSurface extends React.Component {
     var toDisplay = '';
 
     annyang.debug();
+    // annyang.addCallback('soundstart', function() {
+    //   this.setState({
+    //     soundStarted: 'Listening.. .'
+    //   })
+    //   console.log(this.state.soundStarted);
+    // }.bind(this));
 
+    // annyang.addCallback('result', function() {
+    //   this.setState({
+    //     soundStarted: 'nope!'
+    //   })
+    //   console.log(this.state.soundStarted);
+    // }.bind(this))
     annyang.setLanguage('en-IN');
     getDefaultModules().then((modules) => {
       availableModules = modules;
