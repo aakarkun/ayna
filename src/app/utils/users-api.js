@@ -39,7 +39,7 @@ function getUsersData() {
                 return error.message;
             }
         });
-    }
+}
 
 function loginUser(username, password) {
     const url = "/users/signin";
@@ -56,6 +56,7 @@ function loginUser(username, password) {
         }
     });
 }
+
 function registerUser(username, email, password) {
     const url = "/users/signup";
     return axiosInstance.post(url, {
@@ -90,6 +91,7 @@ function registerUser(username, email, password) {
 function getUserId() {
 return sessionStorage['user-id'];
 }
+
 function getJwtToken() {
     return sessionStorage['ayna-jwt'];
 }
@@ -103,6 +105,7 @@ function getUsername() {
             return error;
         })
 }
+
 function getUserModules() {
     return axiosInstance.get(userModulesUrl)
         .then((response) => {
@@ -111,6 +114,7 @@ function getUserModules() {
             return error;
         })    
 }
+
 function postUserModules(name, category, surface_area, position, header, defaul) {
     return axiosInstance.post(userModulesUrl, {
         "name": name,
@@ -125,6 +129,7 @@ function postUserModules(name, category, surface_area, position, header, defaul)
         return error;
     })
 }
+
 function deleteUserModule(moduleId) {
     const moduleUrl = `/modules/${moduleId}`;    
     return axiosInstance.delete(moduleUrl)
