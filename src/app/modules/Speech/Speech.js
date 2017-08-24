@@ -1,18 +1,16 @@
 import React from 'react';
 
 export class Speech extends React.Component{
-    constructor(props) {
-        super(props);
-    }
+    
 	render(){
-        var utterance = new SpeechSynthesisUtterance();
+        var utterance = new SpeechSynthesisUtterance(this.props.reply);
         var voices = speechSynthesis.getVoices();
-        utterance.voice = voices[4];
+        utterance.voice = voices[5];
 
         return(
             <div>
                 {(this.props.reply !== "hello") ? 
-                    utterance.speak(this.props.reply) : console.log("nothing to speak")
+                speechSynthesis.speak(utterance) : console.log("nothing to speak")
                 }
             </div>
         );

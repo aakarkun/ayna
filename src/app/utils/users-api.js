@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-// const BASE_URL = 'http://068a4a62.ngrok.io';
+// const BASE_URL = 'https://e34c24de.ngrok.io';
 const BASE_URL = 'http://localhost:8000';
 
 const userId = getUserId();
@@ -51,8 +51,9 @@ function loginUser(username, password) {
         sessionStorage.setItem('user-id', response.data.user.id);
         return response.data;
     }).catch((error) => {
-        console.log("Error :" + error);
-        return error;
+        if(error.response.data.error) {
+            return error.response.data.error.details[0].message;
+        }
     });
 }
 function registerUser(username, email, password) {
@@ -62,10 +63,27 @@ function registerUser(username, email, password) {
         'email': email,
         'password': password
     }).then((response)  => {
-        return response.data;
+        if(response.status === 201){
+            return response.data;
+        }
     }).catch((error) => {
-        console.error(error);
-        return error.data;
+        // console.log(error.response.status);
+        if(error.response.status === 400) {
+            return [
+                {
+                    error: error.response.data.error.details[0].message,
+                    code: "400"
+                }
+            ]
+            
+        } else if(error.response.status === 403) {
+            return [
+                {
+                    error: error.response.data.error,
+                    code: "403"
+                }   
+            ]
+        }
     });
 }
 

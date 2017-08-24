@@ -227,6 +227,14 @@ export class MainSurface extends React.Component {
           })
           console.log(this.state.toDisplay);
         }.bind(this),
+
+        // 'do you know me': function() {
+        //   toDisplay = "Yes, Mimos Kun.";
+        //   this.setState({
+        //     toDisplay
+        //   })
+
+        // }.bind(this)
       }; 
       
       annyang.addCommands(commands);

@@ -8,7 +8,9 @@ export class Register extends React.Component {
     
     constructor(props) {
         super(props);
-
+        this.state = {
+            error: ''
+        }
         this.handleRegister = this.handleRegister.bind(this);
     }
 
@@ -17,13 +19,29 @@ export class Register extends React.Component {
         var username = this.refs.username.value;
         var email = this.refs.email.value;
         var password = this.refs.password.value;
+        var error = '';
         registerUser(username, email, password)
             .then((response) => {
-                console.log(response.username + ", has been Registered Successfully!");
-                browserHistory.push("/dashboard");
+                // console.log(response[0].code);
+                if(response.username) {
+                    console.log(response.username + " has registered successfully.");
+                    browserHistory.push('/login');
+                } else if(response[0].code === "400") {
+                    console.log(response[0].error);
+                    error =  response[0].error;
+                    this.setState({
+                        error
+                    })
+                } else if(response[0].code === "403"){
+                    console.log(response[0].error);
+                    error =  response[0].error;
+                    this.setState({
+                        error
+                    })
+                }
             }).catch((error) => {
-                return error;
                 console.log(error);
+                return error;
             })
     }
 
@@ -32,7 +50,7 @@ export class Register extends React.Component {
             <div className="row">
                 <div className="col-lg-8 col-lg-offset-2">
                     <center><h2>Register</h2></center>
-                    {/* <Flash type="danger" content="User not Registered!"/> */}
+                    {(this.state.error == '')? '' : <Flash type={(this.state.error === "")? "Success" : "danger"} name={(this.state.error === "")? "Success" : "Error"} content={this.state.error}/>}
                     <div className="row">
                         <div className="col-lg-8 col-lg-offset-2">
                             <form>
