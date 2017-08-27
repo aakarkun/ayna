@@ -43,7 +43,6 @@ export class Login extends React.Component {
                     this.setState({
                         error: userInfo
                     })
-
                 }
         }).catch((error) => {
             console.log("Username or Password invalid!");

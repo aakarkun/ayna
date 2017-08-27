@@ -1,8 +1,7 @@
 import React from 'react';
 import { DashboardInfo } from './mini-components/DashboardInfo';
 import { getDefaultModules } from '../../utils/modules-api';
-import { getUserModules } from '../../utils/users-api';
-import { getUsersData } from '../../utils/users-api';
+import { getUsersData, getUserModules } from '../../utils/users-api';
 import { Flash } from './mini-components/Flash';
 
 export class Dashboard extends React.Component {
@@ -77,7 +76,7 @@ export class Dashboard extends React.Component {
                 <div className="row margin-large-top margin-bottom">
                     <DashboardInfo header="AYNA MODULES" subheader="Available" count={this.state.dCount} />
                     <DashboardInfo header="USER MODULES" subheader="Your Modules" count={this.state.mCount} />
-                    <DashboardInfo header="USERS" subheader="Active Users" count={this.state.uCount} />   
+                    <DashboardInfo header="USERS" subheader="Total Users" count={this.state.uCount} />   
                 </div>
 
                 <div className="row">
