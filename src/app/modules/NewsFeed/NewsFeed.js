@@ -14,6 +14,7 @@ export class NewsFeed extends React.Component{
 			author: [],
 			heading: 'RECENT NEWS',
 			channelNumber: 0,
+			commandChannel: '',
 			channel: [
 				{
 					"name": "sports",
@@ -46,8 +47,16 @@ export class NewsFeed extends React.Component{
 
 	componentWillMount(){
 		var channelNumber = Math.floor((Math.random() * this.state.channel.length));
+		var { channel } = this.state;
+		// console.log(this.props.commandChannel);
+		var commandChannel = this.props.commandChannel;
+		var url;
+		// for(var i = 0; i <channel.length; i++) {
+		// 	(commandChannel === channel[i].name)? url = channel[i].url : url = channel[channelNumber].url;
+		// }
 		this.setState({
-			channelNumber
+			channelNumber,
+			// commandChannel: url
 		})
 		$.ajax({
 			url : this.state.channel[channelNumber].url,

@@ -40,13 +40,13 @@ export class Module extends React.Component {
             case "Greetings":
               return (
                 <div>
-                  <Greetings key={id} reply={this.props.reply} /> 
+                  <Greetings key={id} reply={this.props.reply} listening={this.props.listening} /> 
                   <Speech reply={this.props.reply} />
                 </div>
               );
               break;
             case "NewsFeed":
-              return <NewsFeed key={id}/>
+              return <NewsFeed key={id} commandChannel={this.props.commandChannel}/>
               break;
             case "Todo":
               return <Todo key={id}/>

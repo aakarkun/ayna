@@ -47,7 +47,7 @@ export class Greetings extends React.Component{
 			return(
 				<div> 
 					<h2><center>{this.props.reply}</center></h2>
-					<h2><center>👻</center></h2> 
+					<p><center>{this.props.listening}</center></p>
 				</div>
 			); 
 		}
