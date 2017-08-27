@@ -42,12 +42,12 @@ export class Greetings extends React.Component{
 
 		if(this.props.reply == 'hello') {
 			console.log(this.state.greet);
-			return <h2> <center> {(this.state.greet === null)? <p>Loading.. .</p> : this.state.greet} </center> </h2> 
+			return <center> <h2> {(this.state.greet === null)? <p>Loading.. .</p> : this.state.greet} </h2> </center> 
 		} else {
 			return(
 				<div> 
-					<h2><center>{this.props.reply}</center></h2>
-					<h2><center>👻</center></h2> 
+					<center><h2>{this.props.reply}</h2></center>
+					<center><p>{this.props.listening}</p></center>
 				</div>
 			); 
 		}

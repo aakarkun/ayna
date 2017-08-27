@@ -1,7 +1,8 @@
 import axios from 'axios';
 
-// const BASE_URL = 'https://e34c24de.ngrok.io';
-const BASE_URL = 'http://localhost:8000';
+const BASE_URL = 'https://eacce501.ngrok.io';
+
+// const BASE_URL = 'http://localhost:8000';
 
 const userId = getUserId();
 const userModulesUrl = `/users/${userId}/modules`;
@@ -145,6 +146,7 @@ function deleteUserModule(moduleId) {
     const moduleUrl = `/modules/${moduleId}`;    
     return axiosInstance.delete(moduleUrl)
         .then((response) => {
+            console.log("test");
             return response.data;
         }).catch((error) => {
             return error;

@@ -30,8 +30,8 @@ export class Quotes extends React.Component{
 		//const listItem = list.map((item) => <li> {item}</li>);
 		return(
 			<div className="text-center">
-				<p><h6>QUOTES</h6></p>
-				<h7> {quotes[this.state.num]} </h7>
+				<p>QUOTES</p>
+				<h6> {quotes[this.state.num]} </h6>
 			</div>
 		);
 	}

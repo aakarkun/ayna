@@ -4,6 +4,8 @@ import { SurfaceArea } from './SurfaceArea';
 import { isLoggedIn } from '../utils/AuthService';
 import { getDefaultModules, getModules, changePosition } from '../utils/modules-api';
 import { Spinner } from '../pages/components/mini-components/Spinner';
+import { getUsername, deleteUserModule } from '../utils/users-api';
+
 
 import annyang from 'annyang';
 
@@ -19,6 +21,7 @@ export class MainSurface extends React.Component {
         lower_section: [],
         bottom_bar: []
       },
+      userStatus: isLoggedIn(),
       replies: [
         {
           command: "hello",
@@ -70,15 +73,31 @@ export class MainSurface extends React.Component {
           ]
         },
         {
-          command: "move module",
+          command: "update module",
           text: [
             "Please, Login first!",
-            "You can't change position without logged in!",
-            "Sorry! I can't move modules without knowing you. Please Login!"
+            "You can't. Without login!",
+            "Sorry! I can't do this without knowing you. Please Login!"
+          ]
+        },
+        {
+          command: "do you know me",
+          iDontKnowText: [
+            "Please, Login first!",
+            "I can't recognize you. Do login first!",
+            "Sorry! I don't know you. Please Login!"
+          ],
+          iKnowYouText: [
+            "Yes, you are my friend ",
+            "I know you. You're my friend ",
+            "Is that you, ",
+            "That is easy, you are my friend "
           ]
         }
       ],
       toDisplay: 'hello',
+      soundStarted: '',
+      commandChannel: ''
     };
 
     this.acceptVoiceCommands = this.acceptVoiceCommands.bind(this);
@@ -119,7 +138,8 @@ export class MainSurface extends React.Component {
   acceptVoiceCommands() {
 
     var availableModules = [];
-    var replies = this.state.replies;
+    var newsChannels = ["sports", "bbc", "business", "google-news", "hacker-news"];
+    var { replies, userStatus } = this.state;
 
     var toDisplay = '';
 
@@ -128,17 +148,11 @@ export class MainSurface extends React.Component {
     annyang.setLanguage('en-IN');
     getModules().then((modules) => {
       availableModules = modules;
-      var commands = {
-        'show (me) :moduleName': function(moduleName) {
-          console.log(moduleName);
-        },
-        
-        // 'move (that) :moduleName to (the) :newPosition': {'regexp': /^move (clock|weather|news|calendar|greetings|quote|todo|) to (the) (left|centre|right)$/, 'callback': function(moduleName, newPosition) {
-        // }.bind(this)},
-        
-        'move (that) :moduleName to (the) :newPosition': function(moduleName, newPosition) {
+
+      var commands = {        
+        'position (that) :moduleName (to) (the) :newPosition': function(moduleName, newPosition) {
           // console.log(availableModules);
-          if(!isLoggedIn()) {
+          if(!userStatus) {
             var num;
             num = Math.floor((Math.random() * replies[6].text.length));
             toDisplay = replies[6].text[num];
@@ -164,28 +178,28 @@ export class MainSurface extends React.Component {
   
             if(newPosition === 'left' | newPosition === 'right' | newPosition === 'center') {
               
-              availableModules.map((aModule, index) => {
-  
+              availableModules.map((aModule, index) => {  
                 if(aModule.name.toLowerCase() === moduleName && aModule.position !== newPosition) {
-                  console.log("Modules Matched previously " + aModule.name.toLowerCase() + " was in " + aModule.position);
+                  console.log("Modules Matched! previously " + aModule.name.toLowerCase() + " was in " + aModule.position);
                   aModule.position = newPosition;
                   console.log("now " + aModule.name + " is in " + aModule.position);
                   changePosition(aModule._id, newPosition).then(data => {
                     console.log(data);
+                    window.location.reload();
                   })
-                  window.location.reload();
-                } else {
-                  console.log("Module Not Matched or same position call");
                 }
               });
             } else {
-              console.log("Position not matched!")
+              console.log("Position not matched!");
+              // this.setState({
+              //   toDisplay
+              // })
             }
           }
 
         }.bind(this),
   
-        '(hello) (hi) (hey)': function() {
+        '(hello) (hi) (hey) (howdy) (whats up) (yo)': function() {
           var num;
           num = Math.floor((Math.random() * replies[0].text.length));
           toDisplay = replies[0].text[num];
@@ -245,22 +259,88 @@ export class MainSurface extends React.Component {
           console.log(this.state.toDisplay);
         }.bind(this),
 
-        // 'do you know me': function() {
-        //   toDisplay = "Yes, Mimos Kun.";
-        //   this.setState({
-        //     toDisplay
-        //   })
+        'do you know (me)': function() {
+          if(!userStatus) {
+            var num;
+            num = Math.floor((Math.random() * replies[7].iDontKnowText.length));
+            toDisplay = replies[7].iDontKnowText[num];
+            this.setState({
+              toDisplay
+            })
+          } else {
+            getUsername().then((username) => {   
+              console.log("online: " + userStatus);   
+              var num;
+              num = Math.floor((Math.random() * replies[7].iKnowYouText.length));        
+              toDisplay = replies[7].iKnowYouText[num] + username.charAt(0).toUpperCase() + username.slice(1);
+              this.setState({
+                toDisplay
+              })
+            })
+          }
 
-        // }.bind(this)
+        }.bind(this),
+
+        'remove :moduleName': function(moduleName) {
+          if(!userStatus) {
+            var num;
+            num = Math.floor((Math.random() * replies[6].text.length));
+            toDisplay = replies[6].text[num];
+            this.setState({
+              toDisplay
+            })
+          } else {
+              availableModules.map((aModule, index) => {
+                if(moduleName === 'clock') {
+                  moduleName = 'analogclock'
+                }
+                if(moduleName === 'news' | moduleName === 'feed') {
+                  moduleName = 'newsfeed'
+                }
+                if(moduleName === 'codes') {
+                  moduleName = 'quotes'
+                }
+                console.log(moduleName);
+                if(aModule.name.toLowerCase() === moduleName) {
+                  deleteUserModule(aModule._id).then((response, error) => {
+                    if(response) {
+                        window.location.reload();
+                        console.log("Module has been removed!");
+                    } else {
+                        console.log("Error: " + error);
+                    }
+                })
+                }
+              });
+              toDisplay = "Okay, removed!";              
+              this.setState({
+                toDisplay
+              })
+          }
+        }.bind(this),
+
+        'add :moduleName': function(moduleName) {
+          if(!userStatus) {
+            var num;
+            num = Math.floor((Math.random() * replies[6].text.length));
+            toDisplay = replies[6].text[num];
+            this.setState({
+              toDisplay
+            })
+          } else {
+              toDisplay = "This feature is currently unavailable. Please add "+ moduleName.charAt(0).toUpperCase() + moduleName.slice(1) +" from dashboard."
+              this.setState({
+                toDisplay
+              })
+          }
+        }.bind(this)
       }; 
       
       annyang.addCommands(commands);
       annyang.start();
     });
-    
-
   }
-  
+
   componentDidMount() {
     this.acceptVoiceCommands();
     this.fetchModules();
@@ -270,7 +350,7 @@ export class MainSurface extends React.Component {
   render() {
     const { modules } = this.state;
     const { top_bar, hero_section, middle_center, lower_section, bottom_bar } = this.state.surfaces;
-    var { toDisplay } = this.state;
+    var { toDisplay, soundStarted, commandChannel } = this.state;
     return(
       <div>
       {(modules.length === 0) ? <Spinner /> : 
