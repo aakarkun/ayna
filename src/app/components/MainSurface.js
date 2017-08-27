@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { SurfaceArea } from './SurfaceArea';
-import { isLoggedIn } from '../utils/users-api';
-import { getDefaultModules, changePosition } from '../utils/modules-api';
+import { isLoggedIn } from '../utils/AuthService';
+import { getDefaultModules, getModules, changePosition } from '../utils/modules-api';
 
 import annyang from 'annyang';
 
@@ -67,27 +67,33 @@ export class MainSurface extends React.Component {
             "Midday greetings to you, too.",
             "Good afternoon, I hope the day is going well. Any dinner plans?"
           ]
+        },
+        {
+          command: "move module",
+          text: [
+            "Please, Login first!",
+            "You can't change position without logged in!",
+            "Sorry! I can't move modules without knowing you. Please Login!"
+          ]
         }
       ],
       toDisplay: 'hello',
-      // messages: ["Hello.", "Hi, how are you?", "Hi. Whats up! 👻"],
-      // secondMessages: ["Living the AI dream.", "I'm doing well. What about you?", "hmm. I'm fine I guess 👻"]
     };
 
     this.acceptVoiceCommands = this.acceptVoiceCommands.bind(this);
   }
 
-  defaultModules() {
-    getDefaultModules().then((modules) => {
-      // defining the valid surfaces
-      var validSurfaces = ["top_bar", "hero_section", "middle_center", "lower_section", "bottom_bar"];
-      var surfaces = {
-        top_bar: [],
-        hero_section: [],
-        middle_center: [],
-        lower_section: [],
-        bottom_bar: []
-      };
+  fetchModules() {
+    // defining the valid surfaces
+    var validSurfaces = ["top_bar", "hero_section", "middle_center", "lower_section", "bottom_bar"];
+    var surfaces = {
+      top_bar: [],
+      hero_section: [],
+      middle_center: [],
+      lower_section: [],
+      bottom_bar: []
+    };
+    getModules().then((modules) => {
       // pushing the appropriate modules in corresponding surface areas
       if(modules.length !== 0) {
         modules.map((module, id) => {
@@ -119,7 +125,7 @@ export class MainSurface extends React.Component {
     annyang.debug();
 
     annyang.setLanguage('en-IN');
-    getDefaultModules().then((modules) => {
+    getModules().then((modules) => {
       availableModules = modules;
       var commands = {
         'show (me) :moduleName': function(moduleName) {
@@ -128,44 +134,54 @@ export class MainSurface extends React.Component {
         
         // 'move (that) :moduleName to (the) :newPosition': {'regexp': /^move (clock|weather|news|calendar|greetings|quote|todo|) to (the) (left|centre|right)$/, 'callback': function(moduleName, newPosition) {
         // }.bind(this)},
-  
+        
         'move (that) :moduleName to (the) :newPosition': function(moduleName, newPosition) {
           // console.log(availableModules);
-          if(newPosition === 'centre') {
-            newPosition = 'center';
-          }
-          if(newPosition === 'write') {
-            newPosition = 'right';
-          }
-          if(moduleName === 'clock') {
-            moduleName = 'analogclock'
-          }
-          if(moduleName === 'news' | moduleName === 'feed') {
-            moduleName = 'newsfeed'
-          }
-          if(moduleName === 'codes') {
-            moduleName = 'quotes'
-          }
-
-          if(newPosition === 'left' | newPosition === 'right' | newPosition === 'center') {
-            
-            availableModules.map((aModule, index) => {
-
-              if(aModule.name.toLowerCase() === moduleName && aModule.position !== newPosition) {
-                console.log("Modules Matched previously " + aModule.name.toLowerCase() + " was in " + aModule.position);
-                aModule.position = newPosition;
-                console.log("now " + aModule.name + " is in " + aModule.position);
-                changePosition(aModule._id, newPosition).then(data => {
-                  console.log(data);
-                })
-                window.location.reload();
-              } else {
-                console.log("Module Not Matched or same position call");
-              }
-            });
+          if(!isLoggedIn()) {
+            var num;
+            num = Math.floor((Math.random() * replies[6].text.length));
+            toDisplay = replies[6].text[num];
+            this.setState({
+              toDisplay
+            })
           } else {
-            console.log("Position not matched!")
+            if(newPosition === 'centre') {
+              newPosition = 'center';
+            }
+            if(newPosition === 'write') {
+              newPosition = 'right';
+            }
+            if(moduleName === 'clock') {
+              moduleName = 'analogclock'
+            }
+            if(moduleName === 'news' | moduleName === 'feed') {
+              moduleName = 'newsfeed'
+            }
+            if(moduleName === 'codes') {
+              moduleName = 'quotes'
+            }
+  
+            if(newPosition === 'left' | newPosition === 'right' | newPosition === 'center') {
+              
+              availableModules.map((aModule, index) => {
+  
+                if(aModule.name.toLowerCase() === moduleName && aModule.position !== newPosition) {
+                  console.log("Modules Matched previously " + aModule.name.toLowerCase() + " was in " + aModule.position);
+                  aModule.position = newPosition;
+                  console.log("now " + aModule.name + " is in " + aModule.position);
+                  changePosition(aModule._id, newPosition).then(data => {
+                    console.log(data);
+                  })
+                  window.location.reload();
+                } else {
+                  console.log("Module Not Matched or same position call");
+                }
+              });
+            } else {
+              console.log("Position not matched!")
+            }
           }
+
         }.bind(this),
   
         '(hello) (hi) (hey)': function() {
@@ -246,7 +262,7 @@ export class MainSurface extends React.Component {
   
   componentDidMount() {
     this.acceptVoiceCommands();
-    this.defaultModules();
+    this.fetchModules();
   }
 
   

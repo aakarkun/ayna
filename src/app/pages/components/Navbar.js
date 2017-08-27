@@ -24,6 +24,7 @@ export class Navbar extends React.Component {
   }
   logOut() {
     loggedOut();
+    window.location.reload();
   }
 
   componentDidMount() {

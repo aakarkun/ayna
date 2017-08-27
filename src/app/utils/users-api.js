@@ -13,6 +13,7 @@ const axiosInstance = axios.create({
 // Alter defaults after instance has been created 
 const AUTH_TOKEN = getJwtToken();
 axiosInstance.defaults.headers.common['Authorization'] = AUTH_TOKEN;
+
 // To get all the Users and user related data
 function getUsersData() {
     const url = '/users';
@@ -150,4 +151,84 @@ function deleteUserModule(moduleId) {
         })
 }
 
-export { getUsersData, getUserData, loginUser, registerUser, getUserId, getUsername, getUserModules, postUserModules, deleteUserModule };
+function patchUserData(data, newData) {
+    const url = `/users/${userId}`;
+    if(data === "username") {
+        return axiosInstance.patch(url, {
+            "username" : newData
+        }).then((response) => {
+            if(response.status === 200){
+                return response.data;
+            }
+        }).catch((error) => {
+            if(error.response.status === 400) {
+                return [
+                    {
+                        error: error.response.data.error.details[0].message,
+                        code: "400"
+                    }
+                ]
+                
+            } else if(error.response.status === 403) {
+                return [
+                    {
+                        error: error.response.data.error,
+                        code: "403"
+                    }   
+                ]
+            }
+        })
+    } else if(data === "email") {
+        return axiosInstance.patch(url, {
+            "email" : newData
+        }).then((response) => {
+            if(response.status === 200){
+                return response.data;
+            }
+        }).catch((error) => {
+            if(error.response.status === 400) {
+                return [
+                    {
+                        error: error.response.data.error.details[0].message,
+                        code: "400"
+                    }
+                ]
+                
+            } else if(error.response.status === 403) {
+                return [
+                    {
+                        error: error.response.data.error,
+                        code: "403"
+                    }   
+                ]
+            }
+        })
+    } else {
+        return axiosInstance.patch(url, {
+            "password" : newData
+        }).then((response) => {
+            if(response.status === 200){
+                return response.data;
+            }
+        }).catch((error) => {
+            if(error.response.status === 400) {
+                return [
+                    {
+                        error: error.response.data.error.details[0].message,
+                        code: "400"
+                    }
+                ]
+                
+            } else if(error.response.status === 403) {
+                return [
+                    {
+                        error: error.response.data.error,
+                        code: "403"
+                    }   
+                ]
+            }
+        })
+    }
+}
+
+export { getUsersData, getUserData, loginUser, registerUser, getUserId, getUsername, getUserModules, postUserModules, deleteUserModule, patchUserData };
