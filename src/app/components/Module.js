@@ -2,7 +2,7 @@ import React from 'react';
 
 import { AnalogClock }  from '../modules/AnalogClock/AnalogClock';
 import { Calendar }  from '../modules/Calendar/Calendar';
-import { Clock }  from '../modules/Clock/Clock';
+import { DigitalClock }  from '../modules/DigitalClock/DigitalClock';
 import { Greetings }  from '../modules/Greetings/Greetings';
 import { NewsFeed }  from '../modules/NewsFeed/NewsFeed';
 import { Todo }  from '../modules/Todo/Todo';
@@ -34,9 +34,6 @@ export class Module extends React.Component {
             case "Calendar":
               return <Calendar key={id}/>
               break;
-            case "Clock":
-              return <Clock key={id}/>
-              break;
             case "Greetings":
               return (
                 <div>
@@ -53,6 +50,9 @@ export class Module extends React.Component {
               break;
             case "Quotes":
               return <Quotes key={id}/>
+              break;
+            case "DigitalClock":
+              return <DigitalClock key={id}/>
               break;
              {/* case "Weather":
               return <Weather key={id}/>

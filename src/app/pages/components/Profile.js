@@ -81,7 +81,7 @@ export class Profile extends React.Component {
                 <div className="row">
                     <div className="col-lg-8 col-md-8 col-sm-8">
                         <div className="panel panel-default margin-top">
-                            {(modules.length === 0) ? <Spinner /> : 
+                            {(modules.length === 0) ? <div className="panel-body"><center>USER MODULE EMPTY!</center></div> : 
                             <div> 
                                 <div className="panel-heading">MODULES SETTINGS</div>
                                 <div className="panel-body">
