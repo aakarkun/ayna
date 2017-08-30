@@ -312,10 +312,10 @@ export class MainSurface extends React.Component {
                 })
                 }
               });
-              toDisplay = "Okay, removed!";              
-              this.setState({
-                toDisplay
-              })
+              // toDisplay = "Okay, removed!";              
+              // this.setState({
+              //   toDisplay
+              // })
           }
         }.bind(this),
 
