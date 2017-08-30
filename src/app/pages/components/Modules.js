@@ -97,7 +97,7 @@ export class Modules extends React.Component {
             <div>
                 <h5>MODULES</h5>
                 <div className="panel panel-default margin-large-top padding">
-                    <div className="panel-heading">AYNA MODULES</div>
+                    <div className="panel-heading">AYNA MODULES<span className="badge badge-default">{defaultModules.length}</span></div>
                     <div className="panel-body">
                         <div className="row">
                             {
@@ -122,7 +122,7 @@ export class Modules extends React.Component {
                 </div>
 
                 <div className="panel panel-default margin-large-top padding">
-                    <div className="panel-heading">USER MODULES</div>
+                    <div className="panel-heading">USER MODULES<span className="badge badge-default">{userModules.length}</span></div>
                     <div className="panel-body">
                         <div className="row">
                             {

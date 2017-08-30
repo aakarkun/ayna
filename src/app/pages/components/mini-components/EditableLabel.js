@@ -2,6 +2,7 @@ import React from 'react';
 import { getUserData, getUserModules, patchUserData } from '../../../utils/users-api';
 import { Flash } from './Flash';
 import { Spinner } from './Spinner';
+import { MiniSpinner } from './MiniSpinner';
 
 export class EditableLabel extends React.Component {
     constructor(props) {
@@ -14,12 +15,15 @@ export class EditableLabel extends React.Component {
             password: '',
             modules: [],
             error: '',
-            status: ''
+            status: '',
+            btnStatus: 'success'
 
         }
+
         this.labelClicked = this.labelClicked.bind(this);
         this.textChanged = this.textChanged.bind(this);
         this.inputLostFocus = this.inputLostFocus.bind(this);
+        this.inputFocus = this.inputFocus.bind(this);
         this.keyPressed = this.keyPressed.bind(this);
         this.handleUpdate = this.handleUpdate.bind(this);
     }
@@ -41,6 +45,12 @@ export class EditableLabel extends React.Component {
             editing: false
         })
     }
+
+    inputFocus() {
+        this.setState({
+            editing: true
+        })
+    }
     
     keyPressed(event) {
         if(event.key == 'Enter') {
@@ -54,6 +64,9 @@ export class EditableLabel extends React.Component {
         if(this.props.text === "********") {
             data = "password";
         }
+        this.setState({
+            btnStatus: 'loading'
+        })
         var newData = this.refs.textInput.value;
         if(data === "username" || data === "email" || data === "password") {
             patchUserData(data, newData)
@@ -116,13 +129,14 @@ export class EditableLabel extends React.Component {
         this.labelClicked;
         this.textChanged;
         this.inputLostFocus;
+        this.inputFocus;
         this.keyPressed;
         this.handleUpdate;
     }
 
 
     render() {
-        var { text } = this.state;
+        var { text, btnStatus } = this.state;
         if(this.state.editing)
             return <div><input 
             ref='textInput'
@@ -132,12 +146,20 @@ export class EditableLabel extends React.Component {
             value={this.state.text}
             autoFocus
             /> 
-            <button 
-            type="submit"
-            className="badge badge-primary"
-            onClick={this.handleUpdate}
-            onBlur={this.inputLostFocus}
-            >Update
+            {
+                (btnStatus == "loading") ? <MiniSpinner /> :
+                    <button 
+                    type="submit"
+                    className="badge badge-primary"
+                    onClick={this.handleUpdate}
+                    >Update
+                    </button>
+            }
+            <button
+            type="reset"
+            className="badge red badge-danger margin-left"
+            onClick={this.inputLostFocus}
+            >Cancel
             </button>
             </div>;
             

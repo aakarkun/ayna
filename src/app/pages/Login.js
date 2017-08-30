@@ -13,10 +13,10 @@ export class Login extends React.Component {
             error: ''
         }
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.keyPressed = this.keyPressed.bind(this);
     }
 
     handleSubmit(event) {
-        event.preventDefault();
         var username = this.refs.username.value;
         var password = this.refs.password.value;
         console.log(this.refs.username.value);
@@ -52,6 +52,16 @@ export class Login extends React.Component {
         })
     }
 
+    keyPressed(event) {
+        if(event.key == 'Enter') {
+            this.handleSubmit();
+        }
+    }
+
+    componentDidMount() {
+        this.keyPressed;
+    }
+
     render() {
         return(
             <div className="row">
@@ -65,14 +75,14 @@ export class Login extends React.Component {
                                     <div className="row">
                                         <div className="input-field col s12">
                                             <i className="material-icons prefix">account_circle</i>
-                                            <input id="icon_prefix" ref="username" type="text" className="validate" />
+                                            <input id="icon_prefix" ref="username" type="text" className="validate" onKeyPress={this.keyPressed}/>
                                             <label for="icon_prefix">Username</label>
                                         </div>
                                     </div>
                                     <div className="row">
                                         <div className="input-field col s12">
                                             <i className="material-icons prefix">lock</i>
-                                            <input id="icon_prefix" ref="password" type="password" className="validate" />
+                                            <input id="icon_prefix" ref="password" type="password" className="validate" onKeyPress={this.keyPressed}/>
                                             <label for="icon_prefix">Password</label>
                                         </div>
                                     </div>
