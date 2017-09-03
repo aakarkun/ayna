@@ -133,6 +133,8 @@ export class MainSurface extends React.Component {
         modules.map((module, id) => {
           if(module.surface_area !== null && validSurfaces.indexOf(module.surface_area) !== -1 && module.visible !== false){
             surfaces[module.surface_area].push(module);
+          } else if(module.visible === false){
+            console.log(module.name + ' is hidden (try show ' + module.name +')');
           } else {
             console.log("Error: Surface area is not defined for " + module.name + ".");
           }
@@ -366,7 +368,8 @@ export class MainSurface extends React.Component {
                 availableModules.map((aModule, index) => {
                   if(moduleName === 'digital' && moduleSurname === 'clock') {
                     moduleName = moduleName+moduleSurname;
-                    console.log(moduleName);
+                  } else if(moduleName === 'news' && moduleSurname === 'feed') {
+                    moduleName = moduleName+moduleSurname;                    
                   }
                   console.log(moduleName);
                   if(aModule.name.toLowerCase() === moduleName) {
@@ -395,7 +398,8 @@ export class MainSurface extends React.Component {
                 availableModules.map((aModule, index) => {
                   if(moduleName === 'digital' && moduleSurname === 'clock') {
                     moduleName = moduleName+moduleSurname;
-                    console.log(moduleName);
+                  } else if(moduleName === 'news' && moduleSurname === 'feed') {
+                    moduleName = moduleName+moduleSurname;                    
                   }
                   console.log(moduleName);
                   if(aModule.name.toLowerCase() === moduleName) {
