@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-// const BASE_URL = 'https://160c42be.ngrok.io';
+// const BASE_URL = 'https://eacce501.ngrok.io';
+
 const BASE_URL = 'http://localhost:8000';
 
 const userId = getUserId();
@@ -126,7 +127,7 @@ function getUserData() {
         })
 }
 
-function postUserModules(name, category, surface_area, position, header, defaul) {
+function postUserModule(name, category, surface_area, position, header, defaul) {
     return axiosInstance.post(userModulesUrl, {
         "name": name,
         "category": category,
@@ -232,4 +233,4 @@ function patchUserData(data, newData) {
     }
 }
 
-export { getUsersData, getUserData, loginUser, registerUser, getUserId, getUsername, getUserModules, postUserModules, deleteUserModule, patchUserData };
+export { getUsersData, getUserData, loginUser, registerUser, getUserId, getUsername, getUserModules, postUserModule, deleteUserModule, patchUserData };

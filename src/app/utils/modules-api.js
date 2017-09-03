@@ -1,7 +1,11 @@
 import axios from 'axios';
 import { isLoggedIn } from './AuthService';
 
+<<<<<<< HEAD
 // const BASE_URL = 'https://160c42be.ngrok.io';
+=======
+// const BASE_URL = 'https://eacce501.ngrok.io';
+>>>>>>> 62a342c79a954f4df14c1a2e09b35d50bfd52fb0
 const BASE_URL = 'http://localhost:8000';
 
 const userId = getUserId();
@@ -32,6 +36,57 @@ function getModules() {
     }
 }
 
+function getModule(moduleId) {
+    const moduleUrl = `/modules/${moduleId}`;
+    return axiosInstance.get(moduleUrl)
+        .then((response) => {
+            return response.data;
+        }).catch((error) => {
+            if(error.response.status === 400) {
+                return [
+                    {
+                        error: error.response.data,
+                        code: 400
+                    }
+                ]
+            }
+        });
+}
+
+function checkModule(moduleId) {
+    const moduleUrl = `/modules/${moduleId}`;
+    console.log("Checking User Module Installed or not?");
+    return axiosInstance.get(moduleUrl)
+        .then((response) => {
+            console.log(response.data.user);
+            console.log(userId);
+            if(response.data.user === userId) {
+                console.log("INSTALLED!!");
+                return [
+                    {
+                        status: "Installed",
+                        module: response.data.name
+                    }
+                ]
+            } else {
+                return [
+                    {
+                        status: "Install"
+                    }
+                ]
+            }
+        }).catch((error) => {
+            if(error.response.status === 400) {
+                return [
+                    {
+                        error: error.response.data,
+                        code: 400
+                    }
+                ]
+            }
+        });
+}
+
 function changePosition(moduleId, newPos) {
     const url = `/modules/${moduleId}`;
     console.log("moving.. .");
@@ -48,4 +103,4 @@ function getJwtToken() {
     return sessionStorage['ayna-jwt'];
 }
 
-export { getDefaultModules, getModules, changePosition };
+export { getDefaultModules, getModules, getModule, changePosition, checkModule };

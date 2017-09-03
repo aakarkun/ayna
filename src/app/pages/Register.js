@@ -12,10 +12,10 @@ export class Register extends React.Component {
             error: ''
         }
         this.handleRegister = this.handleRegister.bind(this);
+        this.keyPressed = this.keyPressed.bind(this);
     }
 
     handleRegister(event) {
-        event.preventDefault();
         var username = this.refs.username.value;
         var email = this.refs.email.value;
         var password = this.refs.password.value;
@@ -45,6 +45,16 @@ export class Register extends React.Component {
             })
     }
 
+    keyPressed(event) {
+        if(event.key == 'Enter') {
+            this.handleRegister();
+        }
+    }
+
+    componentDidMount() {
+        this.keyPressed;
+    }
+
     render() {
         return(
             <div className="row">
@@ -58,26 +68,26 @@ export class Register extends React.Component {
                                     <div className="row">
                                         <div className="input-field col s12">
                                             <i className="material-icons prefix">account_circle</i>
-                                            <input id="icon_prefix" ref="username" type="text" className="validate" />
+                                            <input id="icon_prefix" ref="username" type="text" className="validate" onKeyPress={this.keyPressed} />
                                             <label for="icon_prefix">Username</label>
                                         </div>
                                     </div>
                                     <div className="row">
                                         <div className="input-field col s12">
                                             <i className="material-icons prefix">email</i>
-                                            <input id="icon_prefix" ref="email" type="email" className="validate" />
+                                            <input id="icon_prefix" ref="email" type="email" className="validate" onKeyPress={this.keyPressed} />
                                             <label for="icon_prefix">Email</label>
                                         </div>
                                     </div>
                                     <div className="row">
                                         <div className="input-field col s12">
                                             <i className="material-icons prefix">lock</i>
-                                            <input id="icon_prefix" ref="password" type="password" className="validate" />
+                                            <input id="icon_prefix" ref="password" type="password" className="validate" onKeyPress={this.keyPressed} />
                                             <label for="icon_prefix">Password</label>
                                         </div>
                                     </div>
                                     <div className="margin-large-top">
-                                        <a type="submit" className="btn btn-default margin-top" onClick={this.handleRegister}>Register</a>
+                                        <Link type="submit" className="btn btn-default margin-top" onClick={this.handleRegister}>Register</Link>
                                         <Link to={"/login"} type="button" className="btn btn-default margin-top margin-left">Login</Link>
                                     </div>
                                 </div>
