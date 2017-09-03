@@ -58,6 +58,13 @@ function changePosition(moduleId, newPos) {
     }).then(response => response.data);
 }
 
+function patchModule(moduleId, newData) {
+    const url = `/modules/${moduleId}`;
+    return axiosInstance.patch(url, {
+        'visible': newData
+    }).then(response => response.data);
+}
+
 function getUserId() {
     return sessionStorage['user-id'];
 }
@@ -66,4 +73,4 @@ function getJwtToken() {
     return sessionStorage['ayna-jwt'];
 }
 
-export { getDefaultModules, getModules, getModule, changePosition };
+export { getDefaultModules, getModules, getModule, changePosition, patchModule };
