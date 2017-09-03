@@ -2,6 +2,8 @@ import React from 'react';
 import { Navbar } from './components/Navbar';
 import { browserHistory } from 'react-router';
 import annyang from 'annyang';
+import { loggedOut } from '../utils/AuthService';
+
 
 export class Root extends React.Component {
 
@@ -19,7 +21,7 @@ export class Root extends React.Component {
             });
         
             annyang.addCallback('errorNetwork', function() {
-              console.log('ERROR: ' + 'Speech Recognition fails because of a network error');      
+              console.log('ERROR: ' + 'Speech Recognition fails because of a network error');   
             });
             annyang.addCallback('errorPermissionBlocked', function() {
               console.log('ERROR: ' + 'Browser blocks the permission request to use Speech Recognition');      
@@ -34,9 +36,25 @@ export class Root extends React.Component {
             annyang.setLanguage('en-IN');
 
             var commands = {
-                'go home': function() {
-                    browserHistory.push("/");                    
+                'go (to) :path': function(path) {
+                    if(path === "back") {
+                        window.history.back();
+                    } else if(path === "home") {
+                        browserHistory.push("/");
+                    } else if(path === "profile") {
+                        browserHistory.push("/profile");
+                    } else if(path === "modules" | path === "module") {
+                        browserHistory.push("/modules");
+                    } else if(path === "dashboard") {
+                        browserHistory.push("/dashboard");
+                    }
+                },
+
+                'logout': function(path) {
+                    loggedOut();
+                    window.location.reload();
                 }
+                
             }
 
             annyang.addCommands(commands);
