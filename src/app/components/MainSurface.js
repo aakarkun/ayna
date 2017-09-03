@@ -5,6 +5,8 @@ import { isLoggedIn } from '../utils/AuthService';
 import { getDefaultModules, getModules, changePosition } from '../utils/modules-api';
 import { Spinner } from '../pages/components/mini-components/Spinner';
 import { getUsername, deleteUserModule } from '../utils/users-api';
+import { browserHistory } from 'react-router';
+
 
 
 import annyang from 'annyang';
@@ -85,7 +87,8 @@ export class MainSurface extends React.Component {
           iDontKnowText: [
             "Please, Login first!",
             "I can't recognize you. Do login first!",
-            "Sorry! I don't know you. Please Login!"
+            "Sorry! I don't know you. Please Login!",
+            "Nope, I don't know you. Better Login"
           ],
           iKnowYouText: [
             "Yes, you are my friend ",
@@ -137,6 +140,43 @@ export class MainSurface extends React.Component {
 
   acceptVoiceCommands() {
 
+    /* need to impliment this code
+    // Add the commands to annyang
+  			annyang.addCommands(commands);
+			
+			// Add callback functions for errors
+			annyang.addCallback('error', function() {
+				Log.error('ERROR in module ' + self.name + ': ' + 'Speech Recognition fails because an undefined error occured');
+			});
+			annyang.addCallback('errorNetwork', function() {
+		    		Log.error('ERROR in module ' + self.name + ': ' + 'Speech Recognition fails because of a network error');
+			});
+			annyang.addCallback('errorPermissionBlocked', function() {
+		    		Log.error('ERROR in module ' + self.name + ': ' + 'Browser blocks the permission request to use Speech Recognition');
+			});
+			annyang.addCallback('errorPermissionDenied', function() {
+		    		Log.error('ERROR in module ' + self.name + ': ' + 'The user blocks the permission request to use Speech Recognition');
+			});
+			annyang.addCallback('resultNoMatch', function(phrases) {
+				Log.error('ERROR in module ' + self.name + ': ' + 'No match for voice command ' + phrases);
+			});
+			annyang.addCallback('soundstart', function() {
+				self.textMessage = self.translate("HEAR_YOU");
+  				self.updateDom(self.config.animationSpeed);
+			});
+			annyang.addCallback('result', function() {
+				self.textMessage = "";
+  				self.updateDom(self.config.animationSpeed);
+			});
+
+			// Start listening
+			annyang.start();
+		} else {
+			Log.error('ERROR in module ' + self.name + ': ' + 'Google Speech Recognizer is down :(');
+		}
+
+    */
+
     var availableModules = [];
     var newsChannels = ["sports", "bbc", "business", "google-news", "hacker-news"];
     var { replies, userStatus } = this.state;
@@ -144,6 +184,41 @@ export class MainSurface extends React.Component {
     var toDisplay = '';
 
     annyang.debug();
+
+    annyang.addCallback('error', function(err) {
+      console.log('There was an error in Annyang!',err);
+      // toDisplay = "Speech Recognition fails because an undefined error occured";
+      // this.setState({
+      //   toDisplay
+      // })
+      // console.log('ERROR: ' + error);
+    }.bind(this));
+
+    annyang.addCallback('errorNetwork', function() {
+      console.log('ERROR: ' + 'Speech Recognition fails because of a network error');      
+    });
+    annyang.addCallback('errorPermissionBlocked', function() {
+      console.log('ERROR: ' + 'Browser blocks the permission request to use Speech Recognition');      
+      
+    });
+    annyang.addCallback('errorPermissionDenied', function() {
+      console.log('ERROR: ' + 'The user blocks the permission request to use Speech Recognition');      
+      
+    });
+    // annyang.addCallback('soundstart', function() {
+    //   toDisplay = "soundstart";
+    //   this.setState({
+    //     toDisplay
+    //   })
+    // }.bind(this));
+
+    // annyang.addCallback('result', function() {
+    //   toDisplay = "";
+    //   this.setState({
+    //     toDisplay
+    //   })
+    // }.bind(this));
+
 
     annyang.setLanguage('en-IN');
     getModules().then((modules) => {
@@ -190,10 +265,10 @@ export class MainSurface extends React.Component {
                 }
               });
             } else {
-              console.log("Position not matched!");
-              // this.setState({
-              //   toDisplay
-              // })
+              toDisplay = "Position not matched!";
+              this.setState({
+                toDisplay
+              })
             }
           }
 
@@ -333,11 +408,38 @@ export class MainSurface extends React.Component {
                 toDisplay
               })
           }
+        }.bind(this),
+
+        'go to dashboard': function(path) {
+          console.log("Going.. .");
+          browserHistory.push("/dashboard");
+        }.bind(this),
+
+        'go (to) home': function(path) {
+          console.log("Going.. .");
+          browserHistory.push("/");
+        }.bind(this),
+
+        'go to profile': function(path) {
+          console.log("Going.. .");
+          browserHistory.push("/profile");
+        }.bind(this),
+
+        'go to modules': function(path) {
+          console.log("Going.. .");
+          browserHistory.push("/modules");
         }.bind(this)
+
+        
+
       }; 
+
       
       annyang.addCommands(commands);
       annyang.start();
+      
+      // annyang.start({ autoRestart: true });
+      console.log("Listening.. .");
     });
   }
 
@@ -364,7 +466,7 @@ export class MainSurface extends React.Component {
           <div className="surface fullscreen above"/>
         </div>
       }
-      {console.log(modules)}
+      {/* {console.log(modules)} */}
       </div>
     );
   }
