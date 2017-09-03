@@ -15,6 +15,7 @@ export class Login extends React.Component {
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.acceptVoiceCommand = this.acceptVoiceCommand.bind(this);
+        this.keyPressed = this.keyPressed.bind(this);
     }
 
     acceptVoiceCommand() {
@@ -48,11 +49,6 @@ export class Login extends React.Component {
             annyang.addCommands(commands);
             annyang.start();
         
-    }
-
-    componentDidMount() {
-        this.acceptVoiceCommand();
-        this.keyPressed = this.keyPressed.bind(this);
     }
 
     handleSubmit(event) {
@@ -98,6 +94,7 @@ export class Login extends React.Component {
     }
 
     componentDidMount() {
+        this.acceptVoiceCommand();
         this.keyPressed;
     }
 
