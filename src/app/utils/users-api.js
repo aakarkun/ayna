@@ -149,7 +149,6 @@ function deleteUserModule(moduleId) {
     const moduleUrl = `/modules/${moduleId}`;    
     return axiosInstance.delete(moduleUrl)
         .then((response) => {
-            console.log("test");
             return response.data;
         }).catch((error) => {
             return error;

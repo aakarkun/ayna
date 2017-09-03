@@ -1,7 +1,7 @@
 import React from 'react';
 import { browserHistory } from 'react-router';
 import { getUserData, getUserModules, postUserModule, deleteUserModule } from '../../utils/users-api';
-import { getModule } from '../../utils/modules-api';
+import { getModule, setVisible } from '../../utils/modules-api';
 import { EditableLabel } from './mini-components/EditableLabel';
 import { Spinner } from './mini-components/Spinner';
 import { MiniSpinner } from './mini-components/MiniSpinner';
@@ -29,7 +29,7 @@ export class ModuleProfile extends React.Component {
         this.getModuleData = this.getModuleData.bind(this);
         this.handleIsInstalled = this.handleIsInstalled.bind(this);
         this.checkUserModule = this.checkUserModule.bind(this);
-
+        this.isToggle = this.isToggle.bind(this);
     }
 
     getModuleData() {
@@ -64,7 +64,6 @@ export class ModuleProfile extends React.Component {
             response.map((module) => {
                 userModules.push(module.name);    
             })
-            console.log(userModules);
             if(userModules.indexOf(this.state.name) != -1) {
                 console.log("Uninstall");
                 this.setState({
@@ -95,15 +94,57 @@ export class ModuleProfile extends React.Component {
                     }
                 });
         } else {
-            const { id } = this.state;
-            deleteUserModule(id).then((response, error) => {
-                if(response) {
-                    console.log("Module has been uninstalled!");
-                    browserHistory.push('/modules');
+            const { id, name } = this.state;
+            getUserModules().then((uModules) => {
+                var userModules = [];
+                var userModulesId = [];
+                var userModulesName = [];
+                uModules.map((module) => {
+                    userModules.push(module);
+                    userModulesId.push(module._id);
+                    userModulesName.push(module.name);
+                })
+                if(userModulesId.indexOf(id) != -1) {
+                    deleteUserModule(id).then((response, error) => {
+                        if(response) {
+                            console.log("Module has been uninstalled!");
+                            browserHistory.push('/modules');
+                        } else {
+                            console.log("Error during Uninstall! Error: " + error);
+                        }
+                    });
+                } else if(userModulesName.indexOf(name) != -1){
+                    for(var i = 0; i < userModules.length; i++) {
+                        if(userModules[i].name === name) {
+                            deleteUserModule(userModules[i]._id).then((response, error) => {
+                                if(response) {
+                                    console.log("Module has been uninstalled!");
+                                    browserHistory.push('/modules');
+                                } else {
+                                    console.log("Error during Uninstall! Error: " + error);
+                                }
+                            });
+                        }
+                    }
                 } else {
-                    console.log("Error during Uninstall! Error: " + error);
+                    console.log("ERROR!!");
                 }
-            });
+            })
+            
+        }
+    }
+
+    isToggle() {
+        if(this.state.visible === true) {
+            setVisible(this.state.id, false).then((response) => {
+                console.log(response);
+                window.location.reload();
+            })
+        } else {
+            setVisible(this.state.id, true).then((response) => {
+                console.log(response);
+                window.location.reload();
+            })
         }
     }
 
@@ -111,6 +152,7 @@ export class ModuleProfile extends React.Component {
         this.getModuleData();
         this.checkUserModule();
         this.handleIsInstalled;
+        this.isToggle;
     }
 
     render() {
@@ -129,7 +171,16 @@ export class ModuleProfile extends React.Component {
                             {
                                 (name === '') ? <Spinner /> :
                                 <div>
-                                    <div className="panel-heading"></div>
+                                    <div className="panel-heading">
+                                        <div className="switch pull-right">
+                                            <label>
+                                                {
+                                                    (visible === true) ? <div><span>Visible</span><input type="checkbox" checked onClick={this.isToggle}/><span className="lever"></span></div> : <div><span>Not Visible</span><input type="checkbox" onClick={this.isToggle}/><span className="lever"></span></div>
+                                                }
+                                                
+                                            </label>
+                                        </div>
+                                    </div>
                                     <div className="panel-body">
                                         <div className="media">
                                             <div className="badge-circle-bg pull-left">
