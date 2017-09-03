@@ -117,7 +117,7 @@ export class MainSurface extends React.Component {
       // pushing the appropriate modules in corresponding surface areas
       if(modules.length !== 0) {
         modules.map((module, id) => {
-          if(module.surface_area !== null && validSurfaces.indexOf(module.surface_area) !== -1){
+          if(module.surface_area !== null && validSurfaces.indexOf(module.surface_area) !== -1 && module.visible !== false){
             surfaces[module.surface_area].push(module);
           } else {
             console.log("Error: Surface area is not defined for " + module.name + ".");

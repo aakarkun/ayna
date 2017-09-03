@@ -1,8 +1,10 @@
 import React from 'react';
+import { browserHistory } from 'react-router';
 import { getUserData, getUserModules, postUserModule, deleteUserModule } from '../../utils/users-api';
 import { getModule, checkModule } from '../../utils/modules-api';
 import { EditableLabel } from './mini-components/EditableLabel';
 import { Spinner } from './mini-components/Spinner';
+import { MiniSpinner } from './mini-components/MiniSpinner';
 
 export class ModuleProfile extends React.Component {
     constructor(props) {
@@ -19,11 +21,15 @@ export class ModuleProfile extends React.Component {
             defaul: '',
             visible: '',
             error: '',
-            isInstalled: ''
+            isInstalled: '',
+            userModules: [],
+            btnStatus: 'success'
         }
 
         this.getModuleData = this.getModuleData.bind(this);
+        this.handleIsInstalled = this.handleIsInstalled.bind(this);
         this.checkUserModule = this.checkUserModule.bind(this);
+
     }
 
     getModuleData() {
@@ -43,40 +49,83 @@ export class ModuleProfile extends React.Component {
                     visible: response.visible
                 })
             }).catch((error) => {
-                console.log(error.error);
+                console.log(error);
+                console.log("Module not found!");
                 this.setState({
                     error
                 })
-            })
+            });
+
+        getUserModules()
+            .then((response) => {
+                var modules = response;
+                this.setState({
+                    userModules: modules
+                })
+                console.log(modules);
+            });
     }
 
     checkUserModule() {
         var moduleId = this.props.params.id;
-        checkModule(moduleId)
+        checkModule(moduleId, "AnalogClock")
             .then((response) => {
-                console.log(response);
                 this.setState({
                     isInstalled: response[0].status
                 })
             }).catch((error) => {
                 console.log(error);
+                console.log("This module is not installed!")
                 this.setState({
                     error
                 })
             })
     }
 
+    handleIsInstalled() {
+        this.setState({
+            btnStatus: 'loading'
+        })        
+         if(this.state.isInstalled === "Install") {
+            const { name, category, surface_area, position, header, defaul, isInstalled } = this.state;            
+            postUserModule(name, category, surface_area, position, header, defaul)
+                .then((response, error) => {
+                    if(response) {
+                        console.log("Module Installed Successfully!");
+                        browserHistory.push('/modules');
+                    } else {
+                        console.log("Module Not Installed, Error: " + error);
+                    }
+                });
+        } else {
+            const { id } = this.state;
+            deleteUserModule(id).then((response, error) => {
+                if(response) {
+                    console.log("Module has been uninstalled!");
+                    browserHistory.push('/modules');
+                } else {
+                    console.log("Error during Uninstall! Error: " + error);
+                }
+            });
+        }
+    }
+
     componentDidMount() {
         this.getModuleData();
         this.checkUserModule();
+        this.handleIsInstalled;
     }
 
     render() {
-        const { name, id, category, surface_area, position, header, defaul, btn_color, isInstalled, visible } = this.state; 
+        const { name, id, category, surface_area, position, header, defaul, btn_color, isInstalled, visible, userModules } = this.state; 
         const s = surface_area.split('_').slice(0, 1).toString();
         const a = surface_area.split('_').slice(-1).toString();
         const surface = s.substring(0, 1).toUpperCase() + s.slice(1);       
         const area = a.substring(0, 1).toUpperCase() + a.slice(1); 
+        
+
+
+
         return(
             <div>
                 <h5>{name}</h5>
@@ -100,10 +149,10 @@ export class ModuleProfile extends React.Component {
                                         {
                                             (isInstalled === "Install") ? 
                                             <div className="modules">
-                                                <button className="badge blue badge-primary" style={{float: "right", fontSize: "16px"}}>{isInstalled}</button>                                                
+                                                <button className="badge blue badge-primary" style={{float: "right", fontSize: "16px"}} onClick={this.handleIsInstalled}>{isInstalled}</button>                                                
                                             </div> :
                                             <div className="modules">
-                                             <button className="badge red badge-danger margin-left" style={{float: "right", fontSize: "16px"}}>Uninstall</button>                                             
+                                             <button className="badge red badge-danger margin-left" style={{float: "right", fontSize: "16px"}} onClick={this.handleIsInstalled}>Uninstall</button>                                             
                                             </div>
                                         }
                                     

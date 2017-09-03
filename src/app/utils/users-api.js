@@ -112,6 +112,9 @@ function getUsername() {
 function getUserModules() {
     return axiosInstance.get(userModulesUrl)
         .then((response) => {
+            // for(var i = 0; i < response.data.length; i++) {
+            //     sessionStorage.setItem('user-module-'+i, response.data[i].name);        
+            // }
             return response.data;
         }).catch((error) => {
             return error;

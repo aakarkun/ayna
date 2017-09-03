@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { isLoggedIn } from './AuthService';
+import { getUserModules } from './users-api';
 
 // const BASE_URL = 'https://eacce501.ngrok.io';
 const BASE_URL = 'http://localhost:8000';
@@ -49,14 +50,15 @@ function getModule(moduleId) {
         });
 }
 
-function checkModule(moduleId) {
-    const moduleUrl = `/modules/${moduleId}`;
-    console.log("Checking User Module Installed or not?");
+
+function checkModule(moduleId, name) {
+    const moduleUrl = `/modules/${moduleId}`;        
+    // console.log("Checking User Module Installed or not?");
     return axiosInstance.get(moduleUrl)
         .then((response) => {
             console.log(response.data.user);
             console.log(userId);
-            if(response.data.user === userId) {
+            if(response.data.user === userId || response.data.name === name) {
                 console.log("INSTALLED!!");
                 return [
                     {
