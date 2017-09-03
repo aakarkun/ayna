@@ -1,7 +1,7 @@
 import React from 'react';
 import { browserHistory } from 'react-router';
 import { getUserData, getUserModules, postUserModule, deleteUserModule } from '../../utils/users-api';
-import { getModule, patchModule } from '../../utils/modules-api';
+import { getModule, setVisible } from '../../utils/modules-api';
 import { EditableLabel } from './mini-components/EditableLabel';
 import { Spinner } from './mini-components/Spinner';
 import { MiniSpinner } from './mini-components/MiniSpinner';
@@ -136,12 +136,12 @@ export class ModuleProfile extends React.Component {
 
     isToggle() {
         if(this.state.visible === true) {
-            patchModule(this.state.id, false).then((response) => {
+            setVisible(this.state.id, false).then((response) => {
                 console.log(response);
                 window.location.reload();
             })
         } else {
-            patchModule(this.state.id, true).then((response) => {
+            setVisible(this.state.id, true).then((response) => {
                 console.log(response);
                 window.location.reload();
             })
