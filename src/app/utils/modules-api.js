@@ -50,41 +50,6 @@ function getModule(moduleId) {
         });
 }
 
-
-function checkModule(moduleId, name) {
-    const moduleUrl = `/modules/${moduleId}`;        
-    // console.log("Checking User Module Installed or not?");
-    return axiosInstance.get(moduleUrl)
-        .then((response) => {
-            console.log(response.data.user);
-            console.log(userId);
-            if(response.data.user === userId || response.data.name === name) {
-                console.log("INSTALLED!!");
-                return [
-                    {
-                        status: "Installed",
-                        module: response.data.name
-                    }
-                ]
-            } else {
-                return [
-                    {
-                        status: "Install"
-                    }
-                ]
-            }
-        }).catch((error) => {
-            if(error.response.status === 400) {
-                return [
-                    {
-                        error: error.response.data,
-                        code: 400
-                    }
-                ]
-            }
-        });
-}
-
 function changePosition(moduleId, newPos) {
     const url = `/modules/${moduleId}`;
     console.log("moving.. .");
@@ -101,4 +66,4 @@ function getJwtToken() {
     return sessionStorage['ayna-jwt'];
 }
 
-export { getDefaultModules, getModules, getModule, changePosition, checkModule };
+export { getDefaultModules, getModules, getModule, changePosition };

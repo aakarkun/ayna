@@ -1,7 +1,7 @@
 import React from 'react';
 import { browserHistory } from 'react-router';
 import { getUserData, getUserModules, postUserModule, deleteUserModule } from '../../utils/users-api';
-import { getModule, checkModule } from '../../utils/modules-api';
+import { getModule } from '../../utils/modules-api';
 import { EditableLabel } from './mini-components/EditableLabel';
 import { Spinner } from './mini-components/Spinner';
 import { MiniSpinner } from './mini-components/MiniSpinner';
@@ -55,31 +55,28 @@ export class ModuleProfile extends React.Component {
                     error
                 })
             });
-
-        getUserModules()
-            .then((response) => {
-                var modules = response;
-                this.setState({
-                    userModules: modules
-                })
-                console.log(modules);
-            });
+           
     }
 
     checkUserModule() {
-        var moduleId = this.props.params.id;
-        checkModule(moduleId, "AnalogClock")
-            .then((response) => {
-                this.setState({
-                    isInstalled: response[0].status
-                })
-            }).catch((error) => {
-                console.log(error);
-                console.log("This module is not installed!")
-                this.setState({
-                    error
-                })
+        getUserModules().then((response) => {
+            var userModules = [];
+            response.map((module) => {
+                userModules.push(module.name);    
             })
+            console.log(userModules);
+            if(userModules.indexOf(this.state.name) != -1) {
+                console.log("Uninstall");
+                this.setState({
+                    isInstalled: "Uninstall"
+                })
+            } else {
+                console.log("Install");
+                this.setState({
+                    isInstalled: "Install"
+                })
+            }
+        })
     }
 
     handleIsInstalled() {
@@ -122,9 +119,6 @@ export class ModuleProfile extends React.Component {
         const a = surface_area.split('_').slice(-1).toString();
         const surface = s.substring(0, 1).toUpperCase() + s.slice(1);       
         const area = a.substring(0, 1).toUpperCase() + a.slice(1); 
-        
-
-
 
         return(
             <div>

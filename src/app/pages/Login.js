@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
-import { loginUser, isLoggedIn } from '../utils/users-api';
+import { loginUser } from '../utils/users-api';
 import { browserHistory } from 'react-router';
 import { Flash } from './components/mini-components/Flash';
 
