@@ -1,11 +1,7 @@
 import axios from 'axios';
 import { isLoggedIn } from './AuthService';
 
-<<<<<<< HEAD
-// const BASE_URL = 'https://160c42be.ngrok.io';
-=======
 // const BASE_URL = 'https://eacce501.ngrok.io';
->>>>>>> 62a342c79a954f4df14c1a2e09b35d50bfd52fb0
 const BASE_URL = 'http://localhost:8000';
 
 const userId = getUserId();
