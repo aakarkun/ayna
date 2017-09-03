@@ -83,7 +83,7 @@ export class MainSurface extends React.Component {
           command: "update module",
           text: [
             "Please, Login first!",
-            "You can't. Without login!",
+            "You can't, without login!",
             "Sorry! I can't do this without knowing you. Please Login!"
           ]
         },
