@@ -16,6 +16,7 @@ export class Greetings extends React.Component{
 	
 	componentWillMount(){
 		clearInterval(this.greetID);
+		
 	}
 	
 	greetChanger(){

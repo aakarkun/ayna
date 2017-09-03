@@ -1,6 +1,6 @@
 import React from 'react';
 import { getUserData, getUserModules, postUserModule, deleteUserModule } from '../../utils/users-api';
-import { getModule, checkModule } from '../../utils/modules-api';
+import { getModule } from '../../utils/modules-api';
 import { EditableLabel } from './mini-components/EditableLabel';
 import { Spinner } from './mini-components/Spinner';
 
@@ -47,23 +47,29 @@ export class ModuleProfile extends React.Component {
                 this.setState({
                     error
                 })
-            })
+            });
+           
     }
 
     checkUserModule() {
-        var moduleId = this.props.params.id;
-        checkModule(moduleId)
-            .then((response) => {
-                console.log(response);
-                this.setState({
-                    isInstalled: response[0].status
-                })
-            }).catch((error) => {
-                console.log(error);
-                this.setState({
-                    error
-                })
+        getUserModules().then((response) => {
+            var userModules = [];
+            response.map((module) => {
+                userModules.push(module.name);    
             })
+            console.log(userModules);
+            if(userModules.indexOf(this.state.name) != -1) {
+                console.log("Uninstall");
+                this.setState({
+                    isInstalled: "Uninstall"
+                })
+            } else {
+                console.log("Install");
+                this.setState({
+                    isInstalled: "Install"
+                })
+            }
+        })
     }
 
     componentDidMount() {
@@ -77,6 +83,7 @@ export class ModuleProfile extends React.Component {
         const a = surface_area.split('_').slice(-1).toString();
         const surface = s.substring(0, 1).toUpperCase() + s.slice(1);       
         const area = a.substring(0, 1).toUpperCase() + a.slice(1); 
+
         return(
             <div>
                 <h5>{name}</h5>

@@ -223,7 +223,6 @@ export class MainSurface extends React.Component {
     annyang.setLanguage('en-IN');
     getModules().then((modules) => {
       availableModules = modules;
-
       var commands = {        
         'position (that) :moduleName (to) (the) :newPosition': function(moduleName, newPosition) {
           // console.log(availableModules);
@@ -429,8 +428,6 @@ export class MainSurface extends React.Component {
           console.log("Going.. .");
           browserHistory.push("/modules");
         }.bind(this)
-
-        
 
       }; 
 

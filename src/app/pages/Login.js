@@ -3,7 +3,6 @@ import { Link } from 'react-router';
 import { loginUser } from '../utils/users-api';
 import { browserHistory } from 'react-router';
 import { Flash } from './components/mini-components/Flash';
-import annyang from 'annyang';
 
 
 export class Login extends React.Component {
@@ -14,41 +13,7 @@ export class Login extends React.Component {
             error: ''
         }
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.acceptVoiceCommand = this.acceptVoiceCommand.bind(this);
         this.keyPressed = this.keyPressed.bind(this);
-    }
-
-    acceptVoiceCommand() {
-        annyang.debug();
-        
-            annyang.addCallback('error', function(err) {
-              console.log('There was an error in Annyang!',err);
-            });
-        
-            annyang.addCallback('errorNetwork', function() {
-              console.log('ERROR: ' + 'Speech Recognition fails because of a network error');      
-            });
-            annyang.addCallback('errorPermissionBlocked', function() {
-              console.log('ERROR: ' + 'Browser blocks the permission request to use Speech Recognition');      
-              
-            });
-            annyang.addCallback('errorPermissionDenied', function() {
-              console.log('ERROR: ' + 'The user blocks the permission request to use Speech Recognition');      
-              
-            });
-        
-        
-            annyang.setLanguage('en-IN');
-
-            var commands = {
-                'go back': function() {
-                    browserHistory.push("/");                    
-                }
-            }
-
-            annyang.addCommands(commands);
-            annyang.start();
-        
     }
 
     handleSubmit(event) {
@@ -94,7 +59,6 @@ export class Login extends React.Component {
     }
 
     componentDidMount() {
-        this.acceptVoiceCommand();
         this.keyPressed;
     }
 
