@@ -2,7 +2,7 @@ import React from 'react';
 
 import { SurfaceArea } from './SurfaceArea';
 import { isLoggedIn } from '../utils/AuthService';
-import { getDefaultModules, getModules, changePosition } from '../utils/modules-api';
+import { getDefaultModules, getModules, changePosition, setVisible } from '../utils/modules-api';
 import { Spinner } from '../pages/components/mini-components/Spinner';
 import { getUsername, deleteUserModule } from '../utils/users-api';
 import { browserHistory } from 'react-router';
@@ -30,9 +30,14 @@ export class MainSurface extends React.Component {
           text: [
             "Hello. How's it going?",
             "Hey, there",
+            "Hello there",
             "Hi. Whats up!",
+            "Hi.",
+            "Hi. I'm Empresa",
             "Hello to you too",
-            "Is it me you're looking for?"
+            "Is it me you're looking for?",
+            "Hello, Can I get something started for you?",
+            "Yes, how can I help?",
           ]
         },
         {
@@ -96,6 +101,12 @@ export class MainSurface extends React.Component {
             "Is that you, ",
             "That is easy, you are my friend "
           ]
+        },
+        {
+          command: "jokes",
+          jokes: [
+            ""
+          ]
         }
       ],
       toDisplay: 'hello',
@@ -120,7 +131,7 @@ export class MainSurface extends React.Component {
       // pushing the appropriate modules in corresponding surface areas
       if(modules.length !== 0) {
         modules.map((module, id) => {
-          if(module.surface_area !== null && validSurfaces.indexOf(module.surface_area) !== -1){
+          if(module.surface_area !== null && validSurfaces.indexOf(module.surface_area) !== -1 && module.visible !== false){
             surfaces[module.surface_area].push(module);
           } else {
             console.log("Error: Surface area is not defined for " + module.name + ".");
@@ -183,261 +194,328 @@ export class MainSurface extends React.Component {
 
     var toDisplay = '';
 
-    annyang.debug();
+    if(annyang) {
 
-    annyang.addCallback('error', function(err) {
-      console.log('There was an error in Annyang!',err);
-      // toDisplay = "Speech Recognition fails because an undefined error occured";
-      // this.setState({
-      //   toDisplay
-      // })
-      // console.log('ERROR: ' + error);
-    }.bind(this));
-
-    annyang.addCallback('errorNetwork', function() {
-      console.log('ERROR: ' + 'Speech Recognition fails because of a network error');      
-    });
-    annyang.addCallback('errorPermissionBlocked', function() {
-      console.log('ERROR: ' + 'Browser blocks the permission request to use Speech Recognition');      
-      
-    });
-    annyang.addCallback('errorPermissionDenied', function() {
-      console.log('ERROR: ' + 'The user blocks the permission request to use Speech Recognition');      
-      
-    });
-    // annyang.addCallback('soundstart', function() {
-    //   toDisplay = "soundstart";
-    //   this.setState({
-    //     toDisplay
-    //   })
-    // }.bind(this));
-
-    // annyang.addCallback('result', function() {
-    //   toDisplay = "";
-    //   this.setState({
-    //     toDisplay
-    //   })
-    // }.bind(this));
-
-
-    annyang.setLanguage('en-IN');
-    getModules().then((modules) => {
-      availableModules = modules;
-      var commands = {        
-        'position (that) :moduleName (to) (the) :newPosition': function(moduleName, newPosition) {
-          // console.log(availableModules);
-          if(!userStatus) {
-            var num;
-            num = Math.floor((Math.random() * replies[6].text.length));
-            toDisplay = replies[6].text[num];
-            this.setState({
-              toDisplay
-            })
-          } else {
-            if(newPosition === 'centre') {
-              newPosition = 'center';
-            }
-            if(newPosition === 'write') {
-              newPosition = 'right';
-            }
-            if(moduleName === 'clock') {
-              moduleName = 'analogclock'
-            }
-            if(moduleName === 'news' | moduleName === 'feed') {
-              moduleName = 'newsfeed'
-            }
-            if(moduleName === 'codes') {
-              moduleName = 'quotes'
-            }
+      annyang.debug();
   
-            if(newPosition === 'left' | newPosition === 'right' | newPosition === 'center') {
-              
-              availableModules.map((aModule, index) => {  
-                if(aModule.name.toLowerCase() === moduleName && aModule.position !== newPosition) {
-                  console.log("Modules Matched! previously " + aModule.name.toLowerCase() + " was in " + aModule.position);
-                  aModule.position = newPosition;
-                  console.log("now " + aModule.name + " is in " + aModule.position);
-                  changePosition(aModule._id, newPosition).then(data => {
-                    console.log(data);
-                    window.location.reload();
-                  })
-                }
-              });
-            } else {
-              toDisplay = "Position not matched!";
-              this.setState({
-                toDisplay
-              })
-            }
-          }
-
-        }.bind(this),
+      annyang.addCallback('error', function(err) {
+        console.log('There was an error in Annyang!',err);
+      }.bind(this));
   
-        '(hello) (hi) (hey) (howdy) (whats up) (yo)': function() {
-          var num;
-          num = Math.floor((Math.random() * replies[0].text.length));
-          toDisplay = replies[0].text[num];
-          this.setState({
-            toDisplay
-          })
-          console.log(this.state.toDisplay);
-        }.bind(this),
+      annyang.addCallback('errorNetwork', function() {
+        toDisplay = "Sorry, I and internet aren't talking right now. Please try again in a few."
+        this.setState({
+          toDisplay
+        });
+        console.log('ERROR: ' + 'Speech Recognition fails because of a network error');      
+      }.bind(this));
+      annyang.addCallback('errorPermissionBlocked', function() {
+        console.log('ERROR: ' + 'Browser blocks the permission request to use Speech Recognition');      
         
-        'how are you': function() {
-          var num;
-          num = Math.floor((Math.random() * replies[1].text.length));
-          toDisplay = replies[1].text[num];
-          this.setState({
-            toDisplay
-          })
-          console.log(this.state.toDisplay);
-        }.bind(this),
-
-        '(goodnight) (good night)': function() {
-          var num;
-          num = Math.floor((Math.random() * replies[2].text.length));
-          toDisplay = replies[2].text[num];
-          this.setState({
-            toDisplay
-          })
-          console.log(this.state.toDisplay);
-        }.bind(this),
-
-        'who are you': function() {
-          var num;
-          num = Math.floor((Math.random() * replies[3].text.length));
-          toDisplay = replies[3].text[num];
-          this.setState({
-            toDisplay
-          })
-          console.log(this.state.toDisplay);
-        }.bind(this),
-
-        'good morning': function() {
-          var num;
-          num = Math.floor((Math.random() * replies[4].text.length));
-          toDisplay = replies[4].text[num];
-          this.setState({
-            toDisplay
-          })
-          console.log(this.state.toDisplay);
-        }.bind(this),
-
-        'good afternoon': function() {
-          var num;
-          num = Math.floor((Math.random() * replies[5].text.length));
-          toDisplay = replies[5].text[num];
-          this.setState({
-            toDisplay
-          })
-          console.log(this.state.toDisplay);
-        }.bind(this),
-
-        'do you know (me)': function() {
-          if(!userStatus) {
-            var num;
-            num = Math.floor((Math.random() * replies[7].iDontKnowText.length));
-            toDisplay = replies[7].iDontKnowText[num];
-            this.setState({
-              toDisplay
-            })
-          } else {
-            getUsername().then((username) => {   
-              console.log("online: " + userStatus);   
+      });
+      annyang.addCallback('errorPermissionDenied', function() {
+        console.log('ERROR: ' + 'The user blocks the permission request to use Speech Recognition');      
+        
+      });
+  
+      annyang.setLanguage('en-IN');
+      getModules().then((modules) => {
+  
+        availableModules = modules;
+        var commands = {        
+          'position (that) :moduleName (to) (the) :newPosition': function(moduleName, newPosition) {
+            // console.log(availableModules);
+            if(!userStatus) {
               var num;
-              num = Math.floor((Math.random() * replies[7].iKnowYouText.length));        
-              toDisplay = replies[7].iKnowYouText[num] + username.charAt(0).toUpperCase() + username.slice(1);
+              num = Math.floor((Math.random() * replies[6].text.length));
+              toDisplay = replies[6].text[num];
               this.setState({
                 toDisplay
               })
-            })
-          }
-
-        }.bind(this),
-
-        'remove :moduleName': function(moduleName) {
-          if(!userStatus) {
-            var num;
-            num = Math.floor((Math.random() * replies[6].text.length));
-            toDisplay = replies[6].text[num];
-            this.setState({
-              toDisplay
-            })
-          } else {
-              availableModules.map((aModule, index) => {
-                if(moduleName === 'clock') {
-                  moduleName = 'analogclock'
-                }
-                if(moduleName === 'news' | moduleName === 'feed') {
-                  moduleName = 'newsfeed'
-                }
-                if(moduleName === 'codes') {
-                  moduleName = 'quotes'
-                }
-                console.log(moduleName);
-                if(aModule.name.toLowerCase() === moduleName) {
-                  deleteUserModule(aModule._id).then((response, error) => {
-                    if(response) {
-                        window.location.reload();
-                        console.log("Module has been removed!");
-                    } else {
-                        console.log("Error: " + error);
-                    }
+            } else {
+              if(newPosition === 'centre') {
+                newPosition = 'center';
+              }
+              if(newPosition === 'write') {
+                newPosition = 'right';
+              }
+              if(moduleName === 'clock') {
+                moduleName = 'analogclock'
+              }
+              if(moduleName === 'news' | moduleName === 'feed') {
+                moduleName = 'newsfeed'
+              }
+              if(moduleName === 'codes') {
+                moduleName = 'quotes'
+              }
+    
+              if(newPosition === 'left' | newPosition === 'right' | newPosition === 'center') {
+                
+                availableModules.map((aModule, index) => {  
+                  if(aModule.name.toLowerCase() === moduleName && aModule.position !== newPosition) {
+                    console.log("Modules Matched! previously " + aModule.name.toLowerCase() + " was in " + aModule.position);
+                    aModule.position = newPosition;
+                    console.log("now " + aModule.name + " is in " + aModule.position);
+                    changePosition(aModule._id, newPosition).then(data => {
+                      console.log(data);
+                      window.location.reload();
+                    })
+                  }
+                });
+              } else {
+                toDisplay = "Position not matched!";
+                this.setState({
+                  toDisplay
                 })
-                }
-              });
-              // toDisplay = "Okay, removed!";              
-              // this.setState({
-              //   toDisplay
-              // })
-          }
-        }.bind(this),
-
-        'add :moduleName': function(moduleName) {
-          if(!userStatus) {
+              }
+            }
+  
+          }.bind(this),
+    
+          '(hello) (hi) (hey) (howdy) (whats up) (yo)': function() {
             var num;
-            num = Math.floor((Math.random() * replies[6].text.length));
-            toDisplay = replies[6].text[num];
+            num = Math.floor((Math.random() * replies[0].text.length));
+            toDisplay = replies[0].text[num];
             this.setState({
               toDisplay
             })
-          } else {
-              toDisplay = "This feature is currently unavailable. Please add "+ moduleName.charAt(0).toUpperCase() + moduleName.slice(1) +" from dashboard."
+            console.log(this.state.toDisplay);
+          }.bind(this),
+          
+          'how are you': function() {
+            var num;
+            num = Math.floor((Math.random() * replies[1].text.length));
+            toDisplay = replies[1].text[num];
+            this.setState({
+              toDisplay
+            })
+            console.log(this.state.toDisplay);
+          }.bind(this),
+  
+          '(goodnight) (good night)': function() {
+            var num;
+            num = Math.floor((Math.random() * replies[2].text.length));
+            toDisplay = replies[2].text[num];
+            this.setState({
+              toDisplay
+            })
+            console.log(this.state.toDisplay);
+          }.bind(this),
+  
+          'who are you': function() {
+            var num;
+            num = Math.floor((Math.random() * replies[3].text.length));
+            toDisplay = replies[3].text[num];
+            this.setState({
+              toDisplay
+            })
+            console.log(this.state.toDisplay);
+          }.bind(this),
+  
+          'good morning': function() {
+            var num;
+            num = Math.floor((Math.random() * replies[4].text.length));
+            toDisplay = replies[4].text[num];
+            this.setState({
+              toDisplay
+            })
+            console.log(this.state.toDisplay);
+          }.bind(this),
+  
+          'good afternoon': function() {
+            var num;
+            num = Math.floor((Math.random() * replies[5].text.length));
+            toDisplay = replies[5].text[num];
+            this.setState({
+              toDisplay
+            })
+            console.log(this.state.toDisplay);
+          }.bind(this),
+  
+          'do you know (me)': function() {
+            if(!userStatus) {
+              var num;
+              num = Math.floor((Math.random() * replies[7].iDontKnowText.length));
+              toDisplay = replies[7].iDontKnowText[num];
               this.setState({
                 toDisplay
               })
-          }
-        }.bind(this),
+            } else {
+              getUsername().then((username) => {   
+                console.log("online: " + userStatus);   
+                var num;
+                num = Math.floor((Math.random() * replies[7].iKnowYouText.length));        
+                toDisplay = replies[7].iKnowYouText[num] + username.charAt(0).toUpperCase() + username.slice(1);
+                this.setState({
+                  toDisplay
+                })
+              })
+            }
+  
+          }.bind(this),
+  
+          'remove :moduleName :moduleSurname': function(moduleName, moduleSurname) {
+            if(!userStatus) {
+              var num;
+              num = Math.floor((Math.random() * replies[6].text.length));
+              toDisplay = replies[6].text[num];
+              this.setState({
+                toDisplay
+              })
+            } else {
+                availableModules.map((aModule, index) => {
+                  if(moduleName === 'digital' && moduleSurname === 'clock') {
+                    moduleName = moduleName+moduleSurname;
+                    console.log(moduleName);
+                  }
+                  console.log(moduleName);
+                  if(aModule.name.toLowerCase() === moduleName) {
+                    setVisible(aModule._id, false).then((response, error) => {
+                      if(response) {
+                          window.location.reload();
+                          console.log("Module has been removed!");
+                      } else {
+                          console.log("Error: " + error);
+                      }
+                  })
+                  }
+                });
+            }
+          }.bind(this),
 
-        'go to dashboard': function(path) {
-          console.log("Going.. .");
-          browserHistory.push("/dashboard");
-        }.bind(this),
+          'show :moduleName :moduleSurname': function(moduleName, moduleSurname) {
+            if(!userStatus) {
+              var num;
+              num = Math.floor((Math.random() * replies[6].text.length));
+              toDisplay = replies[6].text[num];
+              this.setState({
+                toDisplay
+              })
+            } else {
+                availableModules.map((aModule, index) => {
+                  if(moduleName === 'digital' && moduleSurname === 'clock') {
+                    moduleName = moduleName+moduleSurname;
+                    console.log(moduleName);
+                  }
+                  console.log(moduleName);
+                  if(aModule.name.toLowerCase() === moduleName) {
+                    setVisible(aModule._id, true).then((response, error) => {
+                      if(response) {
+                          window.location.reload();
+                          console.log("Module is now in the screen!");
+                      } else {
+                          console.log("Error: " + error);
+                      }
+                  })
+                  }
+                });
+            }
+          }.bind(this),
 
-        'go (to) home': function(path) {
-          console.log("Going.. .");
-          browserHistory.push("/");
-        }.bind(this),
-
-        'go to profile': function(path) {
-          console.log("Going.. .");
-          browserHistory.push("/profile");
-        }.bind(this),
-
-        'go to modules': function(path) {
-          console.log("Going.. .");
-          browserHistory.push("/modules");
-        }.bind(this)
-
-      }; 
-
-      
-      annyang.addCommands(commands);
-      annyang.start();
-      
-      // annyang.start({ autoRestart: true });
-      console.log("Listening.. .");
-    });
+          'remove :moduleName': function(moduleName, moduleSurname) {
+            if(!userStatus) {
+              var num;
+              num = Math.floor((Math.random() * replies[6].text.length));
+              toDisplay = replies[6].text[num];
+              this.setState({
+                toDisplay
+              })
+            } else {
+                availableModules.map((aModule, index) => {
+                  if(moduleName === 'clock' | moduleName === 'watch') {
+                    moduleName = 'analogclock'
+                  }
+                  if(moduleName === 'digital' && moduleSurname === 'clock') {
+                    moduleName = moduleName+moduleSurname;
+                    console.log(moduleName);
+                  }
+                  if(moduleName === 'news' | moduleName === 'feed') {
+                    moduleName = 'newsfeed'
+                  }
+                  if(moduleName === 'codes') {
+                    moduleName = 'quotes'
+                  }
+                  console.log(moduleName);
+                  if(aModule.name.toLowerCase() === moduleName) {
+                    setVisible(aModule._id, false).then((response, error) => {
+                      if(response) {
+                          window.location.reload();
+                          console.log("Module has been removed!");
+                      } else {
+                          console.log("Error: " + error);
+                      }
+                  })
+                  }
+                });
+            }
+          }.bind(this),
+  
+          'show :moduleName': function(moduleName) {
+            if(!userStatus) {
+              var num;
+              num = Math.floor((Math.random() * replies[6].text.length));
+              toDisplay = replies[6].text[num];
+              this.setState({
+                toDisplay
+              })
+            } else {
+                availableModules.map((aModule, index) => {
+                  if(moduleName === 'clock' | moduleName === 'watch') {
+                    moduleName = 'analogclock'
+                  }
+                  if(moduleName === 'news' | moduleName === 'feed') {
+                    moduleName = 'newsfeed'
+                  }
+                  if(moduleName === 'codes') {
+                    moduleName = 'quotes'
+                  }
+                  console.log(moduleName);
+                  if(aModule.name.toLowerCase() === moduleName) {
+                    setVisible(aModule._id, true).then((response, error) => {
+                      if(response) {
+                          window.location.reload();
+                          console.log("Module is now in the screen");
+                      } else {
+                          console.log("Error: " + error);
+                      }
+                  })
+                  }
+                });
+            }
+          }.bind(this),
+  
+          'go (to) :path (page)': function(path) {
+            if(path === "back") {
+                window.history.back();
+            } else if(path === "profile") {
+                browserHistory.push("/profile");
+            } else if(path === "modules" | path === "module") {
+                browserHistory.push("/modules");
+            } else if(path === "dashboard") {
+                browserHistory.push("/dashboard");
+            } else if(path === "login") {
+              browserHistory.push("/login");
+            } else if(path === "register") {
+              browserHistory.push("/register");
+            } else {
+              toDisplay = "Sorry! I can't find where to go.";
+              this.setState({
+                toDisplay
+              })
+            }
+          }.bind(this)
+  
+        }; 
+  
+        
+        annyang.addCommands(commands);
+        annyang.start();
+        
+        // annyang.start({ autoRestart: true });
+        console.log("Listening.. .");
+  
+      });
+    }
   }
 
   componentDidMount() {
