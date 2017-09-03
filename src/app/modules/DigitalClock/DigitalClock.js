@@ -68,17 +68,22 @@ export class DigitalClock extends React.Component {
     }
 
     render() {
-        const {second, minute, hour, day, month, year, today, todayString, monthString} = this.state;
+        var {second, minute, hour, day, month, year, today, todayString, monthString} = this.state;
+        hour = ((hour<10)?('0'+hour):hour);
+        minute = ((minute<10)?'0'+minute:minute);
+        second = ((second<10)?'0'+second:second);
+        
         return(
             <div>
                 {(!second) ? <Spinner /> :
                     <div style={{fontFamily: "Segoe Ui Light"}}>
-                        <p style={{fontSize: "90px"}} className="margin-bottom-remove margin-top-remove">{hour}:{minute}
+                        <p style={{fontSize: "90px"}} className="margin-bottom-remove margin-top-remove">
+                            {hour}:{minute}
                             <sup className="">
                                 <span className="margin-small-left" style={{fontSize: "24px"}}>{second}</span>
                             </sup>
                         </p>
-                        <span style={{fontSize: "18px", position: "absolute", top: "125", left: "30"}}>{todayString}, {monthString} {day}</span>
+                        <span style={{fontSize: "18px", position: "absolute", top: "125px", left: "30px"}}>{todayString}, {monthString} {day}</span>
                     </div>
                 }
             </div>

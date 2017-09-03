@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 import { registerUser } from '../utils/users-api';
 import { browserHistory } from 'react-router';
 import { Flash } from './components/mini-components/Flash';
+import annyang from 'annyang';
 
 export class Register extends React.Component {
     
@@ -15,6 +16,47 @@ export class Register extends React.Component {
         this.keyPressed = this.keyPressed.bind(this);
     }
 
+    acceptVoiceCommand() {
+        annyang.debug();
+        
+            annyang.addCallback('error', function(err) {
+              console.log('There was an error in Annyang!',err);
+            });
+        
+            annyang.addCallback('errorNetwork', function() {
+              console.log('ERROR: ' + 'Speech Recognition fails because of a network error');      
+            });
+            annyang.addCallback('errorPermissionBlocked', function() {
+              console.log('ERROR: ' + 'Browser blocks the permission request to use Speech Recognition');      
+              
+            });
+            annyang.addCallback('errorPermissionDenied', function() {
+              console.log('ERROR: ' + 'The user blocks the permission request to use Speech Recognition');      
+              
+            });
+        
+        
+            annyang.setLanguage('en-IN');
+
+            var commands = {
+                'go :path': function(path) {
+                    if(path === "back") {
+                        window.history.back();
+                    } else if(path === "home") {
+                        browserHistory.push("/");
+                    }
+                },
+                'login': function() {
+                    browserHistory.push("/login");
+                }.bind(this)
+            }
+
+            annyang.addCommands(commands);
+            annyang.start();
+        
+    }
+
+    
     handleRegister(event) {
         var username = this.refs.username.value;
         var email = this.refs.email.value;
@@ -53,6 +95,7 @@ export class Register extends React.Component {
 
     componentDidMount() {
         this.keyPressed;
+        this.acceptVoiceCommand();
     }
 
     render() {

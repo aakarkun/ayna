@@ -50,3 +50,12 @@
       float: none;
   }
 
+  h2 {
+    font-family: "Roboto";
+    font-weight: 200
+  }
+
+  body {
+    font-family: "Roboto";
+    font-weight: 400    
+  }
