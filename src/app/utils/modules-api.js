@@ -60,7 +60,7 @@ function changePosition(moduleId, newPos) {
 
 function setVisible(moduleId, value) {
     const url = `/modules/${moduleId}`;
-    console.log("setting.. .");
+    console.log("setting visible value to " + value);
     return axiosInstance.patch(url, {
         'visible': value
     }).then(response => response.data);
