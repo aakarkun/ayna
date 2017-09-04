@@ -83,6 +83,7 @@ export class Modules extends React.Component {
             return common;
         }
         var installedModules = intersectModules(defModulesName, userModulesName);
+        
         function isInstalled(name) {
             var install;
             if(userModulesName.indexOf(name) !== -1) {
@@ -97,20 +98,14 @@ export class Modules extends React.Component {
             <div>
                 <h5>MODULES</h5>
                 <div className="panel panel-default margin-large-top padding">
-                    <div className="panel-heading">AYNA MODULES<span className="badge badge-default">{defaultModules.length}</span></div>
+                    <div className="panel-heading">AYNA MODULES<span className="badge badge-default"><strong>{defaultModules.length}</strong></span></div>
                     <div className="panel-body">
                         <div className="row">
                             {
                                 (defaultModules.length === 0) ? <center><Spinner /></center> :
                                 defaultModules.map((defaultModule, index) => (      
                                     <ModuleComponent 
-                                        name={ defaultModule.name }
-                                        id={defaultModule._id} 
-                                        category={ defaultModule.category }
-                                        surface_area={ defaultModule.surface_area }
-                                        position={ defaultModule.position }
-                                        header={ defaultModule.header }
-                                        defaul="false"
+                                        module={defaultModule}
                                         key={index} 
                                         isInstalled={isInstalled(defaultModule.name)}
                                         btn_color={(isInstalled(defaultModule.name) === "INSTALL") ? "primary" : "success"}
@@ -122,7 +117,7 @@ export class Modules extends React.Component {
                 </div>
 
                 <div className="panel panel-default margin-large-top padding">
-                    <div className="panel-heading">USER MODULES<span className="badge badge-default">{userModules.length}</span></div>
+                    <div className="panel-heading">USER MODULES<span className="badge badge-default"><strong>{userModules.length}</strong></span></div>
                     <div className="panel-body">
                         <div className="row">
                             {
@@ -131,9 +126,6 @@ export class Modules extends React.Component {
                                 userModules.map((userModule, index) => (
                                     <ModuleComponent 
                                         module={ userModule } 
-                                        name={ userModule.name }
-                                        id={ userModule._id }
-                                        category={ userModule.category } 
                                         key={ index } 
                                         isInstalled="UNINSTALL"
                                         btn_color= "danger"
