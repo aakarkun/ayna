@@ -185,7 +185,6 @@ export class ModuleProfile extends React.Component {
                                                 {       
                                                     (isAynaModule === true) ? 
                                                     <div>
-                                                    <img src="https://image.ibb.co/coi2ta/Ayna_04.png" className="margin-right" alt="Ayna_04" border="0" height="80" width="55" />    
                                                     </div> :
                                                     (visible !== true) ? 
                                                         <div>
