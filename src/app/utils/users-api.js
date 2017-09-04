@@ -130,14 +130,13 @@ function getUserData() {
         })
 }
 
-function postUserModule(name, category, surface_area, position, header, defaul) {
+function postUserModule(name, category, surface_area, position, header) {
     return axiosInstance.post(userModulesUrl, {
         "name": name,
         "category": category,
         "surface_area": surface_area,
         "position": position,
-        "header": header,
-        "default": defaul
+        "header": header
     }).then((response) => {
         return response.data;
     }).catch((error) => {
