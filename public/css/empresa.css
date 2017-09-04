@@ -418,3 +418,5 @@ input::placeholder {
 .switch label input[type=checkbox]:checked+.lever:after {
   background-color: #fff;
 }
+
+/* Switch Disabled */
