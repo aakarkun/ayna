@@ -1,90 +1,99 @@
 import React from 'react';
 import { browserHistory } from 'react-router';
-import { getUserData, getUserModules, postUserModule, deleteUserModule } from '../../utils/users-api';
+
+import { getUserModules, postUserModule, deleteUserModule } from '../../utils/users-api';
 import { getModule, setVisible } from '../../utils/modules-api';
-import { EditableLabel } from './mini-components/EditableLabel';
 import { Spinner } from './mini-components/Spinner';
 import { MiniSpinner } from './mini-components/MiniSpinner';
 
 export class ModuleProfile extends React.Component {
-    constructor(props) {
-        super(props);
+    constructor() {
+        super();
         this.state = {
-            name: '',
+            module: [],
             id: '',
-            user: '',
+            name: '',
             category: '',
             surface_area: '',
             position: '',
             header: '',
-            __v: '',
-            defaul: '',
             visible: '',
-            error: '',
             isInstalled: '',
             userModules: [],
-            btnStatus: 'success'
+            btnStatus: 'success',
+            error: '',
+            isAynaModule: true
         }
 
         this.getModuleData = this.getModuleData.bind(this);
-        this.handleIsInstalled = this.handleIsInstalled.bind(this);
         this.checkUserModule = this.checkUserModule.bind(this);
+        this.handleIsInstalled = this.handleIsInstalled.bind(this);
         this.isToggle = this.isToggle.bind(this);
     }
-
+    
     getModuleData() {
         var moduleId = this.props.params.id;
+        console.log(moduleId);
         getModule(moduleId)
-            .then((response) => {
-                this.setState({
-                    name: response.name,
-                    id: response._id,
-                    user: response.user,
-                    category: response.category,
-                    surface_area: response.surface_area,
-                    position: response.position,
-                    header: response.header,
-                    __v: response.__v,
-                    defaul: response.defaul,
-                    visible: response.visible
-                })
-            }).catch((error) => {
-                console.log(error);
-                console.log("Module not found!");
-                this.setState({
-                    error
-                })
-            });
-           
+        .then((response) => {
+            this.setState({
+                module: response,
+                id: response._id,
+                name: response.name,
+                category: response.category,
+                surface_area: response.surface_area,
+                position: response.position,
+                header: response.header,
+                visible: response.visible
+            })
+        }).catch((error) => {
+            console.log(error);
+            console.log("Module not found!");
+            this.setState({
+                error
+            })
+        });
     }
 
     checkUserModule() {
         getUserModules().then((response) => {
             var userModules = [];
+            var userModulesId = [];
+            var userModulesName = [];
             response.map((module) => {
-                userModules.push(module.name);    
+                userModules.push(module);
+                userModulesId.push(module._id);
+                userModulesName.push(module.name);
             })
-            if(userModules.indexOf(this.state.name) != -1) {
-                console.log("Uninstall");
+            if(userModulesName.indexOf(this.state.name) != -1) {
                 this.setState({
                     isInstalled: "Uninstall"
                 })
             } else {
-                console.log("Install");
                 this.setState({
-                    isInstalled: "Install"
+                    isInstalled: "Install",
+                    visible: this.state.visible
+                })
+            }
+            if(userModulesId.indexOf(this.state.id) != -1) {
+                this.setState({
+                    isAynaModule: false
+                })
+            } else {
+                this.setState({
+                    isAynaModule: true
                 })
             }
         })
     }
-
+    
     handleIsInstalled() {
         this.setState({
             btnStatus: 'loading'
-        })        
-         if(this.state.isInstalled === "Install") {
-            const { name, category, surface_area, position, header, defaul, isInstalled } = this.state;            
-            postUserModule(name, category, surface_area, position, header, defaul)
+        })
+        if(this.state.isInstalled === "Install") {
+            const { name, category, surface_area, position, header } = this.state;            
+            postUserModule(name, category, surface_area, position, header)
                 .then((response, error) => {
                     if(response) {
                         console.log("Module Installed Successfully!");
@@ -94,18 +103,17 @@ export class ModuleProfile extends React.Component {
                     }
                 });
         } else {
-            const { id, name } = this.state;
-            getUserModules().then((uModules) => {
+            getUserModules().then((response) => {
                 var userModules = [];
                 var userModulesId = [];
                 var userModulesName = [];
-                uModules.map((module) => {
+                response.map((module) => {
                     userModules.push(module);
                     userModulesId.push(module._id);
                     userModulesName.push(module.name);
                 })
-                if(userModulesId.indexOf(id) != -1) {
-                    deleteUserModule(id).then((response, error) => {
+                if(userModulesId.indexOf(this.state.id) != -1) {
+                    deleteUserModule(this.state.id).then((response, error) => {
                         if(response) {
                             console.log("Module has been uninstalled!");
                             browserHistory.push('/modules');
@@ -113,9 +121,9 @@ export class ModuleProfile extends React.Component {
                             console.log("Error during Uninstall! Error: " + error);
                         }
                     });
-                } else if(userModulesName.indexOf(name) != -1){
+                } else if(userModulesName.indexOf(this.state.name) != -1){
                     for(var i = 0; i < userModules.length; i++) {
-                        if(userModules[i].name === name) {
+                        if(userModules[i].name === this.state.name) {
                             deleteUserModule(userModules[i]._id).then((response, error) => {
                                 if(response) {
                                     console.log("Module has been uninstalled!");
@@ -127,10 +135,9 @@ export class ModuleProfile extends React.Component {
                         }
                     }
                 } else {
-                    console.log("ERROR!!");
+                    console.log("ERROR UNINSTALL!!");
                 }
             })
-            
         }
     }
 
@@ -156,7 +163,8 @@ export class ModuleProfile extends React.Component {
     }
 
     render() {
-        const { name, id, category, surface_area, position, header, defaul, btn_color, isInstalled, visible, userModules } = this.state; 
+        var { module, name, category, surface_area, position, header, visible, isInstalled, isAynaModule, btnStatus } = this.state;
+
         const s = surface_area.split('_').slice(0, 1).toString();
         const a = surface_area.split('_').slice(-1).toString();
         const surface = s.substring(0, 1).toUpperCase() + s.slice(1);       
@@ -174,10 +182,19 @@ export class ModuleProfile extends React.Component {
                                     <div className="panel-heading">
                                         <div className="switch pull-right">
                                             <label>
-                                                {
-                                                    (visible === true) ? <div><span>Visible</span><input type="checkbox" checked onClick={this.isToggle}/><span className="lever"></span></div> : <div><span>Not Visible</span><input type="checkbox" onClick={this.isToggle}/><span className="lever"></span></div>
-                                                }
-                                                
+                                                {       
+                                                    (isAynaModule === true) ? 
+                                                    <div>
+                                                    <img src="https://image.ibb.co/coi2ta/Ayna_04.png" className="margin-right" alt="Ayna_04" border="0" height="80" width="55" />    
+                                                    </div> :
+                                                    (visible !== true) ? 
+                                                        <div>
+                                                        <span>Not Visible</span><input type="checkbox" onClick={this.isToggle}/><span className="lever"></span> 
+                                                        </div> : 
+                                                        <div>
+                                                        <span>Visible</span><input checked type="checkbox" onClick={this.isToggle}/><span className="lever"></span>
+                                                        </div>
+                                                }                                                
                                             </label>
                                         </div>
                                     </div>
@@ -192,6 +209,7 @@ export class ModuleProfile extends React.Component {
                                             </div>
                                         </div>
                                         {
+                                            (btnStatus === "loading") ? <div className="margin-right" style={{float: "right"}}><MiniSpinner /></div> : 
                                             (isInstalled === "Install") ? 
                                             <div className="modules">
                                                 <button className="badge blue badge-primary" style={{float: "right", fontSize: "16px"}} onClick={this.handleIsInstalled}>{isInstalled}</button>                                                
