@@ -47,7 +47,8 @@ export class MainSurface extends React.Component {
             "I'm doing well. What about you?",
             "hmm. I'm fine I guess",
             "I'm feeling electrified.",
-            "I'm well."
+            "I'm well.",
+            "I'm good. Feeling positively charged!"
           ]
         },
         {
@@ -92,8 +93,7 @@ export class MainSurface extends React.Component {
           iDontKnowText: [
             "Please, Login first!",
             "I can't recognize you. Do login first!",
-            "Sorry! I don't know you. Please Login!",
-            "Nope, I don't know you. Better Login"
+            "Sorry! I don't know you. Please Login!"
           ],
           iKnowYouText: [
             "Yes, you are my friend ",
@@ -103,9 +103,50 @@ export class MainSurface extends React.Component {
           ]
         },
         {
-          command: "jokes",
-          jokes: [
-            ""
+          command: "remove module",
+          cannotFindText: [
+            "I can't find this module",
+            "Opps! I find visible property of this module is already false!",
+            "Sorry, I cannot remove the module which has been removed already!"
+          ],
+          findText: [
+            "Module has been removed!",
+            "Module is now invisible.",
+            "abra kaa! dabra!",
+            "aye aye! removing.. ."
+          ],
+          cannotRecognizeText: [
+            "I cannot recognize this module.",
+            "Do I know about this module?",            
+            "You didn't told me about this module, did you?",
+            "Is there any module with this name?",
+            "This module is completely new to me."
+          ]
+        },
+        {
+          command: "show module",
+          cannotFindText: [
+            "I can't show this module twice!",
+            "Opps! I find visible property of this module is already true!",
+            "Sorry, this module is already in the screen!"
+          ],
+          findText: [
+            "Module is now in the screen",
+            "I'm glad that you make it visible"
+          ],
+          cannotRecognizeText: [
+            "I cannot recognize this module.",
+            "Do I know about this module?",
+            "You didn't told me about this module, did you?",
+            "Is there any module with this name?",
+            "This module is completely new to me.",
+            "Did you just add new module that I can't recognized?"
+          ]
+        },
+        {
+          command: "go to path",
+          iDontKnowText: [
+            "Please enter valid username and password."
           ]
         }
       ],
@@ -224,7 +265,32 @@ export class MainSurface extends React.Component {
       getModules().then((modules) => {
   
         availableModules = modules;
-        var commands = {        
+        var availableModulesName = [];
+        var visibleModules = [];
+        var visibleModulesName = [];
+        var invisibleModules = [];
+        var invisibleModulesName = [];
+
+        modules.map((module) => {
+          availableModulesName.push(module.name.toLowerCase());
+        });
+
+        modules.map((module) => {
+          if(module.visible === true) {
+            visibleModules.push(module);
+            visibleModulesName.push(module.name.toLowerCase());
+          }
+          if(module.visible === false) {
+            invisibleModules.push(module);
+            invisibleModulesName.push(module.name.toLowerCase());
+          }
+        })
+        console.log(visibleModulesName);
+        var commands = {  
+          'reload': function() {
+            window.location.reload();
+          },
+
           'position (that) :moduleName (to) (the) :newPosition': function(moduleName, newPosition) {
             // console.log(availableModules);
             if(!userStatus) {
@@ -365,25 +431,49 @@ export class MainSurface extends React.Component {
                 toDisplay
               })
             } else {
-                availableModules.map((aModule, index) => {
-                  if(moduleName === 'digital' && moduleSurname === 'clock') {
-                    moduleName = moduleName+moduleSurname;
-                  } else if(moduleName === 'news' && moduleSurname === 'feed') {
-                    moduleName = moduleName+moduleSurname;                    
+                if(moduleName === 'digital' && moduleSurname === 'clock') {
+                  moduleName = moduleName+moduleSurname;
+                } else if(moduleName === 'news' && moduleSurname === 'feed') {
+                  moduleName = moduleName+moduleSurname;                    
+                }
+                console.log(moduleName);
+                  if(visibleModulesName.indexOf(moduleName) === -1 && invisibleModulesName.indexOf(moduleName) !== -1) {
+                    console.log(visibleModulesName.indexOf(moduleName));
+                    num = Math.floor((Math.random() * replies[8].cannotFindText.length));
+                    toDisplay = replies[8].cannotFindText[num];
+                    console.log(toDisplay);
+                    this.setState({
+                      toDisplay
+                    });
                   }
-                  console.log(moduleName);
-                  if(aModule.name.toLowerCase() === moduleName) {
-                    setVisible(aModule._id, false).then((response, error) => {
-                      if(response) {
-                          window.location.reload();
-                          console.log("Module has been removed!");
-                      } else {
-                          console.log("Error: " + error);
-                      }
-                  })
+
+                  if(availableModulesName.indexOf(moduleName) === -1) {
+                    num = Math.floor((Math.random() * replies[8].cannotRecognizeText.length));
+                    toDisplay = replies[8].cannotRecognizeText[num];
+                    console.log(toDisplay);
+                    this.setState({
+                      toDisplay
+                    });
                   }
-                });
-            }
+
+                  visibleModules.map((vModule, index) => {
+                    if(vModule.name.toLowerCase() === moduleName) {
+                      setVisible(vModule._id, false).then((response, error) => {
+                        if(response) {
+                            window.location.reload();
+                            num = Math.floor((Math.random() * replies[8].findText.length));
+                            toDisplay = replies[8].findText[num];
+                            console.log(toDisplay);
+                            this.setState({
+                              toDisplay
+                            });
+                        } else {
+                            console.log("Error: " + error);
+                        }
+                      });
+                    }
+                  });
+              }
           }.bind(this),
 
           'show :moduleName :moduleSurname': function(moduleName, moduleSurname) {
@@ -395,24 +485,45 @@ export class MainSurface extends React.Component {
                 toDisplay
               })
             } else {
-                availableModules.map((aModule, index) => {
-                  if(moduleName === 'digital' && moduleSurname === 'clock') {
-                    moduleName = moduleName+moduleSurname;
-                  } else if(moduleName === 'news' && moduleSurname === 'feed') {
-                    moduleName = moduleName+moduleSurname;                    
-                  }
-                  console.log(moduleName);
-                  if(aModule.name.toLowerCase() === moduleName) {
-                    setVisible(aModule._id, true).then((response, error) => {
+                if(moduleName === 'digital' && moduleSurname === 'clock') {
+                  moduleName = moduleName+moduleSurname;
+                } else if(moduleName === 'news' && moduleSurname === 'feed') {
+                  moduleName = moduleName+moduleSurname;                    
+                }
+                if(invisibleModulesName.indexOf(moduleName) === -1 && visibleModulesName.indexOf(moduleName) !== -1) {
+                  num = Math.floor((Math.random() * replies[9].cannotFindText.length));
+                  toDisplay = replies[9].cannotFindText[num];
+                  this.setState({
+                    toDisplay
+                  })
+                }
+
+                if(availableModulesName.indexOf(moduleName) === -1) {
+                  num = Math.floor((Math.random() * replies[9].cannotRecognizeText.length));
+                  toDisplay = replies[9].cannotRecognizeText[num];
+                  console.log(toDisplay);
+                  this.setState({
+                    toDisplay
+                  });
+                }
+
+                invisibleModules.map((ivModule, index) => {
+                  if(ivModule.name.toLowerCase() === moduleName) {
+                    setVisible(ivModule._id, true).then((response, error) => {
                       if(response) {
                           window.location.reload();
-                          console.log("Module is now in the screen!");
+                          num = Math.floor((Math.random() * replies[9].findText.length));
+                          toDisplay = replies[9].findText[num];
+                          console.log(toDisplay);
+                          this.setState({
+                            toDisplay
+                          });
                       } else {
                           console.log("Error: " + error);
                       }
-                  })
+                    })
                   }
-                });
+                })
             }
           }.bind(this),
 
@@ -425,32 +536,58 @@ export class MainSurface extends React.Component {
                 toDisplay
               })
             } else {
-                availableModules.map((aModule, index) => {
-                  if(moduleName === 'clock' | moduleName === 'watch') {
-                    moduleName = 'analogclock'
-                  }
-                  if(moduleName === 'digital' && moduleSurname === 'clock') {
-                    moduleName = moduleName+moduleSurname;
-                    console.log(moduleName);
-                  }
-                  if(moduleName === 'news' | moduleName === 'feed') {
-                    moduleName = 'newsfeed'
-                  }
-                  if(moduleName === 'codes') {
-                    moduleName = 'quotes'
-                  }
-                  console.log(moduleName);
-                  if(aModule.name.toLowerCase() === moduleName) {
-                    setVisible(aModule._id, false).then((response, error) => {
-                      if(response) {
-                          window.location.reload();
-                          console.log("Module has been removed!");
-                      } else {
-                          console.log("Error: " + error);
-                      }
-                  })
-                  }
+              if(moduleName === 'clock' | moduleName === 'watch') {
+                moduleName = 'analogclock'
+              }
+              if(moduleName === 'digital' && moduleSurname === 'clock') {
+                moduleName = moduleName+moduleSurname;
+                console.log(moduleName);
+              }
+              if(moduleName === 'news' | moduleName === 'feed') {
+                moduleName = 'newsfeed'
+              }
+              if(moduleName === 'codes') {
+                moduleName = 'quotes'
+              }
+              console.log(moduleName);
+
+              if(visibleModulesName.indexOf(moduleName) === -1 && invisibleModulesName.indexOf(moduleName) !== -1) {
+                console.log(visibleModulesName.indexOf(moduleName));
+                num = Math.floor((Math.random() * replies[8].cannotFindText.length));
+                toDisplay = replies[8].cannotFindText[num];
+                console.log(toDisplay);
+                this.setState({
+                  toDisplay
                 });
+              }
+
+              if(availableModulesName.indexOf(moduleName) === -1) {
+                num = Math.floor((Math.random() * replies[8].cannotRecognizeText.length));
+                toDisplay = replies[8].cannotRecognizeText[num];
+                console.log(toDisplay);
+                this.setState({
+                  toDisplay
+                });
+              }
+
+              visibleModules.map((vModule, index) => {
+                if(vModule.name.toLowerCase() === moduleName) {
+                  setVisible(vModule._id, false).then((response, error) => {
+                    if(response) {
+                        window.location.reload();
+                        num = Math.floor((Math.random() * replies[8].findText.length));
+                        toDisplay = replies[8].findText[num];
+                        console.log(toDisplay);
+                        this.setState({
+                          toDisplay
+                        });
+                    } else {
+                        console.log("Error: " + error);
+                    }
+                  });
+                }
+              });
+
             }
           }.bind(this),
   
@@ -463,58 +600,98 @@ export class MainSurface extends React.Component {
                 toDisplay
               })
             } else {
-                availableModules.map((aModule, index) => {
-                  if(moduleName === 'clock' | moduleName === 'watch') {
-                    moduleName = 'analogclock'
-                  }
-                  if(moduleName === 'news' | moduleName === 'feed') {
-                    moduleName = 'newsfeed'
-                  }
-                  if(moduleName === 'codes') {
-                    moduleName = 'quotes'
-                  }
-                  console.log(moduleName);
-                  if(aModule.name.toLowerCase() === moduleName) {
-                    setVisible(aModule._id, true).then((response, error) => {
+                if(moduleName === 'clock' | moduleName === 'watch') {
+                  moduleName = 'analogclock'
+                }
+                if(moduleName === 'news' | moduleName === 'feed') {
+                  moduleName = 'newsfeed'
+                }
+                if(moduleName === 'codes') {
+                  moduleName = 'quotes'
+                }
+
+                if(invisibleModulesName.indexOf(moduleName) === -1 && visibleModulesName.indexOf(moduleName) !== -1) {
+                  num = Math.floor((Math.random() * replies[9].cannotFindText.length));
+                  toDisplay = replies[9].cannotFindText[num];
+                  this.setState({
+                    toDisplay
+                  })
+                }
+
+                if(availableModulesName.indexOf(moduleName) === -1) {
+                  num = Math.floor((Math.random() * replies[9].cannotRecognizeText.length));
+                  toDisplay = replies[9].cannotRecognizeText[num];
+                  console.log(toDisplay);
+                  this.setState({
+                    toDisplay
+                  });
+                }
+
+                invisibleModules.map((ivModule, index) => {
+                  if(ivModule.name.toLowerCase() === moduleName) {
+                    setVisible(ivModule._id, true).then((response, error) => {
                       if(response) {
                           window.location.reload();
-                          console.log("Module is now in the screen");
+                          num = Math.floor((Math.random() * replies[9].findText.length));
+                          toDisplay = replies[9].findText[num];
+                          console.log(toDisplay);
+                          this.setState({
+                            toDisplay
+                          });
                       } else {
                           console.log("Error: " + error);
                       }
-                  })
+                    })
                   }
-                });
+                })
             }
           }.bind(this),
   
           'go (to) :path (page)': function(path) {
-            if(path === "back") {
-                window.history.back();
-            } else if(path === "profile") {
-                browserHistory.push("/profile");
-            } else if(path === "modules" | path === "module") {
-                browserHistory.push("/modules");
-            } else if(path === "dashboard") {
-                browserHistory.push("/dashboard");
-            } else if(path === "login") {
-              browserHistory.push("/login");
-            } else if(path === "register") {
-              browserHistory.push("/register");
-            } else {
-              toDisplay = "Sorry! I can't find where to go.";
+            if(!userStatus) {
+              
+              var num;
+              num = Math.floor((Math.random() * replies[7].iDontKnowText.length));
+              toDisplay = replies[7].iDontKnowText[num];
               this.setState({
                 toDisplay
               })
+              browserHistory.push("/dashboard");
+            } else {
+              if(path === "profile") {
+                toDisplay = "profile";
+                this.setState({
+                  toDisplay
+                })
+                browserHistory.push("/profile");
+              } else if(path === "modules" | path === "module") {
+                toDisplay = "modules";
+                this.setState({
+                  toDisplay
+                })
+                browserHistory.push("/modules");
+              } else if(path === "dashboard") {
+                getUsername().then((username) => {   
+                  var num;
+                  toDisplay = "Welcome to Dashboard " + username.charAt(0).toUpperCase() + username.slice(1);
+                  this.setState({
+                    toDisplay
+                  })
+                  browserHistory.push("/dashboard");
+                });
+              } else {
+                toDisplay = "Sorry! I can't find where to go.";
+                this.setState({
+                  toDisplay
+                })
+              }
             }
+
           }.bind(this)
-  
         }; 
-  
         
         annyang.addCommands(commands);
-        annyang.start();
-        
+        annyang.start({ autoRestart: true });      
         // annyang.start({ autoRestart: true });
         console.log("Listening.. .");
   

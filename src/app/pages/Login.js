@@ -45,7 +45,7 @@ export class Login extends React.Component {
                     if(path === "back") {
                         window.history.back();                
                     } else if( path === "home") {
-                        browserHistory.push("/home");
+                        browserHistory.push("/");
                     }
                 },
                 'login': function() {
