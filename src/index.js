@@ -14,6 +14,7 @@ import { Profile } from './app/pages/components/Profile';
 import { ModuleProfile } from './app/pages/components/ModuleProfile';
 
 import { isLoggedIn, requireAuth } from './app/utils/AuthService';
+import { NotFound } from './app/pages/components/mini-components/NotFound';
 
 
 class App extends React.Component {
@@ -34,10 +35,12 @@ class App extends React.Component {
           <Route path="/modules" component={Modules} />         
           <Route path="/users" component={Users} />   
           <Route path="/profile" component={Profile} /> 
-          <Route path="/modules/:id" component={ModuleProfile} />                         
+          <Route path="/modules/:id" component={ModuleProfile} />
+          <Route path="*" component={NotFound} />
         </Route>
         <Route path="login" component={Login} />
         <Route path="register" component={Register} />
+        <Route path="*" component={NotFound} />
       </Router>
     );
   }
