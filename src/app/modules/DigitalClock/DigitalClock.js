@@ -64,7 +64,7 @@ export class DigitalClock extends React.Component {
         var {second, minute, hour, day, month, year, today, todayString, monthString} = this.state;
         hour = ((hour<10)?('0'+hour):hour);
         minute = ((minute<10)?'0'+minute:minute);
-        second = ((second<10)?'0'+second:second);
+        var _second = ((second<10)?'0'+second:second);
         
         return(
             <div>
@@ -73,10 +73,10 @@ export class DigitalClock extends React.Component {
                         <p style={{fontSize: "90px"}} className="margin-bottom-remove margin-top-remove">
                             {hour}:{minute}
                             <sup className="">
-                                <span className="margin-small-left" style={{fontSize: "24px"}}>{second}</span>
+                                <span className="margin-small-left" style={{fontSize: "24px"}}>{_second}</span>
                             </sup>
                         </p>
-                        <span style={{fontSize: "18px", position: "absolute", top: "125px", left: "30px"}}>{todayString}, {monthString} {day}</span>
+                        <span style={{fontSize: "18px", position: "absolute", top: "125px", left: "30px"}}>{todayString} {monthString} {day}</span>
                     </div>
                 }
             </div>

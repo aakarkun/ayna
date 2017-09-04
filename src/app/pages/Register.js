@@ -48,6 +48,9 @@ export class Register extends React.Component {
                 },
                 'login': function() {
                     browserHistory.push("/login");
+                }.bind(this),
+                'register': function() {
+                    this.handleRegister();
                 }.bind(this)
             }
 
