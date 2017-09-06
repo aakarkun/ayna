@@ -3,7 +3,7 @@ import { Module } from './Module';
 
 export class SurfaceArea extends React.Component {
   render() {
-    var { reply, listening, commandChannel } = this.props;
+    var { reply, listening, commandChannel, wikiSearch } = this.props;
     var positions = {
           left: [],
           center: [],
@@ -30,13 +30,13 @@ export class SurfaceArea extends React.Component {
         <div className="container">
           <div className="row text-center">
             <div className={'col-sm-' + this.props.col_left}>
-              <Module modules={positions.left} reply={reply} listening={listening}/>
+              <Module modules={positions.left} reply={reply} listening={listening} wikiSearch={wikiSearch} />
             </div>
             <div className={'col-sm-' + this.props.col_center}>
-              <Module modules={positions.center} reply={reply} commandChannel={commandChannel} listening={listening} />
+              <Module modules={positions.center} reply={reply} commandChannel={commandChannel} listening={listening} wikiSearch={wikiSearch} />
             </div>
             <div className={'col-sm-' + this.props.col_right}>
-              <Module modules={positions.right} reply={reply} listening={listening} /> 
+              <Module modules={positions.right} reply={reply} listening={listening} wikiSearch={wikiSearch} /> 
             </div>
           </div>
         </div>

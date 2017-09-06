@@ -10,9 +10,9 @@ import { Quotes }  from '../modules/Quotes/Quotes';
 import { Speech } from '../modules/Speech/Speech';
 import { MusicPlayer } from '../modules/MusicPlayer/MusicPlayer';
 import { BitcoinChart } from '../modules/BitcoinChart/BitcoinChart';
+import { WikiSearch } from '../modules/WikiSearch/WikiSearch';
 
 // import { Weather }  from '../modules/Weather/Weather';
-// import { MediaPlayer }  from '../modules/MediaPlayer/MediaPlayer';
 
 
 export class Module extends React.Component {
@@ -64,7 +64,10 @@ export class Module extends React.Component {
               break;
             case "BitcoinChart":
               return <BitcoinChart key={id}/>
-              break;  
+              break;
+            case "WikiSearch":
+            return <WikiSearch key={id} wikiSearch={this.props.wikiSearch}/>
+            break;  
             default:
               return null
           }
