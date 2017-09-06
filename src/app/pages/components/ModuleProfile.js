@@ -1,15 +1,17 @@
 import React from 'react';
-import { browserHistory } from 'react-router';
+import { browserHistory, Link } from 'react-router';
 
-import { getUserModules, postUserModule, deleteUserModule } from '../../utils/users-api';
+import { getUserModules, postUserModule, deleteUserModule, getUsername } from '../../utils/users-api';
 import { getModule, setVisible } from '../../utils/modules-api';
+
 import { Spinner } from './mini-components/Spinner';
 import { MiniSpinner } from './mini-components/MiniSpinner';
 
 export class ModuleProfile extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
+            username: '',
             module: [],
             id: '',
             name: '',
@@ -204,11 +206,27 @@ export class ModuleProfile extends React.Component {
         this.getModuleData();
         this.handleIsInstalled;
         this.isToggle;
+        getUsername().then(username => {
+            this.setState({
+                username
+            })
+        })
     }
 
     render() {
-        var { module, name, category, surface_area, position, header, visible, isInstalled, isAynaModule, btnStatus } = this.state;
+        var { username, module, name, category, surface_area, position, header, visible, isInstalled, isAynaModule, btnStatus } = this.state;
+        // Module Profile Name Split
 
+        var headerLen = header.split(' ').length;
+        console.log(headerLen);
+        var h = header.split(' ').slice(0, 1).toString();
+        h = h.substring(0, 1).toUpperCase();
+        var _h = header.split(' ').slice(-1).toString();
+        _h = _h.substring(0, 1).toUpperCase();
+        var Header = '';
+        (headerLen != 1) ? Header= h + _h : Header= h;        
+
+        // Module Surface Area Split
         const s = surface_area.split('_').slice(0, 1).toString();
         const a = surface_area.split('_').slice(-1).toString();
         const surface = s.substring(0, 1).toUpperCase() + s.slice(1);       
@@ -216,7 +234,10 @@ export class ModuleProfile extends React.Component {
 
         return(
             <div>
-                <h5>{name}</h5>
+                <ol className="breadcrumb" style={{backgroundColor: "transparent", fontSize: "12px"}}>
+                <li><Link to={'/modules'}>{(isAynaModule === true) ? "Ayna Modules" : username.charAt(0).toUpperCase() + username.slice(1) + " Modules"}</Link></li>
+                <li>{header}</li>
+                </ol>
                 <div className="row">
                     <div className="col-lg-8 col-md-8 col-sm-8">
                         <div className="panel panel-default margin-top padding">
@@ -235,7 +256,7 @@ export class ModuleProfile extends React.Component {
                                                             <span>Not Visible</span><input type="checkbox" onClick={this.isToggle} /><span className="lever"></span> 
                                                             </div> : 
                                                             <div>
-                                                            <span>Visible</span><input checked type="checkbox" onClick={this.isToggle} /><span className="lever"></span>
+                                                            <span>Visible</span><input defaultChecked type="checkbox" onClick={this.isToggle} /><span className="lever"></span>
                                                             </div>
                                                 }                                                
                                             </label>
@@ -243,14 +264,16 @@ export class ModuleProfile extends React.Component {
                                     </div>
                                     <div className="panel-body">
                                         <div className="media">
-                                            <div className="badge-circle-bg pull-left" style={{marginBottom: "4px"}}>
-                                                <span style={{paddingLeft: "12px"}}>{name.toUpperCase().substring(0,2)}</span>
-                                            </div>
+                                            <div className="badge-circle-bg pull-left margin-right" style={{marginBottom: "4px"}}>
+                                                    <span style={{paddingLeft: "14px"}}>{Header}</span>
+                                                </div>
                                             <div className="media-body">
-                                                <span className="margin-left" style={{fontSize: "18px"}}>{name}</span><br />
-                                                <span className="text-muted margin-left">{category}</span>
+                                                <h4 className="media-heading">{header}{(isAynaModule === true) ? <sup><span className="fa fa-check-circle-o margin-small-left" style={{fontSize: "16px", color: "#fff"}} title="This is Ayna Module!"></span></sup> : ''}</h4>
+                                                <p style={{color: "#e0e0e0"}}>This Module is located in {surface} {area} of your Mirror, which is placed in {position} position.</p>
+                                                {(isInstalled === "Install") ? <p className="text-muted">FREE</p> : <p className="text-muted">This Product is Installed.</p>}
                                             </div>
                                         </div>
+
                                         {
                                             (btnStatus === "loading") ? <div className="margin-large-right" style={{float: "right"}}><MiniSpinner /></div> : 
                                             (isInstalled === "Install") ? 
@@ -261,13 +284,9 @@ export class ModuleProfile extends React.Component {
                                              <button className="badge red badge-danger margin-left" style={{float: "right", fontSize: "16px"}} onClick={this.handleIsInstalled}>Uninstall</button>                                             
                                             </div>
                                         }
-                                    
-                                        <table className="table table-hover margin-large-top">
+                                        
+                                        <table className="table table-striped table-hover margin-large-top">
                                             <tbody>
-                                                <tr>
-                                                    <td>Name</td>
-                                                    <td>{name}</td>
-                                                </tr>
                                                 <tr>
                                                     <td>Category</td>
                                                     <td>{category}</td>

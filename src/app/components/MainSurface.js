@@ -5,6 +5,9 @@ import { isLoggedIn } from '../utils/AuthService';
 import { getDefaultModules, getModules, changePosition, setVisible } from '../utils/modules-api';
 import { Spinner } from '../pages/components/mini-components/Spinner';
 import { getUsername, deleteUserModule } from '../utils/users-api';
+import { searchWiki } from '../utils/search-wiki-api';
+
+
 import { browserHistory } from 'react-router';
 
 
@@ -12,8 +15,8 @@ import { browserHistory } from 'react-router';
 import annyang from 'annyang';
 
 export class MainSurface extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       modules: [],
       surfaces : {
@@ -185,7 +188,12 @@ export class MainSurface extends React.Component {
       ],
       toDisplay: 'hello',
       soundStarted: '',
-      commandChannel: ''
+      commandChannel: '',
+      wikiSearch: {
+        status: 'close',
+        title: [],
+        snippet: []
+      }
     };
 
     this.acceptVoiceCommands = this.acceptVoiceCommands.bind(this);
@@ -303,6 +311,9 @@ export class MainSurface extends React.Component {
               }
               if(moduleName === 'clock') {
                 moduleName = 'analogclock'
+              }
+              if(moduleName === 'search') {
+                moduleName = 'wikisearch'
               }
               if(moduleName === 'news' | moduleName === 'feed') {
                 moduleName = 'newsfeed'
@@ -767,6 +778,48 @@ export class MainSurface extends React.Component {
               }
             }
 
+          }.bind(this),
+
+          'search *keyword': function(keyword) {
+            searchWiki(keyword).then((response) => {
+              var search = [];
+              var wikiSearch = {
+                title: [],
+                snippet: []
+              }
+
+              response.search.map((res) => {
+                search.push(res);
+              })
+
+              search.map((result) => {
+                wikiSearch.title.push(result.title);
+                wikiSearch.snippet.push(result.snippet);                
+              })
+
+              toDisplay = "Search Completed!"
+              this.setState({
+                toDisplay,
+                wikiSearch
+              })
+
+            })
+          }.bind(this),
+
+          ':status': function(status) {
+            var wikiSearch = {
+              status: '',
+              title: [],
+              snippet: []
+            };
+            if(status === 'close' | status === 'closed' | status === 'exit') {              
+              wikiSearch.status = 'close';
+              toDisplay = "Thank you for using Wiki Search."
+              this.setState({
+                wikiSearch,
+                toDisplay
+              })
+            }
           }.bind(this)
         }; 
         
@@ -788,14 +841,15 @@ export class MainSurface extends React.Component {
   render() {
     const { modules } = this.state;
     const { top_bar, hero_section, middle_center, lower_section, bottom_bar } = this.state.surfaces;
-    var { toDisplay, soundStarted, commandChannel } = this.state;
+    var { toDisplay, soundStarted, commandChannel, wikiSearch } = this.state;
+
     return(
       <div>
       {(modules.length === 0) ? <Spinner /> : 
         <div>
           <div className="surface fullscreen below" />
           <SurfaceArea surfaceName="surface top bar" modules={top_bar} col_left={3} col_center={6} col_right={3}/>
-          <SurfaceArea surfaceName="surface hero section" modules={hero_section} col_left={2} col_center={8} col_right={2}/>
+          <SurfaceArea surfaceName="surface hero section" modules={hero_section} wikiSearch={wikiSearch} col_left={2} col_center={8} col_right={2}/>
           <SurfaceArea surfaceName="surface middle center" modules={middle_center} reply={toDisplay} col_left={1} col_center={10} col_right={1}/>
           <SurfaceArea surfaceName="surface lower section" modules={lower_section} col_left={1} col_center={10} col_right={1}/>
           <SurfaceArea surfaceName="surface bottom bar" modules={bottom_bar} col_left={1} col_center={10} col_right={1}/>

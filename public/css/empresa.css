@@ -173,18 +173,26 @@ input::placeholder {
 }
 
 .badge-circle-bg {
-  height: 70px;
-  width: 70px;
+  height: 80px;
+  width: 80px;
   color: #121212;
-  font-size: 24px;
+  font-size: 38px;
+  font-weight: 300;
   display: table-cell;
   text-align: center;
   vertical-align: middle;
   border-radius: 50%;
   border: none;
   background: #fff;
-  padding-top: 12px;
+  padding-top: 4px;
   box-shadow: 0 2px 4px rgba(255, 255, 255, 0.4);
+}
+
+.badge-circle-bg.medium {
+  height: 75px;
+  width: 75px;
+  padding-top: 8px;  
+  font-size: 32px;  
 }
 
 /* Spinner */
@@ -420,3 +428,19 @@ input::placeholder {
 }
 
 /* Switch Disabled */
+
+/* Table */
+td, th {
+  border-radius: 0px;
+}
+.table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+  border-top: 0;
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) {
+  background-color: rgba(34, 34, 34, 0.35);
+}
+
+.table-hover > tbody > tr:hover {
+  background-color: rgba(34, 34, 34, 0.60);
+}

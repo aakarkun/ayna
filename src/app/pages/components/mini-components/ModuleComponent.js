@@ -59,33 +59,49 @@ export class ModuleComponent extends React.Component {
         const { btnStatus }  = this.state;
         const { module, isInstalled, btn_color } = this.props;
         var id = module._id;
+
+        // Module Profile Name Split
+        var header = module.header;
+        var headerLen = header.split(' ').length;
+        console.log(headerLen);
+        var h = header.split(' ').slice(0, 1).toString();
+        h = h.substring(0, 1).toUpperCase();
+        var _h = header.split(' ').slice(-1).toString();
+        _h = _h.substring(0, 1).toUpperCase();
+        var Header = '';
+        (headerLen != 1) ? Header= h + _h : Header= h;
+
         return(
             <div className="col-lg-4 col-md-6 col-sm-6 margin-bottom modules">
+                
                 <div className="media">
-                    <div className="badge-circle-bg pull-left"><span style={{paddingLeft: "12px"}}>{module.name.substring(0,2)}</span></div>
-                    <div className="media-body" style={{paddingLeft: "12px", }}>
-                        <Link to={`/modules/${id}`}><strong style={{fontSize: "16px"}}>{module.name}</strong></Link>
-                        <br />
-                        <strong>Category:</strong> {module.category}
-                        <br />
-                        {(isInstalled) === '' ? <Spinner /> :
-                            <div style={{marginTop: "5px", marginBottom: "5px", height: "25px"}}>
-                                {
-                                    (btnStatus === "loading") ? <MiniSpinner /> :
-                                        <div>
-                                        {
-                                            (btn_color === "success") ? 
-                                            <button className={'badge green badge-' + btn_color}>
-                                                INSTALLED
-                                            </button>:
-                                            <button className={'badge red badge-' + btn_color} onClick={this.handleIsInstalled}>
-                                                {isInstalled}
-                                            </button>                                                
-                                        }   
-                                        </div>
-                                }
-                            </div>
-                        }
+                    <div className="badge-circle-bg medium pull-left margin-right" style={{marginBottom: "4px", marginRight: "10px"}}>
+                            <span style={{paddingLeft: "14px"}}>{Header}</span>
+                        </div>
+                    <div className="media-body" style={{paddingLeft: "6px"}}>
+                        <h5 className="media-heading margin-bottom-remove" style={{fontSize: "18px", fontWeight: "400"}}>
+                            <Link to={`/modules/${id}`}>{header}</Link>
+                        </h5>
+                        <p><span style={{color: "#bdbdbd"}}>Category: {module.category}</span><br />
+                            {(isInstalled) === '' ? <Spinner /> :
+                                <div style={{marginTop: "5px", marginBottom: "5px", height: "25px"}}>
+                                    {
+                                        (btnStatus === "loading") ? <MiniSpinner /> :
+                                            <div>
+                                            {
+                                                (btn_color === "success") ? 
+                                                <button className={'badge green badge-' + btn_color}>
+                                                    INSTALLED
+                                                </button>:
+                                                <button className={'badge red badge-' + btn_color} onClick={this.handleIsInstalled}>
+                                                    {isInstalled}
+                                                </button>                                                
+                                            }   
+                                            </div>
+                                    }
+                                </div>
+                            }
+                        </p>
                     </div>
                 </div>
             </div>

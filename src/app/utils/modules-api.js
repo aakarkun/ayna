@@ -74,4 +74,6 @@ function getJwtToken() {
     return sessionStorage['ayna-jwt'];
 }
 
+
+
 export { getDefaultModules, getModules, getModule, changePosition, setVisible };

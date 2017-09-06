@@ -6,8 +6,8 @@ import { Spinner } from './mini-components/Spinner';
 
 
 export class Modules extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             defaultModules: [],
             userModules: [],
