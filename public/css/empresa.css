@@ -374,7 +374,7 @@ input::placeholder {
 }  
 
 .modules .badge-success {
-  /* border: 2px solid rgba(73, 217, 97, 0); */
+  border: 2px solid rgba(73, 217, 97, 0);
   font-size: 12px!important;
   float: left!important;
   color: rgb(255, 255, 255)!important;
