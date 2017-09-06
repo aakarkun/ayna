@@ -60,7 +60,7 @@ export class ModuleComponent extends React.Component {
         const { module, isInstalled, btn_color } = this.props;
         var id = module._id;
         return(
-            <div className="col-lg-6 col-md-6 col-sm-6 margin-bottom modules">
+            <div className="col-lg-4 col-md-6 col-sm-6 margin-bottom modules">
                 <div className="media">
                     <div className="badge-circle-bg pull-left"><span style={{paddingLeft: "12px"}}>{module.name.substring(0,2)}</span></div>
                     <div className="media-body" style={{paddingLeft: "12px", }}>
@@ -69,7 +69,7 @@ export class ModuleComponent extends React.Component {
                         <strong>Category:</strong> {module.category}
                         <br />
                         {(isInstalled) === '' ? <Spinner /> :
-                            <div style={{marginTop: "2px", height: "25px"}}>
+                            <div style={{marginTop: "5px", marginBottom: "5px", height: "25px"}}>
                                 {
                                     (btnStatus === "loading") ? <MiniSpinner /> :
                                         <div>
