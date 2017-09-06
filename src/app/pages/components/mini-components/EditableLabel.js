@@ -12,7 +12,6 @@ export class EditableLabel extends React.Component {
             text: '',
             username: '',
             email: '',
-            password: '',
             modules: [],
             error: '',
             status: '',
@@ -61,14 +60,11 @@ export class EditableLabel extends React.Component {
 
     handleUpdate() {
         var data = this.props.text;
-        if(this.props.text === "********") {
-            data = "password";
-        }
         this.setState({
             btnStatus: 'loading'
         })
         var newData = this.refs.textInput.value;
-        if(data === "username" || data === "email" || data === "password") {
+        if(data === "username" || data === "email") {
             patchUserData(data, newData)
                 .then((response) => {
                     if(response.success === true) {
@@ -120,10 +116,6 @@ export class EditableLabel extends React.Component {
                         text: email
                     })
                 })
-        } else {
-            this.setState({
-                text: "********"
-            })
         }
         
         this.labelClicked;
@@ -138,7 +130,7 @@ export class EditableLabel extends React.Component {
     render() {
         var { text, btnStatus } = this.state;
         if(this.state.editing)
-            return <div><input 
+            return <div className="modules"><input 
             ref='textInput'
             type='text'
             onChange={this.textChanged}

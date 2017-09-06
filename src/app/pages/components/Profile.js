@@ -40,7 +40,7 @@ export class Profile extends React.Component {
                 <h5>Profile</h5>
                 <div className="row">
                     <div className="col-lg-8 col-md-8 col-sm-8">
-                        <div className="panel panel-default margin-top padding">
+                        <div className="panel panel-default white-gradient margin-top padding">
                             {
                                 (username === '' || email === '') ? <Spinner /> :
                                 <div>
@@ -66,10 +66,6 @@ export class Profile extends React.Component {
                                                     <td>Email</td>
                                                     <td><EditableLabel text="email" /></td>
                                                 </tr>
-                                                <tr>
-                                                    <td>Password</td>
-                                                    <td><EditableLabel text="********"/></td>
-                                                </tr>
                                             </tbody>
                                         </table>
                                     </div>
@@ -80,20 +76,29 @@ export class Profile extends React.Component {
                 </div>
                 <div className="row">
                     <div className="col-lg-8 col-md-8 col-sm-8">
-                        <div className="panel panel-default margin-top">
+                        <div className="panel panel-default white-gradient margin-top">
                             {(modules.length === 0) ? <div className="panel-body"><center>USER MODULE EMPTY!</center></div> : 
                             <div> 
                                 <div className="panel-heading">MODULES SETTINGS</div>
                                 <div className="panel-body">
-                                    <table className="table table-hover">
+                                    <table className="table table-hover table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Surface area</th>
+                                                <th>Position</th>
+                                            </tr>
+                                        </thead>
                                         <tbody>
-                                        <tr>
-                                            <td>Modules</td>
-                                            <td>{modules.map((module, id) => {
-                                                    return <li key={id}>{module.name}</li>    
-                                                })}
-                                            </td>
-                                        </tr>
+                                            {modules.map((module, id) => {
+                                                return (
+                                                    <tr key={id}>    
+                                                        <td>{module.header}</td>
+                                                        <td>{module.surface_area}</td>
+                                                        <td>{module.position}</td>
+                                                    </tr>
+                                                );                                                                                             
+                                            })}
                                         </tbody>
                                     </table>
                                 </div>

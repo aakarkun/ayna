@@ -1,5 +1,6 @@
 import React from 'react';
 import { Navbar } from './components/Navbar';
+import { Footer } from './components/mini-components/Footer';
 import { browserHistory } from 'react-router';
 import annyang from 'annyang';
 import { loggedOut } from '../utils/AuthService';
@@ -77,6 +78,11 @@ export class Root extends React.Component {
                 <div className="row">
                     <div className="col-xs-12 col-md-12 col-lg-10 col-lg-offset-1">
                         {this.props.children}
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-xs-12 col-md-12 col-lg-10 col-lg-offset-1">
+                        <Footer />
                     </div>
                 </div>
             </div>

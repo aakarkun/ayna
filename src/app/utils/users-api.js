@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const BASE_URL = 'https://550eec24.ngrok.io';
-// const BASE_URL = 'http://localhost:8000';
+// const BASE_URL = 'https://550eec24.ngrok.io';
+const BASE_URL = 'http://localhost:8000';
 
 
 const userId = getUserId();
@@ -184,31 +184,6 @@ function patchUserData(data, newData) {
     } else if(data === "email") {
         return axiosInstance.patch(url, {
             "email" : newData
-        }).then((response) => {
-            if(response.status === 200){
-                return response.data;
-            }
-        }).catch((error) => {
-            if(error.response.status === 400) {
-                return [
-                    {
-                        error: error.response.data.error.details[0].message,
-                        code: "400"
-                    }
-                ]
-                
-            } else if(error.response.status === 403) {
-                return [
-                    {
-                        error: error.response.data.error,
-                        code: "403"
-                    }   
-                ]
-            }
-        })
-    } else {
-        return axiosInstance.patch(url, {
-            "password" : newData
         }).then((response) => {
             if(response.status === 200){
                 return response.data;

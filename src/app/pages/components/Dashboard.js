@@ -73,7 +73,7 @@ export class Dashboard extends React.Component {
         return(
             <div>
                 {/* <Flash type="success" name="Success" content="Logged in Successfully!" /> */}
-                <h5>DASHBOARD</h5>
+                <h6 style={{fontWeight: "300"}}>DASHBOARD</h6>
                 <div className="row margin-large-top margin-bottom">
                     <DashboardInfo header="AYNA MODULES" subheader="Available" count={this.state.dCount} />
                     <DashboardInfo header="USER MODULES" subheader="Your Modules" count={this.state.mCount} />
@@ -82,13 +82,13 @@ export class Dashboard extends React.Component {
 
                 <div className="row">
                     <div className="col-lg-8 col-md-8 col-sm-8">
-                        <div className="panel panel-default margin-top">
+                        <div className="panel panel-default white-gradient margin-top">
                             <div className="panel-heading">POPULAR MODULES</div>
                             <div className="panel-body">
-                                <table className="table table-hover">
+                                <table className="table table-striped table-hover">
                                     <tbody>
                                         <tr>
-                                            <td>Analog Clock</td>
+                                            <td><span className="text-large">Analog Clock</span></td>
                                             <td>1.2k Downloads</td>
                                         </tr>
                                         <tr>

@@ -54,10 +54,10 @@ export class Navbar extends React.Component {
                   <a className="navbar-brand" href="" onClick={ this.onNavigateHome }>{ brandname }</a>
                   <ul className="nav navbar-nav">
                     <li>
-                      <a className="" href="" onClick={ this.onNavigateDashboard }>{ menu_i }</a>
+                      <Link to="/dashboard" activeStyle={{fontWeight: "400"}}>{ menu_i }</Link>
                     </li>
                     <li>
-                      <a className="" href="" onClick={ this.onNavigateModules }>{ menu_ii }</a>
+                      <Link to="/modules" activeStyle={{fontWeight: "500"}}>{ menu_ii }</Link>
                     </li>
                   </ul>
                 </div>
@@ -71,7 +71,7 @@ export class Navbar extends React.Component {
                         }
                       </a>
                       <ul className="dropdown-menu">
-                        <li><Link to="/profile" activeStyle={{fontWeight: 400}}>Profile</Link></li>
+                        <li><Link to="/profile" activeStyle={{fontWeight: "400"}}>Profile</Link></li>
                         <li><Link to={"/"} onClick={this.logOut}>Logout</Link></li>                        
                       </ul>
                     </li>

@@ -235,12 +235,12 @@ export class ModuleProfile extends React.Component {
         return(
             <div>
                 <ol className="breadcrumb" style={{backgroundColor: "transparent", fontSize: "12px"}}>
-                <li><Link to={'/modules'}>{(isAynaModule === true) ? "Ayna Modules" : username.charAt(0).toUpperCase() + username.slice(1) + " Modules"}</Link></li>
-                <li>{header}</li>
+                    <li><Link to={'/modules'}>{(isAynaModule === true) ? "Ayna Modules" : username.charAt(0).toUpperCase() + username.slice(1) + " Modules"}</Link></li>
+                    <li>{header}</li>
                 </ol>
                 <div className="row">
                     <div className="col-lg-8 col-md-8 col-sm-8">
-                        <div className="panel panel-default margin-top padding">
+                        <div className="panel panel-default white-gradient margin-top padding">
                             {
                                 (name === '') ? <Spinner /> :
                                 <div>
@@ -269,8 +269,7 @@ export class ModuleProfile extends React.Component {
                                                 </div>
                                             <div className="media-body">
                                                 <h4 className="media-heading">{header}{(isAynaModule === true) ? <sup><span className="fa fa-check-circle-o margin-small-left" style={{fontSize: "16px", color: "#fff"}} title="This is Ayna Module!"></span></sup> : ''}</h4>
-                                                <p style={{color: "#e0e0e0"}}>This Module is located in {surface} {area} of your Mirror, which is placed in {position} position.</p>
-                                                {(isInstalled === "Install") ? <p className="text-muted">FREE</p> : <p className="text-muted">This Product is Installed.</p>}
+                                                {(isInstalled === "Install") ? <div><p style={{color: "#e0e0e0"}}>This Module will be located in {surface} {area} of your Mirror, at {position} position.</p><p className="text-muted">FREE</p></div> : <div><p style={{color: "#e0e0e0"}}>This Module is located in {surface} {area} of your Mirror, at {position} position.</p><p className="text-muted">This Product is Installed.</p></div>}
                                             </div>
                                         </div>
 

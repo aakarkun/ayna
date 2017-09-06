@@ -1,7 +1,7 @@
 import React from 'react';
 import { ModuleComponent} from './mini-components/ModuleComponent';
 import { getDefaultModules } from '../../utils/modules-api';
-import { getUserId, getUserModules } from '../../utils/users-api';
+import { getUserId, getUserModules, getUsername } from '../../utils/users-api';
 import { Spinner } from './mini-components/Spinner';
 
 
@@ -9,6 +9,7 @@ export class Modules extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            username: '',
             defaultModules: [],
             userModules: [],
             installedModules: [],
@@ -43,10 +44,15 @@ export class Modules extends React.Component {
     componentDidMount() {
         this.defaultModules();
         this.userModules();
+        getUsername().then(username => {
+            this.setState({
+                username
+            })
+        })
     }
 
     render() {
-        var { defaultModules, userModules } = this.state;
+        var { defaultModules, userModules, username } = this.state;
 
         // To identify the installed Modules by the user from available Ayna Modules  
 
@@ -117,7 +123,7 @@ export class Modules extends React.Component {
                 </div>
 
                 <div className="panel panel-default margin-large-top padding">
-                    <div className="panel-heading">USER MODULES<span className="badge badge-default"><strong>{userModules.length}</strong></span></div>
+                    <div className="panel-heading">{username.toUpperCase()} MODULES<span className="badge badge-default"><strong>{userModules.length}</strong></span></div>
                     <div className="panel-body">
                         <div className="row">
                             {
