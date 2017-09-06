@@ -12,8 +12,8 @@ import { browserHistory } from 'react-router';
 import annyang from 'annyang';
 
 export class MainSurface extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       modules: [],
       surfaces : {

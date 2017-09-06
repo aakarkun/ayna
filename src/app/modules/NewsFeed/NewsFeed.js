@@ -5,8 +5,8 @@ import { Spinner } from '../../pages/components/mini-components/Spinner';
 
 
 export class NewsFeed extends React.Component{
-	constructor(){
-		super()
+	constructor(props){
+		super(props)
 		this.state = {
 			newsLength : 0,
 			news : [],

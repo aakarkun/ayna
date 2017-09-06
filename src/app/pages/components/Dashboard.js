@@ -5,8 +5,8 @@ import { getUsersData, getUserModules } from '../../utils/users-api';
 import { Flash } from './mini-components/Flash';
 
 export class Dashboard extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
         this.state = {
             dCount: 0,
@@ -21,7 +21,7 @@ export class Dashboard extends React.Component {
             c = '' + c;
         } else if(c < 10) {
             c = '0' + c;
-        } else if(c > 10){
+        } else if(c >= 10){
             c = '' + c; 
         } else {
             c = 0;
@@ -45,6 +45,7 @@ export class Dashboard extends React.Component {
         getUsersData().then((users, error) => {
             if(users) {
                 var count = users.length;
+                console.log(count);
                 this.setState({
                     uCount: this.counter(count)
                 })

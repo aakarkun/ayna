@@ -7,8 +7,8 @@ import { loggedOut } from '../utils/AuthService';
 
 export class Root extends React.Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
         this.acceptVoiceCommand = this.acceptVoiceCommand.bind(this);
     }

@@ -8,12 +8,14 @@ import { NewsFeed }  from '../modules/NewsFeed/NewsFeed';
 import { Todo }  from '../modules/Todo/Todo';
 import { Quotes }  from '../modules/Quotes/Quotes';
 import { Speech } from '../modules/Speech/Speech';
+import { MusicPlayer } from '../modules/MusicPlayer/MusicPlayer';
+import { BitcoinChart } from '../modules/BitcoinChart/BitcoinChart';
+
 // import { Weather }  from '../modules/Weather/Weather';
 // import { MediaPlayer }  from '../modules/MediaPlayer/MediaPlayer';
 
 
 export class Module extends React.Component {
-
   render() {
     var componentName = [];
 
@@ -56,10 +58,13 @@ export class Module extends React.Component {
               break;
              {/* case "Weather":
               return <Weather key={id}/>
+              break;*/}
+            case "MusicPlayer":
+              return <MusicPlayer key={id}/>
               break;
-            case "MediaPlayer":
-              return <MediaPlayer key={id}/>
-              break;    */}
+            case "BitcoinChart":
+              return <BitcoinChart key={id}/>
+              break;  
             default:
               return null
           }

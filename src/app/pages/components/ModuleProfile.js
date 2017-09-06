@@ -7,8 +7,8 @@ import { Spinner } from './mini-components/Spinner';
 import { MiniSpinner } from './mini-components/MiniSpinner';
 
 export class ModuleProfile extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             module: [],
             id: '',
@@ -191,7 +191,7 @@ export class ModuleProfile extends React.Component {
                                                         <span>Not Visible</span><input type="checkbox" onClick={this.isToggle}/><span className="lever"></span> 
                                                         </div> : 
                                                         <div>
-                                                        <span>Visible</span><input checked type="checkbox" onClick={this.isToggle}/><span className="lever"></span>
+                                                        <span>Visible</span><input defaultChecked type="checkbox" onClick={this.isToggle}/><span className="lever"></span>
                                                         </div>
                                                 }                                                
                                             </label>

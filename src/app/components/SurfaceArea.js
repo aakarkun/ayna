@@ -2,7 +2,6 @@ import React from 'react';
 import { Module } from './Module';
 
 export class SurfaceArea extends React.Component {
-  
   render() {
     var { reply, listening, commandChannel } = this.props;
     var positions = {

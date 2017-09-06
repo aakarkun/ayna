@@ -18,8 +18,8 @@ import { NotFound } from './app/pages/components/mini-components/NotFound';
 
 
 class App extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       isLoggedIn: isLoggedIn()
     }
