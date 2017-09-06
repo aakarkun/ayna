@@ -26,6 +26,7 @@ export class MainSurface extends React.Component {
       userStatus: isLoggedIn(),
       replies: [
         {
+          id: 0,
           command: "hello",
           text: [
             "Hello. How's it going?",
@@ -41,6 +42,7 @@ export class MainSurface extends React.Component {
           ]
         },
         {
+          id: 1,
           command: "how are you",
           text: [
             "Living the AI dream.",
@@ -52,6 +54,7 @@ export class MainSurface extends React.Component {
           ]
         },
         {
+          id: 2,
           command: "goodnight",
           text: [
             "I seem to have hit a hiccup. Check back in a few",
@@ -60,12 +63,14 @@ export class MainSurface extends React.Component {
             ]
         },
         {
+          id: 3,
           command: "who are you",
           text: [
             "Empresa. I'm your personal assistant."
           ]
         },
         {
+          id: 4,
           command: "goodmorning",
           text: [
             "Good morning, I hope you slept well.",
@@ -74,6 +79,7 @@ export class MainSurface extends React.Component {
           ]
         },
         {
+          id: 5,
           command: "good afternoon",
           text: [
             "Midday greetings to you, too.",
@@ -81,7 +87,8 @@ export class MainSurface extends React.Component {
           ]
         },
         {
-          command: "update module",
+          id: 6,
+          command: "unauthorized",
           text: [
             "Please, Login first!",
             "You can't, without login!",
@@ -89,6 +96,7 @@ export class MainSurface extends React.Component {
           ]
         },
         {
+          id: 7,
           command: "do you know me",
           iDontKnowText: [
             "Please, Login first!",
@@ -103,6 +111,7 @@ export class MainSurface extends React.Component {
           ]
         },
         {
+          id: 8,
           command: "remove module",
           cannotFindText: [
             "I can't find this module",
@@ -124,6 +133,7 @@ export class MainSurface extends React.Component {
           ]
         },
         {
+          id: 9,
           command: "show module",
           cannotFindText: [
             "I can't show this module twice!",
@@ -140,13 +150,36 @@ export class MainSurface extends React.Component {
             "You didn't told me about this module, did you?",
             "Is there any module with this name?",
             "This module is completely new to me.",
-            "Did you just add new module that I can't recognized?"
+            "Did you just installed this module that I can't recognized?"
           ]
         },
         {
+          id: 10,
           command: "go to path",
           iDontKnowText: [
             "Please enter valid username and password."
+          ]
+        },
+        {
+          id: 11,
+          command: "position module to newPosition",
+          cannotFindText: [
+            "Please make sure this module is visible.",
+            "Sorry, I find this module is invisible.",
+            "I can't find this module in your screen."
+          ],
+          findText: [
+            "Okay! Changing the position",
+            "Sure, you can see the changes.",
+            "Ok! here you go."
+          ],
+          cannotRecognizeText: [
+            "I cannot recognize this module.",
+            "Do I know about this module?",
+            "You didn't told me about this module, did you?",
+            "Is there any module with this name?",
+            "This module is completely new to me.",
+            "Did you just installed this module that I can't recognized?"
           ]
         }
       ],
@@ -193,43 +226,6 @@ export class MainSurface extends React.Component {
   }
 
   acceptVoiceCommands() {
-
-    /* need to impliment this code
-    // Add the commands to annyang
-  			annyang.addCommands(commands);
-			
-			// Add callback functions for errors
-			annyang.addCallback('error', function() {
-				Log.error('ERROR in module ' + self.name + ': ' + 'Speech Recognition fails because an undefined error occured');
-			});
-			annyang.addCallback('errorNetwork', function() {
-		    		Log.error('ERROR in module ' + self.name + ': ' + 'Speech Recognition fails because of a network error');
-			});
-			annyang.addCallback('errorPermissionBlocked', function() {
-		    		Log.error('ERROR in module ' + self.name + ': ' + 'Browser blocks the permission request to use Speech Recognition');
-			});
-			annyang.addCallback('errorPermissionDenied', function() {
-		    		Log.error('ERROR in module ' + self.name + ': ' + 'The user blocks the permission request to use Speech Recognition');
-			});
-			annyang.addCallback('resultNoMatch', function(phrases) {
-				Log.error('ERROR in module ' + self.name + ': ' + 'No match for voice command ' + phrases);
-			});
-			annyang.addCallback('soundstart', function() {
-				self.textMessage = self.translate("HEAR_YOU");
-  				self.updateDom(self.config.animationSpeed);
-			});
-			annyang.addCallback('result', function() {
-				self.textMessage = "";
-  				self.updateDom(self.config.animationSpeed);
-			});
-
-			// Start listening
-			annyang.start();
-		} else {
-			Log.error('ERROR in module ' + self.name + ': ' + 'Google Speech Recognizer is down :(');
-		}
-
-    */
 
     var availableModules = [];
     var newsChannels = ["sports", "bbc", "business", "google-news", "hacker-news"];
@@ -291,7 +287,6 @@ export class MainSurface extends React.Component {
             window.location.reload();
           },
           'position (that) :moduleName (to) (the) :newPosition': function(moduleName, newPosition) {
-            // console.log(availableModules);
             if(!userStatus) {
               var num;
               num = Math.floor((Math.random() * replies[6].text.length));
@@ -318,14 +313,100 @@ export class MainSurface extends React.Component {
     
               if(newPosition === 'left' | newPosition === 'right' | newPosition === 'center') {
                 
-                availableModules.map((aModule, index) => {  
-                  if(aModule.name.toLowerCase() === moduleName && aModule.position !== newPosition) {
-                    console.log("Modules Matched! previously " + aModule.name.toLowerCase() + " was in " + aModule.position);
-                    aModule.position = newPosition;
-                    console.log("now " + aModule.name + " is in " + aModule.position);
-                    changePosition(aModule._id, newPosition).then(data => {
-                      console.log(data);
+                if(visibleModulesName.indexOf(moduleName) === -1 && invisibleModulesName.indexOf(moduleName) !== -1) {
+                  console.log(visibleModulesName.indexOf(moduleName));
+                  num = Math.floor((Math.random() * replies[11].cannotFindText.length));
+                  toDisplay = replies[11].cannotFindText[num];
+                  console.log(toDisplay);
+                  this.setState({
+                    toDisplay
+                  });
+                }
+
+                if(availableModulesName.indexOf(moduleName) === -1) {
+                  num = Math.floor((Math.random() * replies[11].cannotRecognizeText.length));
+                  toDisplay = replies[11].cannotRecognizeText[num];
+                  console.log(toDisplay);
+                  this.setState({
+                    toDisplay
+                  });
+                }
+
+                visibleModules.map((vModule, index) => {
+                  if(vModule.name.toLowerCase() === moduleName && vModule.position !== newPosition) {
+                    changePosition(vModule._id, newPosition).then(data => {
                       window.location.reload();
+                      num = Math.floor((Math.random() * replies[11].findText.length));
+                      toDisplay = replies[11].findText[num];
+                      console.log(toDisplay);
+                      this.setState({
+                        toDisplay
+                      });
+                    })
+                  }
+                });
+              } else {
+                toDisplay = "Position not matched!";
+                this.setState({
+                  toDisplay
+                })
+              }
+            }
+  
+          }.bind(this),
+
+          'position (that) :moduleName :moduleSurname (to) (the) :newPosition': function(moduleName, moduleSurname, newPosition) {
+            if(!userStatus) {
+              var num;
+              num = Math.floor((Math.random() * replies[6].text.length));
+              toDisplay = replies[6].text[num];
+              this.setState({
+                toDisplay
+              })
+            } else {
+              if(newPosition === 'centre') {
+                newPosition = 'center';
+              }
+              if(newPosition === 'write') {
+                newPosition = 'right';
+              }
+              if(moduleName === 'news' && moduleSurname === 'feed') {
+                moduleName = 'newsfeed'
+              }
+
+              moduleName = moduleName + moduleSurname;
+    
+              if(newPosition === 'left' | newPosition === 'right' | newPosition === 'center') {
+                
+                if(visibleModulesName.indexOf(moduleName) === -1 && invisibleModulesName.indexOf(moduleName) !== -1) {
+                  console.log(visibleModulesName.indexOf(moduleName));
+                  num = Math.floor((Math.random() * replies[11].cannotFindText.length));
+                  toDisplay = replies[11].cannotFindText[num];
+                  console.log(toDisplay);
+                  this.setState({
+                    toDisplay
+                  });
+                }
+
+                if(availableModulesName.indexOf(moduleName) === -1) {
+                  num = Math.floor((Math.random() * replies[11].cannotRecognizeText.length));
+                  toDisplay = replies[11].cannotRecognizeText[num];
+                  console.log(toDisplay);
+                  this.setState({
+                    toDisplay
+                  });
+                }
+
+                visibleModules.map((vModule, index) => {
+                  if(vModule.name.toLowerCase() === moduleName && vModule.position !== newPosition) {
+                    changePosition(vModule._id, newPosition).then(data => {
+                      window.location.reload();
+                      num = Math.floor((Math.random() * replies[11].findText.length));
+                      toDisplay = replies[11].findText[num];
+                      console.log(toDisplay);
+                      this.setState({
+                        toDisplay
+                      });
                     })
                   }
                 });
