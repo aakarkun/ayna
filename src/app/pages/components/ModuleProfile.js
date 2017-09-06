@@ -121,6 +121,7 @@ export class ModuleProfile extends React.Component {
         this.setState({
             btnStatus: 'loading'
         })
+
         if(this.state.isInstalled === "Install") {
             const { name, category, surface_area, position, header } = this.state;            
             getUserModules().then((modules) => {
@@ -130,8 +131,9 @@ export class ModuleProfile extends React.Component {
                 });
                 
                 if(modulesName.indexOf(name) === -1) {
-                    postUserModule(module.name, module.category, module.surface_area, module.position, module.header).then((response, error) => {
+                    postUserModule(name, category, surface_area, position, header).then((response, error) => {
                         if(response) {
+                            console.log(name);
                             window.location.reload();
                             console.log("Module Installed Successfully!");
                         } else {
