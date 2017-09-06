@@ -243,7 +243,7 @@ export class ModuleProfile extends React.Component {
                                     </div>
                                     <div className="panel-body">
                                         <div className="media">
-                                            <div className="badge-circle-bg pull-left">
+                                            <div className="badge-circle-bg pull-left" style={{marginBottom: "4px"}}>
                                                 <span style={{paddingLeft: "12px"}}>{name.toUpperCase().substring(0,2)}</span>
                                             </div>
                                             <div className="media-body">
