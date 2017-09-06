@@ -290,7 +290,6 @@ export class MainSurface extends React.Component {
           'reload': function() {
             window.location.reload();
           },
-
           'position (that) :moduleName (to) (the) :newPosition': function(moduleName, newPosition) {
             // console.log(availableModules);
             if(!userStatus) {
