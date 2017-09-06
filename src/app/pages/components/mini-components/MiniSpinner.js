@@ -9,8 +9,9 @@ export class MiniSpinner extends React.Component {
                         <div className="spinner">
                             <div className="double-bounce1"></div>
                             <div className="double-bounce2"></div>
+                            <div style={{marginLeft: "25px"}}>Loading..</div>
                         </div>
-                    </span>    
+                    </span>
                 </center>
             </div>
         );
