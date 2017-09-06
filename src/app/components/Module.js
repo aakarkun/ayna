@@ -10,11 +10,8 @@ import { Quotes }  from '../modules/Quotes/Quotes';
 import { Speech } from '../modules/Speech/Speech';
 import { MusicPlayer } from '../modules/MusicPlayer/MusicPlayer';
 import { BitcoinChart } from '../modules/BitcoinChart/BitcoinChart';
-<<<<<<< HEAD
 import { WikiSearch } from '../modules/WikiSearch/WikiSearch';
 
-=======
->>>>>>> 7933927cbb61e9fd2ef45d8b22db92f82630696a
 
 // import { Weather }  from '../modules/Weather/Weather';
 // import { MediaPlayer }  from '../modules/MediaPlayer/MediaPlayer';
