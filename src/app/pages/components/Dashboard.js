@@ -21,7 +21,7 @@ export class Dashboard extends React.Component {
             c = '' + c;
         } else if(c < 10) {
             c = '0' + c;
-        } else if(c > 10){
+        } else if(c >= 10){
             c = '' + c; 
         } else {
             c = 0;
