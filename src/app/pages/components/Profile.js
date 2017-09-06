@@ -56,7 +56,7 @@ export class Profile extends React.Component {
                                             </div>
                                         </div>
                                     
-                                        <table className="table table-hover margin-large-top">
+                                        <table className="table table-striped table-hover margin-large-top">
                                             <tbody>
                                                 <tr>
                                                     <td>Username</td>
