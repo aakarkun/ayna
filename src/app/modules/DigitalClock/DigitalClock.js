@@ -68,7 +68,7 @@ export class DigitalClock extends React.Component {
         
         return(
             <div>
-                {(!second) ? <Spinner /> :
+                {(!day) ? <Spinner /> :
                     <div style={{fontFamily: "Roboto"}}>
                         <p style={{fontSize: "80px"}} className="margin-bottom-remove margin-top-remove">
                             {hour}:{minute}

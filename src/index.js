@@ -16,7 +16,6 @@ import { ModuleProfile } from './app/pages/components/ModuleProfile';
 import { isLoggedIn, requireAuth } from './app/utils/AuthService';
 import { NotFound } from './app/pages/components/mini-components/NotFound';
 import { NoInternet } from './app/pages/components/mini-components/NoInternet';
-
 import { getModules } from './app/utils/modules-api';
 
 class App extends React.Component {

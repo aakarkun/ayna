@@ -92,7 +92,7 @@ export class NewsFeed extends React.Component{
 		return(
 			<div>
 				{(this.state.news.length === 0 && this.state.imageUrl.length === 0) ? <Spinner /> :	
-				<div className="media">
+				<div className="media text-center">
 					<div className="media-left">
 						{(this.state.imageUrl[this.state.newsLength] === null)? 
 							<img className="news-img media-object" src="https://image.ibb.co/i98W2Q/no_image.jpg" alt="no image" /> :

@@ -31,7 +31,7 @@ export class Quotes extends React.Component{
 		return(
 			<div className="text-center">
 				<h6 style={{fontWeight: "400"}}>QUOTES</h6>
-				<h5 style={{fontWeight: "300", fontSize: "18px"}}> {quotes[this.state.num]} </h5>
+				<h5 style={{fontWeight: "300", fontSize: "16px"}}> {quotes[this.state.num]} </h5>
 			</div>
 		);
 	}
