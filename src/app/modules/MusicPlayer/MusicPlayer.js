@@ -21,11 +21,11 @@ export class MusicPlayer extends React.Component {
     }
     
     volume() {
-        document.getElementById('player').volume + 0.1;
+        document.getElementById('player').volume += 0.1;
     }
     
     _volume() {
-        document.getElementById('player').volume - 0.1;
+        document.getElementById('player').volume -= 0.1;
     }
     
     componentDidMount() {
@@ -71,7 +71,7 @@ export class MusicPlayer extends React.Component {
         ]
         var musicId = Math.floor((Math.random() * mp3.length));
         return(
-            <div className="row">
+            <div className="row" style={{float: "left"}}>
                 <div className="col-lg-6 col-md-6 col-sm-6" style={{paddingRight: "0px"}}>
                     <div className="valign-wrapper">
                         <marquee direction="up" style={{height: "180px", marginLeft: "8px"}}><h6>{mp3[musicId].name}</h6></marquee>                
@@ -79,7 +79,7 @@ export class MusicPlayer extends React.Component {
                 </div>                
                 <div className="col-lg-6 col-md-6 col-sm-6" style={{paddingLeft: "0px"}}>
                 <audio id='player' refs="player" src={mp3[musicId].url}></audio>
-                    <div> 
+                    <div style={{height: "180px"}}> 
                         <button className="player play" onClick={this.play}><i className="fa fa-play-circle" /></button>
                         <button className="player pause" onClick={this.pause}><i className="fa  fa-pause-circle" /></button> 
                         <button className="player volume" onClick={this.volume}><i className="fa fa-volume-up" /></button> 
