@@ -30,8 +30,8 @@ export class Quotes extends React.Component{
 		//const listItem = list.map((item) => <li> {item}</li>);
 		return(
 			<div className="text-center">
-				<p>QUOTES</p>
-				<h6> {quotes[this.state.num]} </h6>
+				<h6 style={{fontWeight: "400"}}>QUOTES</h6>
+				<h5 style={{fontWeight: "300", fontSize: "18px"}}> {quotes[this.state.num]} </h5>
 			</div>
 		);
 	}

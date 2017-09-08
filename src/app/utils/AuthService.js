@@ -1,3 +1,6 @@
+function getJwtToken() {
+    return sessionStorage['ayna-jwt'];
+}
 
 export function isLoggedIn() {
     if(!sessionStorage['ayna-jwt']) {

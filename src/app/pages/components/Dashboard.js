@@ -45,7 +45,7 @@ export class Dashboard extends React.Component {
         getUsersData().then((users, error) => {
             if(users) {
                 var count = users.length;
-                console.log(count);
+                // console.log(count);
                 this.setState({
                     uCount: this.counter(count)
                 })
@@ -80,7 +80,7 @@ export class Dashboard extends React.Component {
                     <DashboardInfo header="USERS" subheader="Total Users" count={this.state.uCount} />   
                 </div>
 
-                <div className="row">
+                {/* <div className="row">
                     <div className="col-lg-8 col-md-8 col-sm-8">
                         <div className="panel panel-default white-gradient margin-top">
                             <div className="panel-heading">POPULAR MODULES</div>
@@ -88,7 +88,7 @@ export class Dashboard extends React.Component {
                                 <table className="table table-striped table-hover">
                                     <tbody>
                                         <tr>
-                                            <td><span className="text-large">Analog Clock</span></td>
+                                            <td>Analog Clock</td>
                                             <td>1.2k Downloads</td>
                                         </tr>
                                         <tr>
@@ -104,7 +104,7 @@ export class Dashboard extends React.Component {
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> */}
                 
             </div>
         );

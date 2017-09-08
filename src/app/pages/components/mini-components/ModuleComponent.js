@@ -63,7 +63,7 @@ export class ModuleComponent extends React.Component {
         // Module Profile Name Split
         var header = module.header;
         var headerLen = header.split(' ').length;
-        console.log(headerLen);
+        // console.log(headerLen);
         var h = header.split(' ').slice(0, 1).toString();
         h = h.substring(0, 1).toUpperCase();
         var _h = header.split(' ').slice(-1).toString();

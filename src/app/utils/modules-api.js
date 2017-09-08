@@ -2,8 +2,8 @@ import axios from 'axios';
 import { isLoggedIn } from './AuthService';
 import { getUserModules } from './users-api';
 
-// const BASE_URL = 'https://550eec24.ngrok.io';
-const BASE_URL = 'http://localhost:8000';
+const BASE_URL = 'https://0be4fe83.ngrok.io';
+// const BASE_URL = 'http://localhost:8000';
 
 const userId = getUserId();
 
@@ -73,7 +73,5 @@ function getUserId() {
 function getJwtToken() {
     return sessionStorage['ayna-jwt'];
 }
-
-
 
 export { getDefaultModules, getModules, getModule, changePosition, setVisible };

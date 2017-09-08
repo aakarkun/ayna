@@ -3,7 +3,7 @@ import { ModuleComponent} from './mini-components/ModuleComponent';
 import { getDefaultModules } from '../../utils/modules-api';
 import { getUserId, getUserModules, getUsername } from '../../utils/users-api';
 import { Spinner } from './mini-components/Spinner';
-
+import { NoInternet } from './mini-components/NoInternet';
 
 export class Modules extends React.Component {
     constructor(props) {
@@ -53,11 +53,9 @@ export class Modules extends React.Component {
 
     render() {
         var { defaultModules, userModules, username } = this.state;
-
         // To identify the installed Modules by the user from available Ayna Modules  
-
         var defModulesName = [];
-        var userModulesName = [];
+        var userModulesName = [];        
         defaultModules.map((defaultModule, index) => {
             defModulesName.push(defaultModule.name);
         });
@@ -102,7 +100,7 @@ export class Modules extends React.Component {
 
         return(
             <div>
-                <h5>MODULES</h5>
+                <h6 style={{fontWeight: "300"}}>MODULES</h6>
                 <div className="panel panel-default margin-large-top padding">
                     <div className="panel-heading">AYNA MODULES<span className="badge badge-default"><strong>{defaultModules.length}</strong></span></div>
                     <div className="panel-body">
@@ -128,7 +126,7 @@ export class Modules extends React.Component {
                         <div className="row">
                             {
                                 (userModules.length === '') ? <Spinner /> :
-                                (userModules.length === 0) ? <center><p>EMPTY USER MODULES</p></center> : 
+                                (userModules.length === 0) ? <center><p>EMPTY USER MODULES!</p></center> : 
                                 userModules.map((userModule, index) => (
                                     <ModuleComponent 
                                         module={ userModule } 

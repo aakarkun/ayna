@@ -26,7 +26,7 @@ export class WikiSearch extends React.Component {
                 '' :
                 <div>
                     <h4>{title[0]}</h4>
-                    <h6>{snip[0]} .. .</h6>
+                    <h6 style={{fontWeight: "300", fontSize: "18px"}}>{snip[0]} .. .</h6>
                 </div>
                 )}
                 

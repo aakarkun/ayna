@@ -37,9 +37,9 @@ export class Profile extends React.Component {
         var { username, email, password, modules } = this.state;
         return(
             <div>
-                <h5>Profile</h5>
+                <h6 style={{fontWeight: "300"}}>PROFILE</h6>
                 <div className="row">
-                    <div className="col-lg-8 col-md-8 col-sm-8">
+                    <div className="col-lg-8 col-md-9 col-sm-10">
                         <div className="panel panel-default white-gradient margin-top padding">
                             {
                                 (username === '' || email === '') ? <Spinner /> :
@@ -75,7 +75,7 @@ export class Profile extends React.Component {
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col-lg-8 col-md-8 col-sm-8">
+                    <div className="col-lg-8 col-md-9 col-sm-10">
                         <div className="panel panel-default white-gradient margin-top">
                             {(modules.length === 0) ? <div className="panel-body"><center>USER MODULE EMPTY!</center></div> : 
                             <div> 

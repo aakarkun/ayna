@@ -12,13 +12,11 @@ const axiosInstance = axios.create({
 
 function searchWiki(keyword) {
     var url = BASE_URL + request_url + keyword;
-
     return axiosInstance.get(url, { crossdomain: true })
     .then((response) => {
         // console.log(response.data.query);
         return response.data.query;
     })
-
 }
 
 export { searchWiki };

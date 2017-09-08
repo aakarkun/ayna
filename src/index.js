@@ -15,17 +15,47 @@ import { ModuleProfile } from './app/pages/components/ModuleProfile';
 
 import { isLoggedIn, requireAuth } from './app/utils/AuthService';
 import { NotFound } from './app/pages/components/mini-components/NotFound';
+import { NoInternet } from './app/pages/components/mini-components/NoInternet';
 
+import { getModules } from './app/utils/modules-api';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLoggedIn: isLoggedIn()
+      isLoggedIn: isLoggedIn(),
+      online: ''
     }
   }
+
+  componentDidMount() {
+    getModules()
+      .then((response) => {
+        if(response) {
+          this.setState({
+            online: "online"
+          });
+        } else {
+          console.log("error");
+          this.setState({
+            online: "offline"
+          })
+        }
+      }).catch((error) => {
+        if(!navigator.online) {
+          this.setState({
+          online: "offline"          
+          })
+        }
+      });
+  }
+
   render() {
+    var { online } = this.state;
+    console.log(online);
+  
     return(
+      (online == "offline") ? <NoInternet /> :
       <Router history={browserHistory}>
         <Route path={"/"} component={MainSurface}>
           <IndexRoute component={SurfaceArea} />

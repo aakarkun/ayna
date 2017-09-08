@@ -3,6 +3,7 @@ import { Link, browserHistory } from 'react-router';
 import { loggedOut } from '../../utils/AuthService';
 import { getUsername } from '../../utils/users-api';
 import { Spinner } from './mini-components/Spinner';
+import { NoInternet } from './mini-components/NoInternet';
 
 export class Navbar extends React.Component {
 
@@ -29,12 +30,15 @@ export class Navbar extends React.Component {
 
   componentDidMount() {
     getUsername()
-    .then((response) => {
-      var uname = response;
-      this.setState({
-        username: uname
-      })        
-    })
+      .then((response) => {
+        var uname = response;
+        console.log(uname);
+        this.setState({
+          username: uname
+        })        
+      }).catch((error) => {
+          console.log(error);
+      })
   }
 
   render() {

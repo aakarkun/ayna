@@ -239,7 +239,7 @@ export class ModuleProfile extends React.Component {
                     <li>{header}</li>
                 </ol>
                 <div className="row">
-                    <div className="col-lg-8 col-md-8 col-sm-8">
+                    <div className="col-lg-8 col-md-9 col-sm-12">
                         <div className="panel panel-default white-gradient margin-top padding">
                             {
                                 (name === '') ? <Spinner /> :
