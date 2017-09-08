@@ -95,14 +95,14 @@ export class NewsFeed extends React.Component{
 				<div className="media">
 					<div className="media-left">
 						{(this.state.imageUrl[this.state.newsLength] === null)? 
-							<img className="news-img media-object" src="https://image.ibb.co/i98W2Q/no_image.jpg" alt="no image" border="0" /> :
+							<img className="news-img media-object" src="https://image.ibb.co/i98W2Q/no_image.jpg" alt="no image" /> :
 							<img className="news-img media-object" src={this.state.imageUrl[this.state.newsLength]} /> 
 						}
 					</div>
 					<div className="media-body text-left">
 						<div className="margin-left">
-							<h6 className="media-heading">{this.state.heading}</h6>
-							<h6> {this.state.news[this.state.newsLength]} </h6>
+							<h6 className="media-heading" style={{fontWeight: "400"}}>{this.state.heading}</h6>
+							<h6 style={{fontWeight: "400"}}> {this.state.news[this.state.newsLength]} </h6>
 							<p className="news-via"> {
 								(this.state.author[this.state.newsLength] === null) ? "Unknown " : this.state.author[this.state.newsLength]} | {this.state.channel[this.state.channelNumber].powered_by} </p>
 						</div>
