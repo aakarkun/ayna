@@ -12,7 +12,54 @@ export class Dashboard extends React.Component {
             dCount: 0,
             mCount: 0,
             uCount: 0,
-            error: ''
+            error: '',
+            commands: [
+                {
+                    text: "Hello | Hi | Hey | Howdy | Whats up | Yo!",
+                    reg: true,
+                    unreg: true 
+                },
+                {
+                    text: "How | Who are you?",
+                    reg: true,
+                    unreg: true
+                },
+                {
+                    text: "Go to Dashboard | Modules | Profile | Home",
+                    reg: true,
+                    unreg: false
+                },
+                {
+                    text: "Go to Login | Register",
+                    reg: true,
+                    unreg: true
+                },
+                {
+                    text: "Position 'Clock' (module name) to center",
+                    reg: true,
+                    unreg: false
+                },
+                {
+                    text: "Good Morning | Afternoon | Evening | Night",
+                    reg: true,
+                    unreg: true
+                },
+                {
+                    text: "Do you know me?",
+                    reg: true,
+                    unreg: false
+                },
+                {
+                    text: "Show | Remove 'Clock' (module name)",
+                    reg: true,
+                    unreg: false
+                },
+                {
+                    text: "Search 'Smart Mirror' (keyword)",
+                    reg: true,
+                    unreg: true
+                }
+            ]
         }
     }
 
@@ -70,6 +117,7 @@ export class Dashboard extends React.Component {
     }
 
     render() {
+        var { commands } = this.state;
         return(
             <div>
                 {/* <Flash type="success" name="Success" content="Logged in Successfully!" /> */}
@@ -80,32 +128,31 @@ export class Dashboard extends React.Component {
                     <DashboardInfo header="USERS" subheader="Total Users" count={this.state.uCount} />   
                 </div>
 
-                {/* <div className="row">
-                    <div className="col-lg-8 col-md-8 col-sm-8">
+                <div className="row">
+                    <div className="col-lg-8 col-md-9 col-sm-12">
                         <div className="panel panel-default white-gradient margin-top">
-                            <div className="panel-heading">POPULAR MODULES</div>
+                            <div className="panel-heading" style={{fontWeight: "400"}}>AVAILABLE VOICE COMMANDS</div>
                             <div className="panel-body">
                                 <table className="table table-striped table-hover">
-                                    <tbody>
-                                        <tr>
-                                            <td>Analog Clock</td>
-                                            <td>1.2k Downloads</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Greetings</td>
-                                            <td>1.1k Downloads</td>
-                                        </tr>
-                                        <tr>
-                                            <td>News Feed</td>
-                                            <td>1.0k Downloads</td>
-                                        </tr>
+                                    <thead style={{fontWeight: "400", fontSize: "14px"}}>
+                                        <td>Commands</td>
+                                        <td>Unregistered</td>
+                                        <td>Registered</td>                                                                                                                        
+                                    </thead>
+                                    <tbody style={{fontWeight: "400"}}>
+                                        { commands.map((command, id) => {
+                                            return <tr key={id}>
+                                                        <td>{command.text}</td>
+                                                        <td className="text-center"><i className={`fa fa-${(command.unreg === true) ? "check text-success" : "times text-danger"}`}></i></td>                                                        
+                                                        <td className="text-center"><i className={`fa fa-${(command.reg === true) ? "check text-success" : "times text-danger"}`}></i></td>
+                                                    </tr>
+                                        })}
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
-                </div> */}
-                
+                </div>
             </div>
         );
     }
