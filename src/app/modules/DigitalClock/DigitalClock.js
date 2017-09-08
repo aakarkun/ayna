@@ -69,14 +69,14 @@ export class DigitalClock extends React.Component {
         return(
             <div>
                 {(!second) ? <Spinner /> :
-                    <div style={{fontFamily: "Segoe Ui Light"}}>
-                        <p style={{fontSize: "90px"}} className="margin-bottom-remove margin-top-remove">
+                    <div style={{fontFamily: "Roboto"}}>
+                        <p style={{fontSize: "80px"}} className="margin-bottom-remove margin-top-remove">
                             {hour}:{minute}
                             <sup className="">
                                 <span className="margin-small-left" style={{fontSize: "24px"}}>{_second}</span>
                             </sup>
                         </p>
-                        <span style={{fontSize: "18px", position: "absolute", top: "125px", left: "30px"}}>{todayString} {monthString} {day}</span>
+                        <span style={{fontSize: "18px", position: "absolute", top: "110px", left: "20px", width: "max-content"}}>{todayString} {monthString} {day}</span>
                     </div>
                 }
             </div>
