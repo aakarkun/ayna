@@ -15,7 +15,7 @@
     "react-media-player": "^0.6.3",
     "react-router": "^4.1.2",
     "react-trend": "^1.2.4",
-    "underscore": "^1.8.3"
+    "underscore": "^1.12.1"
   },
   "devDependencies": {
     "react-scripts": "1.0.7"
